@@ -3,266 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gestión de Desempeño</title>
+    <title>Sistema de Desempeño | UIX Design Style</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         :root {
-            --primary: #8B0000;
-            --primary-dark: #660000;
-            --white: #ffffff;
-            --bg: #f4f7f6;
-            --text: #333;
+            --uix-purple-dark: #1A0033;
+            --uix-purple-main: #2D0056;
+            --uix-green: #7CFF01; /* El verde vibrante de UIX */
+            --uix-green-dark: #6BD900;
+            --white: #FFFFFF;
+            --text-gray: #BDBDBD;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); }
+
+        body { 
+            font-family: 'Sora', sans-serif; 
+            background-color: var(--uix-purple-dark); 
+            color: var(--white);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Fondo decorativo similar a la imagen de referencia */
+        body::before {
+            content: "";
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle at center, var(--uix-purple-main) 0%, var(--uix-purple-dark) 70%);
+            z-index: -1;
+        }
+
+        .login-screen {
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 50px 40px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+
+        .brand-logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .brand-logo span { color: var(--uix-green); }
+
+        .login-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+            color: var(--text-gray);
+            padding-left: 5px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--white);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--uix-green);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        select option { background: var(--uix-purple-dark); }
+
+        .btn-uix {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--uix-green);
+            color: var(--uix-purple-dark);
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        .btn-uix:hover {
+            background-color: var(--uix-green-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-uix:disabled {
+            background-color: #4a4a4a;
+            color: #888;
+            cursor: not-allowed;
+        }
+
+        /* Dashboards temporales */
+        .app-container { display: none; padding: 50px; text-align: center; width: 100%; }
+        .app-container.active { display: block; }
         
-        /* LOGIN */
-        .login-screen { position: fixed; inset: 0; background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-        .login-card { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); width: 100%; max-width: 400px; text-align: center; }
-        .login-card h2 { color: var(--primary); margin-bottom: 20px; }
-        
-        /* LAYOUT */
-        .app-container { display: none; min-height: 100vh; }
-        .navbar { background: white; padding: 0 30px; height: 60px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--primary); position: sticky; top: 0; z-index: 100; }
-        .sidebar { width: 260px; background: #2c3e50; color: white; height: calc(100vh - 60px); position: fixed; padding: 20px; }
-        .main-content { margin-left: 260px; padding: 40px; }
-        
-        /* COMPONENTES */
-        .card { background: white; padding: 25px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .menu-item { padding: 12px; cursor: pointer; border-radius: 8px; transition: 0.3s; display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
-        .menu-item:hover { background: rgba(255,255,255,0.1); }
-        .menu-active { background: var(--primary) !important; }
-        
-        input, select, button { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ddd; font-size: 14px; }
-        .btn-primary { background: var(--primary); color: white; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .btn-primary:hover { background: var(--primary-dark); }
-        .btn-primary:disabled { background: #ccc; }
-        
-        .hidden { display: none; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        table th, table td { padding: 12px; border: 1px solid #eee; text-align: left; }
-        .badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; background: #eee; }
     </style>
 </head>
 <body>
 
     <div id="loginScreen" class="login-screen">
         <div class="login-card">
-            <i class="fas fa-user-circle fa-4x" style="color: var(--primary); margin-bottom: 15px;"></i>
-            <h2>Acceso al Sistema</h2>
+            <div class="brand-logo">uix<span>.</span></div>
+            <h2>Gestión de Desempeño</h2>
+            
             <form id="loginForm">
-                <select id="role" required>
-                    <option value="" disabled selected>Selecciona tu Rol</option>
-                    <option value="Colaborador">Colaborador</option>
-                    <option value="Líder">Líder / Formador</option>
-                </select>
-                <input type="email" id="email" placeholder="Correo electrónico" required>
-                <input type="password" id="pass" placeholder="Contraseña" required>
-                <button type="submit" id="btnIngresar" class="btn-primary">Entrar</button>
+                <div class="input-group">
+                    <label>Tu Rol</label>
+                    <select id="roleSelect" required>
+                        <option value="" disabled selected>Selecciona tu Rol</option>
+                        <option value="Colaborador">Colaborador</option>
+                        <option value="Líder">Líder / Formador</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Correo Electrónico</label>
+                    <input type="email" id="emailInput" placeholder="ejemplo@uixdesign.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="passInput" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn-uix" id="loginBtn">
+                    Entrar al Sistema <i class="fas fa-arrow-right"></i>
+                </button>
             </form>
         </div>
     </div>
 
-    <div id="app" class="app-container">
-        <nav class="navbar">
-            <div style="font-weight: bold; color: var(--primary); font-size: 1.2rem;">SISTEMA DESEMPEÑO 2026</div>
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <span id="userNameDisplay" style="font-weight: 500;"></span>
-                <button onclick="logout()" style="width: auto; padding: 5px 15px; background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;">Salir</button>
-            </div>
-        </nav>
+    <div id="colaboradorApp" class="app-container">
+        <h1 style="color:var(--uix-green)">Bienvenido Colaborador</h1>
+        <p id="colabName"></p>
+        <button onclick="logout()" class="btn-uix" style="width:auto; margin: 20px auto;">Cerrar Sesión</button>
+    </div>
 
-        <aside class="sidebar">
-            <div class="menu-item menu-active" onclick="showTab('tab-dashboard', this)">
-                <i class="fas fa-home"></i> Inicio
-            </div>
-            <div class="menu-item" onclick="showTab('tab-objetivos', this)">
-                <i class="fas fa-target-shot"></i> Mis Objetivos
-            </div>
-            <div class="menu-item" onclick="showTab('tab-evaluacion', this)">
-                <i class="fas fa-file-signature"></i> Evaluación Mes 6
-            </div>
-        </aside>
-
-        <main class="main-content">
-            <div id="tab-dashboard" class="content-section">
-                <div class="card">
-                    <h1>¡Hola, <span id="welcomeName"></span>!</h1>
-                    <p style="margin-top: 10px; color: #666;">Bienvenido a tu panel de gestión de desempeño anual.</p>
-                </div>
-            </div>
-
-            <div id="tab-objetivos" class="content-section hidden">
-                <div class="card">
-                    <h3>🎯 Definición de Objetivos Anuales</h3>
-                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">Registra tus metas principales para este periodo.</p>
-                    
-                    <div id="objetivosForm">
-                        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px;">
-                            <input type="text" id="objNombre" placeholder="Nombre del Objetivo">
-                            <input type="number" id="objPeso" placeholder="Peso %">
-                            <input type="text" id="objMeta" placeholder="Meta">
-                        </div>
-                        <button class="btn-primary" onclick="agregarFilaObjetivo()" style="width: auto; padding: 8px 20px; background: #2c3e50;">+ Agregar a la lista</button>
-                    </div>
-
-                    <table id="tablaObjetivos">
-                        <thead>
-                            <tr>
-                                <th>Objetivo</th>
-                                <th>Peso</th>
-                                <th>Meta</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            </tbody>
-                    </table>
-                    <button id="btnGuardarObjs" class="btn-primary" style="margin-top: 20px;" onclick="enviarObjetivosASheets()">Guardar y Enviar para Aprobación</button>
-                </div>
-            </div>
-
-            <div id="tab-evaluacion" class="content-section hidden">
-                <div class="card">
-                    <h3>📝 Autoevaluación de Medio Año</h3>
-                    <p>Califica tu desempeño en las competencias clave:</p>
-                    <div style="margin-top: 20px;">
-                        <label>Liderazgo y Proactividad</label>
-                        <input type="range" min="1" max="5" value="3" style="accent-color: var(--primary);">
-                        <label>Cumplimiento de Metas</label>
-                        <input type="range" min="1" max="5" value="3" style="accent-color: var(--primary);">
-                    </div>
-                    <button class="btn-primary" onclick="alert('Funcionalidad de guardado de evaluación en desarrollo')">Guardar Autoevaluación</button>
-                </div>
-            </div>
-        </main>
+    <div id="liderApp" class="app-container">
+        <h1 style="color:var(--uix-green)">Panel de Líder</h1>
+        <p id="liderName"></p>
+        <button onclick="logout()" class="btn-uix" style="width:auto; margin: 20px auto;">Cerrar Sesión</button>
     </div>
 
     <script>
-        // PEGA AQUÍ TU URL DE GOOGLE APPS SCRIPT (LA NUEVA QUE GENERASTE)
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzHASofc7KKjZA_eacfqnSKjJgwfZ1V_wGh5KunvIonuXqF22koNkEKvl1ax0odRRo/exec";
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxLYxg_b_rhtAtgTIQQgJYbn_Mbpnyg3-7bdl7P2noV4RHym6StMSrHOBBXsXDicgw/exec";
 
-        let objetivosTemporales = [];
-
-        // LÓGICA DE LOGIN REAL
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const btn = document.getElementById('btnIngresar');
-            btn.disabled = true;
-            btn.innerText = "Validando...";
+            const btn = document.getElementById('loginBtn');
+            const role = document.getElementById('roleSelect').value;
+            const email = document.getElementById('emailInput').value;
+            const password = document.getElementById('passInput').value;
 
-            const payload = {
-                action: "login",
-                email: document.getElementById('email').value,
-                password: document.getElementById('pass').value,
-                role: document.getElementById('role').value
-            };
+            btn.disabled = true;
+            btn.innerHTML = 'Verificando... <i class="fas fa-spinner fa-spin"></i>';
 
             try {
-                const response = await fetch(WEB_APP_URL, {
-                    method: 'POST',
-                    body: JSON.stringify(payload)
+                await fetch(WEB_APP_URL, {
+                    method: "POST",
+                    mode: "no-cors",
+                    body: JSON.stringify({ action: "login", email, password, role })
                 });
-                const result = await response.json();
 
-                if (result.status === "success") {
-                    iniciarApp(result);
+                // Simulación de éxito para el MVP
+                document.getElementById('loginScreen').style.display = 'none';
+                if (role === 'Colaborador') {
+                    document.getElementById('colaboradorApp').classList.add('active');
+                    document.getElementById('colabName').textContent = email;
                 } else {
-                    alert("Error: " + result.message);
-                    btn.disabled = false;
-                    btn.innerText = "Entrar";
+                    document.getElementById('liderApp').classList.add('active');
+                    document.getElementById('liderName').textContent = email;
                 }
-            } catch (err) {
-                console.error(err);
-                alert("Error de conexión. Verifica que el Apps Script tenga acceso para 'Cualquier persona'.");
+                localStorage.setItem('sesion_activa', email);
+                localStorage.setItem('rol_activo', role);
+            } catch (error) {
+                alert("Error de conexión");
                 btn.disabled = false;
-                btn.innerText = "Entrar";
+                btn.innerHTML = 'Entrar al Sistema <i class="fas fa-arrow-right"></i>';
             }
         });
-
-        function iniciarApp(userData) {
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('app').style.display = 'block';
-            document.getElementById('userNameDisplay').innerText = userData.nombre;
-            document.getElementById('welcomeName').innerText = userData.nombre;
-            localStorage.setItem('session', JSON.stringify(userData));
-        }
-
-        function showTab(tabId, element) {
-            document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
-            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('menu-active'));
-            document.getElementById(tabId).classList.remove('hidden');
-            element.classList.add('menu-active');
-        }
-
-        function agregarFilaObjetivo() {
-            const nombre = document.getElementById('objNombre').value;
-            const peso = document.getElementById('objPeso').value;
-            const meta = document.getElementById('objMeta').value;
-
-            if(!nombre || !peso) return alert("Llena los campos obligatorios");
-
-            objetivosTemporales.push({ nombre, peso, meta });
-            actualizarTabla();
-            
-            document.getElementById('objNombre').value = "";
-            document.getElementById('objPeso').value = "";
-            document.getElementById('objMeta').value = "";
-        }
-
-        function actualizarTabla() {
-            const tbody = document.querySelector('#tablaObjetivos tbody');
-            tbody.innerHTML = objetivosTemporales.map(obj => `
-                <tr>
-                    <td>${obj.nombre}</td>
-                    <td>${obj.peso}%</td>
-                    <td>${obj.meta}</td>
-                    <td><span class="badge">Borrador</span></td>
-                </tr>
-            `).join('');
-        }
-
-        async function enviarObjetivosASheets() {
-            if(objetivosTemporales.length === 0) return alert("Agrega al menos un objetivo");
-            
-            const btn = document.getElementById('btnGuardarObjs');
-            btn.disabled = true;
-            btn.innerText = "Enviando...";
-
-            const user = JSON.parse(localStorage.getItem('session'));
-            
-            try {
-                const response = await fetch(WEB_APP_URL, {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        action: "saveObjetivos",
-                        email: user.email,
-                        objetivos: objetivosTemporales
-                    })
-                });
-                
-                const res = await response.json();
-                if(res.status === "success") {
-                    alert("¡Objetivos guardados con éxito en Google Sheets!");
-                    objetivosTemporales = [];
-                    actualizarTabla();
-                }
-            } catch (e) {
-                alert("Error al guardar");
-            } finally {
-                btn.disabled = false;
-                btn.innerText = "Guardar y Enviar para Aprobación";
-            }
-        }
 
         function logout() {
             localStorage.clear();
             location.reload();
-        }
-
-        window.onload = () => {
-            const saved = localStorage.getItem('session');
-            if(saved) iniciarApp(JSON.parse(saved));
         }
     </script>
 </body>
