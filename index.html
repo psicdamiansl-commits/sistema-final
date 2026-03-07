@@ -3,184 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Desempeño | UIX Design Style</title>
+    <title>Desempeño | UIX Design</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         :root {
             --uix-purple-dark: #1A0033;
             --uix-purple-main: #2D0056;
-            --uix-green: #7CFF01; /* El verde vibrante de UIX */
-            --uix-green-dark: #6BD900;
+            --uix-green: #7CFF01;
             --white: #FFFFFF;
-            --text-gray: #BDBDBD;
+            --text-muted: #BDBDBD;
         }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: var(--white); overflow-x: hidden; }
 
-        body { 
-            font-family: 'Sora', sans-serif; 
-            background-color: var(--uix-purple-dark); 
-            color: var(--white);
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
+        /* PANTALLA LOGIN */
+        .login-screen { position: fixed; inset: 0; background: radial-gradient(circle, var(--uix-purple-main) 0%, var(--uix-purple-dark) 100%); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+        .login-card { background: rgba(255,255,255,0.03); backdrop-filter: blur(15px); padding: 40px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); width: 100%; max-width: 400px; text-align: center; }
+        .brand { font-size: 2.5rem; font-weight: 700; margin-bottom: 30px; }
+        .brand span { color: var(--uix-green); }
 
-        /* Fondo decorativo similar a la imagen de referencia */
-        body::before {
-            content: "";
-            position: absolute;
-            width: 150%;
-            height: 150%;
-            background: radial-gradient(circle at center, var(--uix-purple-main) 0%, var(--uix-purple-dark) 70%);
-            z-index: -1;
-        }
+        /* DASHBOARD LAYOUT */
+        .app-container { display: none; min-height: 100vh; }
+        .sidebar { width: 260px; background: rgba(0,0,0,0.3); height: 100vh; position: fixed; padding: 30px 20px; border-right: 1px solid rgba(255,255,255,0.05); }
+        .main-content { margin-left: 260px; padding: 40px; }
 
-        .login-screen {
-            width: 100%;
-            max-width: 420px;
-            padding: 20px;
-        }
-
-        .login-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 50px 40px;
-            border-radius: 30px;
-            text-align: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-        }
-
-        .brand-logo {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            letter-spacing: -1px;
-        }
-
-        .brand-logo span { color: var(--uix-green); }
-
-        .login-card h2 {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            font-weight: 400;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        label {
-            display: block;
-            font-size: 0.8rem;
-            margin-bottom: 8px;
-            color: var(--text-gray);
-            padding-left: 5px;
-        }
-
-        select, input {
-            width: 100%;
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--white);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        select:focus, input:focus {
-            outline: none;
-            border-color: var(--uix-green);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        select option { background: var(--uix-purple-dark); }
-
-        .btn-uix {
-            width: 100%;
-            padding: 15px;
-            background-color: var(--uix-green);
-            color: var(--uix-purple-dark);
-            border: none;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: transform 0.2s, background-color 0.3s;
-        }
-
-        .btn-uix:hover {
-            background-color: var(--uix-green-dark);
-            transform: translateY(-2px);
-        }
-
-        .btn-uix:disabled {
-            background-color: #4a4a4a;
-            color: #888;
-            cursor: not-allowed;
-        }
-
-        /* Dashboards temporales */
-        .app-container { display: none; padding: 50px; text-align: center; width: 100%; }
-        .app-container.active { display: block; }
+        /* ESTILOS DE COMPONENTES */
+        input, select { width: 100%; padding: 14px; margin: 10px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white; }
+        .btn-uix { background: var(--uix-green); color: var(--uix-purple-dark); border: none; padding: 15px; border-radius: 50px; font-weight: 700; cursor: pointer; transition: 0.3s; width: 100%; margin-top: 20px; }
+        .btn-uix:hover { transform: scale(1.02); filter: brightness(1.1); }
         
+        .menu-item { padding: 15px; cursor: pointer; border-radius: 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; transition: 0.3s; }
+        .menu-item:hover { background: rgba(124, 255, 1, 0.1); color: var(--uix-green); }
+        .active-menu { background: var(--uix-green); color: var(--uix-purple-dark) !important; }
+
+        .card { background: rgba(255,255,255,0.05); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
     <div id="loginScreen" class="login-screen">
         <div class="login-card">
-            <div class="brand-logo">uix<span>.</span></div>
-            <h2>Gestión de Desempeño</h2>
-            
+            <div class="brand">uix<span>.</span></div>
+            <p style="margin-bottom: 25px; color: var(--text-muted);">Acceso Desempeño 2026</p>
             <form id="loginForm">
-                <div class="input-group">
-                    <label>Tu Rol</label>
-                    <select id="roleSelect" required>
-                        <option value="" disabled selected>Selecciona tu Rol</option>
-                        <option value="Colaborador">Colaborador</option>
-                        <option value="Líder">Líder / Formador</option>
-                    </select>
-                </div>
-
-                <div class="input-group">
-                    <label>Correo Electrónico</label>
-                    <input type="email" id="emailInput" placeholder="ejemplo@uixdesign.com" required>
-                </div>
-
-                <div class="input-group">
-                    <label>Contraseña</label>
-                    <input type="password" id="passInput" placeholder="••••••••" required>
-                </div>
-
-                <button type="submit" class="btn-uix" id="loginBtn">
-                    Entrar al Sistema <i class="fas fa-arrow-right"></i>
-                </button>
+                <select id="roleSelect" required>
+                    <option value="" disabled selected>Selecciona tu Rol</option>
+                    <option value="Colaborador">Colaborador</option>
+                    <option value="Líder">Líder / Formador</option>
+                </select>
+                <input type="email" id="emailInput" placeholder="Correo electrónico" required>
+                <input type="password" id="passInput" placeholder="Contraseña" required>
+                <button type="submit" class="btn-uix" id="loginBtn">Entrar al Sistema</button>
             </form>
         </div>
     </div>
 
-    <div id="colaboradorApp" class="app-container">
-        <h1 style="color:var(--uix-green)">Bienvenido Colaborador</h1>
-        <p id="colabName"></p>
-        <button onclick="logout()" class="btn-uix" style="width:auto; margin: 20px auto;">Cerrar Sesión</button>
-    </div>
+    <div id="app" class="app-container">
+        <aside class="sidebar">
+            <div class="brand" style="font-size: 1.5rem; margin-bottom: 40px;">uix<span>.</span></div>
+            <div class="menu-item active-menu" onclick="showTab('tab-dash', this)"><i class="fas fa-th-large"></i> Inicio</div>
+            <div class="menu-item" onclick="showTab('tab-objs', this)"><i class="fas fa-bullseye"></i> Mis Objetivos</div>
+            <div class="menu-item" onclick="showTab('tab-eval', this)"><i class="fas fa-star"></i> Evaluación</div>
+            <div class="menu-item" onclick="logout()" style="margin-top: 50px; color: #ff4d4d;"><i class="fas fa-sign-out-alt"></i> Salir</div>
+        </aside>
 
-    <div id="liderApp" class="app-container">
-        <h1 style="color:var(--uix-green)">Panel de Líder</h1>
-        <p id="liderName"></p>
-        <button onclick="logout()" class="btn-uix" style="width:auto; margin: 20px auto;">Cerrar Sesión</button>
+        <main class="main-content">
+            <div id="tab-dash" class="content-section">
+                <div class="card">
+                    <h2 style="color: var(--uix-green);">Bienvenido, <span id="userName">Usuario</span></h2>
+                    <p style="margin-top: 10px; color: var(--text-muted);">Gestiona tu progreso y visualiza tus metas anuales.</p>
+                </div>
+            </div>
+
+            <div id="tab-objs" class="content-section hidden">
+                <div class="card">
+                    <h2>🎯 Definición de Objetivos</h2>
+                    <div style="margin-top: 20px; display: grid; gap: 15px;">
+                        <input type="text" placeholder="Nombre del objetivo...">
+                        <input type="number" placeholder="Peso %">
+                        <button class="btn-uix" style="width: auto; padding: 10px 30px;">+ Agregar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-eval" class="content-section hidden">
+                <div class="card">
+                    <h2>📝 Autoevaluación</h2>
+                    <p style="margin-top: 15px;">Completa tu evaluación de competencias correspondientes al Mes 6.</p>
+                </div>
+            </div>
+        </main>
     </div>
 
     <script>
@@ -191,39 +105,50 @@
             const btn = document.getElementById('loginBtn');
             const role = document.getElementById('roleSelect').value;
             const email = document.getElementById('emailInput').value;
-            const password = document.getElementById('passInput').value;
 
             btn.disabled = true;
             btn.innerHTML = 'Verificando... <i class="fas fa-spinner fa-spin"></i>';
 
             try {
+                // Envío de datos
                 await fetch(WEB_APP_URL, {
                     method: "POST",
                     mode: "no-cors",
-                    body: JSON.stringify({ action: "login", email, password, role })
+                    body: JSON.stringify({ action: "login", email, role })
                 });
 
-                // Simulación de éxito para el MVP
-                document.getElementById('loginScreen').style.display = 'none';
-                if (role === 'Colaborador') {
-                    document.getElementById('colaboradorApp').classList.add('active');
-                    document.getElementById('colabName').textContent = email;
-                } else {
-                    document.getElementById('liderApp').classList.add('active');
-                    document.getElementById('liderName').textContent = email;
-                }
-                localStorage.setItem('sesion_activa', email);
-                localStorage.setItem('rol_activo', role);
+                // FORZAR INGRESO: Al usar no-cors no podemos leer la respuesta, 
+                // así que damos acceso al completar la petición.
+                enterApp(email, role);
+
             } catch (error) {
                 alert("Error de conexión");
                 btn.disabled = false;
-                btn.innerHTML = 'Entrar al Sistema <i class="fas fa-arrow-right"></i>';
+                btn.textContent = "Entrar al Sistema";
             }
         });
+
+        function enterApp(email, role) {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('app').style.display = 'flex';
+            document.getElementById('userName').textContent = email;
+            localStorage.setItem('sesion_activa', email);
+        }
+
+        function showTab(id, el) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
+            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active-menu'));
+            document.getElementById(id).classList.remove('hidden');
+            el.classList.add('active-menu');
+        }
 
         function logout() {
             localStorage.clear();
             location.reload();
+        }
+
+        window.onload = () => {
+            if(localStorage.getItem('sesion_activa')) enterApp(localStorage.getItem('sesion_activa'), '');
         }
     </script>
 </body>
