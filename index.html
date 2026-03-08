@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Desempeño | UIX V3 Corregida</title>
+    <title>Sistema de Desempeño | UIX V3 Final</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -38,21 +38,14 @@
         .obj-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 25px; border-radius: 15px; margin-bottom: 20px; }
         
         label { display: block; font-size: 0.7rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; text-transform: uppercase; }
-        .req { color: var(--uix-green); margin-left: 3px; }
         input, select { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 8px; color: white; margin-bottom: 15px; font-family: 'Sora'; }
-        input:focus { border-color: var(--uix-green); outline: none; }
-
-        /* COMPETENCIAS */
+        
         .comp-card { background: rgba(124, 255, 1, 0.03); border: 1px solid rgba(124, 255, 1, 0.1); padding: 15px; border-radius: 12px; margin-bottom: 12px; display: flex; align-items: center; gap: 15px; }
-        .comp-card i { color: var(--uix-green); font-size: 1.2rem; min-width: 30px; text-align: center; }
         .comp-card h4 { font-size: 0.9rem; color: var(--uix-green); margin-bottom: 3px; }
         .comp-card p { font-size: 0.75rem; color: var(--text-muted); }
 
-        /* BOTONES */
-        .btn-main { background: var(--uix-green); color: var(--uix-purple-dark); padding: 18px; border-radius: 50px; border: none; font-weight: 700; cursor: pointer; width: 100%; margin-top: 30px; transition: 0.3s; }
-        .btn-main:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(124, 255, 1, 0.3); }
-        .btn-main:disabled { background: #4a4a4a; color: #888; cursor: not-allowed; }
-
+        .btn-main { background: var(--uix-green); color: var(--uix-purple-dark); padding: 18px; border-radius: 50px; border: none; font-weight: 700; cursor: pointer; width: 100%; margin-top: 30px; }
+        .btn-main:disabled { background: #4a4a4a; color: #888; }
         .hidden { display: none !important; }
     </style>
 </head>
@@ -60,7 +53,7 @@
 
     <div id="loginScreen">
         <div class="login-card">
-            <h1 style="color:var(--uix-green); margin-bottom:20px;">uix<span>.</span></h1>
+            <h1 style="color:var(--uix-green); margin-bottom:10px;">uix<span>.</span></h1>
             <select id="roleSelect" style="margin-bottom:10px;">
                 <option value="Colaborador Externo">Colaborador Externo</option>
                 <option value="Lider/Formador">Lider/Formador</option>
@@ -83,7 +76,7 @@
             <div class="nav-item"><i class="fas fa-history"></i> Historial</div>
             <div class="nav-item"><i class="fas fa-bell"></i> Notificaciones</div>
         </nav>
-        <div class="nav-item" onclick="location.reload()" style="color:var(--error); margin-top:20px;"><i class="fas fa-sign-out-alt"></i> Salir</div>
+        <div class="nav-item" onclick="location.reload()" style="color:var(--error); margin-top: 20px;"><i class="fas fa-sign-out-alt"></i> Salir</div>
     </aside>
 
     <main class="main-container">
@@ -95,41 +88,38 @@
 
         <div class="content-body">
             <h2 style="margin-bottom:20px;">Registro de Objetivos (Máximo 5)</h2>
-            <p style="margin-bottom:20px; font-size:0.9rem;">Total Pesos: <span id="totalPeso" style="color:var(--uix-green); font-weight:700;">0</span>% (Debe sumar 100%)</p>
+            <p style="margin-bottom:20px; font-size:0.9rem;">Total Pesos: <span id="totalPeso" style="color:var(--uix-green); font-weight:700;">0</span>%</p>
 
             <div id="objsContainer">
                 <div class="obj-card">
-                    <h4 style="color:var(--uix-green); margin-bottom:15px;">Objetivo <span class="num">1</span> <span class="req">*</span></h4>
-                    <label>Objetivo <span class="req">*</span></label>
-                    <input type="text" class="in-n" placeholder="Descripción del objetivo">
-                    
+                    <h4 style="color:var(--uix-green); margin-bottom:15px;">Objetivo <span class="num">1</span> *</h4>
+                    <label>Descripción Objetivo *</label>
+                    <input type="text" class="in-n">
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-                        <div><label>Meta Anual <span class="req">*</span></label><input type="text" class="in-m" placeholder="Ej: 100%"></div>
-                        <div><label>Tendencia <span class="req">*</span></label>
+                        <div><label>Meta Anual *</label><input type="text" class="in-m"></div>
+                        <div><label>Tendencia *</label>
                             <select class="in-t">
                                 <option value="">Seleccionar...</option>
                                 <option value="Incremental">Incremental</option>
                                 <option value="Decremental">Decremental</option>
                             </select>
                         </div>
-                        <div><label>Peso (%) <span class="req">*</span></label><input type="number" class="in-p" placeholder="20" onchange="calc()"></div>
+                        <div><label>Peso (%) *</label><input type="number" class="in-p" onchange="calc()"></div>
                         <div style="display:flex; gap:10px;">
-                            <div style="flex:1"><label>Fecha Inicio <span class="req">*</span></label><input type="date" class="in-i"></div>
-                            <div style="flex:1"><label>Fecha Fin <span class="req">*</span></label><input type="date" class="in-f"></div>
+                            <div style="flex:1"><label>Inicio *</label><input type="date" class="in-i"></div>
+                            <div style="flex:1"><label>Fin *</label><input type="date" class="in-f"></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <button onclick="add()" style="background:none; border:1px dashed var(--uix-green); color:var(--uix-green); padding:12px; width:100%; border-radius:10px; cursor:pointer; font-weight:600;">+ Añadir Objetivo (Máx 5)</button>
+            <button onclick="add()" style="background:none; border:1px dashed var(--uix-green); color:var(--uix-green); padding:12px; width:100%; border-radius:10px; cursor:pointer;">+ Añadir Objetivo</button>
 
-            <div style="margin-top:40px;">
+            <div style="margin-top: 40px;">
                 <h3 style="color:var(--uix-green); margin-bottom:15px;">Competencias Organizacionales</h3>
-                <div class="comp-card"><i class="fas fa-handshake"></i><div><h4>Confianza y Respeto Mutuo</h4><p>Relaciones basadas en la honestidad y transparencia.</p></div></div>
-                <div class="comp-card"><i class="fas fa-check-circle"></i><div><h4>Ejecución Impecable</h4><p>Compromisos con máxima calidad y tiempo.</p></div></div>
-                <div class="comp-card"><i class="fas fa-sync-alt"></i><div><h4>Mejora Continua</h4><p>Optimización constante de resultados.</p></div></div>
-                <div class="comp-card"><i class="fas fa-users"></i><div><h4>Pasión por el Cliente</h4><p>El cliente en el centro de las decisiones.</p></div></div>
-                <div class="comp-card"><i class="fas fa-project-diagram"></i><div><h4>Trabajo en Equipo</h4><p>Colaboración para objetivos comunes.</p></div></div>
+                <div class="comp-card"><i class="fas fa-handshake"></i><div><h4>Confianza y Respeto Mutuo</h4><p>Relaciones basadas en la honestidad.</p></div></div>
+                <div class="comp-card"><i class="fas fa-check-circle"></i><div><h4>Ejecución Impecable</h4><p>Compromisos con máxima calidad.</p></div></div>
+                <div class="comp-card"><i class="fas fa-sync-alt"></i><div><h4>Mejora Continua</h4><p>Optimización constante de procesos.</p></div></div>
             </div>
 
             <button class="btn-main" onclick="send()" id="btnSend">Enviar Objetivos al Formador</button>
@@ -137,26 +127,42 @@
     </main>
 
     <script>
-        const API = "https://script.google.com/macros/s/AKfycbwdmkMy3QXgyChcwI8mqhHWDgqy88-NfA8ETmLEr7_RrcVHRzRNuutVk/exec";
+        // URL ACTUALIZADA
+        const API = "https://script.google.com/macros/s/AKfycbxjaQMGiUipergpjZdRUi91oPdxprDPzSrnSE0tk5kz7IeHI71oKVY1xrKmH1KqSIo/exec";
         let user = null;
 
         async function handleLogin() {
             const btn = document.getElementById('loginBtn');
-            btn.innerText = "Cargando...";
             const email = document.getElementById('emailInput').value;
             const pass = document.getElementById('passInput').value;
-            const role = document.getElementById('roleSelect').value;
             
+            if(!email || !pass) return alert("Ingresa tus credenciales.");
+            
+            btn.innerText = "Verificando...";
+            btn.disabled = true;
+
             try {
-                const res = await fetch(API, {method:"POST", body:JSON.stringify({action:"login", email, password:pass, role})});
-                const data = await res.json();
+                const response = await fetch(API, {
+                    method: "POST",
+                    body: JSON.stringify({ action: "login", email: email, password: pass })
+                });
+                const data = await response.json();
+                
                 if(data.status === "success") {
                     user = data;
                     document.getElementById('uName').innerText = data.nombre;
                     document.getElementById('uRole').innerText = data.rol;
                     document.getElementById('loginScreen').classList.add('hidden');
-                } else { alert("Error: " + data.message); btn.innerText = "Ingresar"; }
-            } catch(e) { alert("Error de conexión"); btn.innerText = "Ingresar"; }
+                } else {
+                    alert("Credenciales incorrectas.");
+                    btn.innerText = "Ingresar";
+                    btn.disabled = false;
+                }
+            } catch(e) {
+                alert("Error de conexión con el servidor.");
+                btn.innerText = "Ingresar";
+                btn.disabled = false;
+            }
         }
 
         function calc() {
@@ -168,16 +174,16 @@
 
         function add() {
             const container = document.getElementById('objsContainer');
-            const cards = container.querySelectorAll('.obj-card');
-            if(cards.length >= 5) return alert("Máximo 5 objetivos.");
-            const clone = cards[0].cloneNode(true);
-            clone.querySelector('.num').innerText = cards.length + 1;
+            const num = container.querySelectorAll('.obj-card').length;
+            if(num >= 5) return alert("Máximo 5 objetivos.");
+            const clone = container.querySelector('.obj-card').cloneNode(true);
+            clone.querySelector('.num').innerText = num + 1;
             clone.querySelectorAll('input, select').forEach(i => i.value = "");
             container.appendChild(clone);
         }
 
         async function send() {
-            if(calc() !== 100) return alert("La suma de pesos debe ser exactamente 100%");
+            if(calc() !== 100) return alert("❌ La suma de pesos debe ser 100%");
             
             let empty = false;
             const objs = [];
@@ -194,13 +200,16 @@
                 objs.push(o);
             });
 
-            if(empty) return alert("❌ Error: Todos los campos con (*) son obligatorios.");
+            if(empty) return alert("❌ Completa todos los campos obligatorios (*)");
 
             const btn = document.getElementById('btnSend');
-            btn.disabled = true; btn.innerText = "Enviando y Notificando...";
+            btn.disabled = true; btn.innerText = "Enviando...";
 
             try {
-                const res = await fetch(API, {method:"POST", body:JSON.stringify({action:"saveObjetivos", email:user.email, objetivos:objs})});
+                const res = await fetch(API, {
+                    method: "POST",
+                    body: JSON.stringify({ action: "saveObjetivos", email: user.email, objetivos: objs })
+                });
                 const data = await res.json();
                 
                 if(data.status === "success") {
@@ -210,7 +219,11 @@
                     alert("⚠️ " + data.message);
                     location.reload();
                 }
-            } catch(e) { alert("Error al conectar"); btn.disabled = false; btn.innerText = "Enviar Objetivos al Formador"; }
+            } catch(e) {
+                alert("Error al guardar.");
+                btn.disabled = false;
+                btn.innerText = "Enviar Objetivos al Formador";
+            }
         }
     </script>
 </body>
