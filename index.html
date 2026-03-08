@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uix. Sistema de Desempeño - V6</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>uix. Sistema de Desempeño - V6 Responsive</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -25,42 +25,62 @@
         .login-card { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 25px; width: 400px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
         .login-card h1 { color: var(--uix-green); font-size: 2.8rem; margin-bottom: 5px; }
 
-        /* SIDEBAR MVP STYLE */
+        /* SIDEBAR */
         .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); }
         .user-info { padding: 0 20px 30px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
         .nav-menu { flex: 1; }
         .nav-item { padding: 15px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: var(--text-muted); font-size: 0.9rem; transition: 0.3s; }
-        .nav-item:hover { background: rgba(255,255,255,0.03); color: white; }
         .nav-item.active { background: var(--active-red); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
 
         /* MAIN CONTENT */
         .main-container { flex: 1; overflow-y: auto; padding: 0; background: #0a0118; }
-        .top-nav-tabs { display: flex; gap: 30px; padding: 20px 40px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .tab-link { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); cursor: pointer; padding-bottom: 10px; border-bottom: 2px solid transparent; }
+        .top-nav-tabs { display: flex; gap: 30px; padding: 20px 40px; border-bottom: 1px solid rgba(255,255,255,0.05); overflow-x: auto; }
+        .tab-link { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); cursor: pointer; padding-bottom: 10px; border-bottom: 2px solid transparent; white-space: nowrap; }
         .tab-link.active { color: var(--uix-green); border-bottom-color: var(--uix-green); }
 
         .content-body { padding: 40px; }
-        
-        /* ALERTS & HEADERS */
         .alert-banner { background: var(--alert-bg); color: #856404; padding: 15px; border-radius: 8px; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; font-size: 0.8rem; border: 1px solid #ffeeba; }
         .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .btn-add { background: var(--uix-green-btn); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.8rem; }
 
-        /* CARDS */
         .obj-card { background: var(--uix-purple-card); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--active-red); }
         .obj-title { color: var(--uix-green); font-size: 0.9rem; font-weight: 700; margin-bottom: 20px; }
         label { font-size: 0.7rem; color: var(--text-muted); display: block; margin-bottom: 8px; text-transform: uppercase; }
         label span { color: #ff4d4d; }
-        
         input, select { width: 100%; background: #0a0118; border: 1px solid #3d2b56; padding: 12px; border-radius: 8px; color: white; margin-bottom: 20px; font-family: 'Sora'; }
 
-        /* COMPETENCIAS */
         .comp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 20px; }
         .comp-item { padding: 15px; border-radius: 10px; font-size: 0.65rem; min-height: 110px; }
         .c1 { background: #5a4ca5; } .c2 { background: #5c78d6; } .c3 { background: #5e48ad; } .c4 { background: #4a54b3; } .c5 { background: #7162ad; }
 
         .btn-send { background: var(--active-red); color: white; flex: 1; padding: 16px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; text-transform: uppercase; }
         .btn-draft { background: #6c757d; color: white; padding: 16px 25px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; }
+
+        /* ==========================================
+           MODO CELULAR (RESPONSIVE) 
+           ========================================== */
+        @media (max-width: 768px) {
+            body { flex-direction: column; overflow-y: auto; }
+            .sidebar { width: 100%; height: auto; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 15px 0; }
+            .user-info { padding: 0 15px 15px; margin-bottom: 10px; display: flex; align-items: center; gap: 15px; }
+            .user-info div { width: 40px !important; height: 40px !important; margin-bottom: 0 !important; }
+            .nav-menu { display: flex; overflow-x: auto; padding: 0 15px; }
+            .nav-item { padding: 10px 15px; white-space: nowrap; font-size: 0.75rem; }
+            .nav-item.active { border-radius: 20px; margin-right: 10px; }
+            
+            .content-body { padding: 20px; }
+            .obj-card { padding: 15px; }
+            
+            /* FUERZA LAS GRILLAS A UNA COLUMNA EN CELULAR */
+            .obj-card div[style*="grid-template-columns"] {
+                grid-template-columns: 1fr !important;
+                gap: 5px !important;
+            }
+            .comp-grid { grid-template-columns: 1fr 1fr; } /* 2 competencias por fila */
+            .footer-actions { flex-direction: column; }
+            .btn-draft { width: 100%; }
+            .login-card { width: 90%; padding: 25px; }
+        }
 
         .hidden { display: none !important; }
     </style>
@@ -85,8 +105,10 @@
     <aside class="sidebar">
         <div class="user-info">
             <div style="width:50px; height:50px; background:#1a0830; border-radius:50%; margin-bottom:10px; display:flex; align-items:center; justify-content:center; border:1px solid var(--uix-green);"><i class="fas fa-user"></i></div>
-            <h5 id="uName">Nombre Usuario</h5>
-            <p id="uRole" style="font-size:0.65rem; color:var(--uix-green);">Rol del Usuario</p>
+            <div>
+                <h5 id="uName">Nombre Usuario</h5>
+                <p id="uRole" style="font-size:0.65rem; color:var(--uix-green);">Rol del Usuario</p>
+            </div>
         </div>
         <nav class="nav-menu">
             <div class="nav-item"><i class="fas fa-home"></i> Dashboard</div>
@@ -94,7 +116,7 @@
             <div class="nav-item"><i class="fas fa-history"></i> Historial</div>
             <div class="nav-item"><i class="fas fa-bell"></i> Notificaciones</div>
         </nav>
-        <div class="nav-item" style="color:#ff4d4d; border-top: 1px solid rgba(255,255,255,0.05);" onclick="location.reload()"><i class="fas fa-sign-out-alt"></i> Salir</div>
+        <div class="nav-item" style="color:#ff4d4d;" onclick="location.reload()"><i class="fas fa-sign-out-alt"></i> Salir</div>
     </aside>
 
     <main class="main-container">
@@ -106,7 +128,6 @@
 
         <div class="content-body">
             <h2 style="font-size:1.3rem; margin-bottom:10px;">Registro de Objetivos (Máximo 5)</h2>
-            
             <div class="alert-banner">
                 <i class="fas fa-exclamation-triangle"></i>
                 <div>
@@ -125,39 +146,36 @@
                     <div class="obj-title">Objetivo 1 <span>*</span></div>
                     <label>OBJETIVO <span>*</span></label>
                     <input type="text" class="in-n" placeholder="Nombre del objetivo">
-                    
                     <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px;">
-                        <div><label>META ANUAL <span>*</span></label><input type="text" class="in-m" placeholder="0"></div>
+                        <div><label>META <span>*</span></label><input type="text" class="in-m" placeholder="0"></div>
                         <div><label>TENDENCIA <span>*</span></label>
                             <select class="in-t">
-                                <option value="" disabled selected>Seleccionar...</option>
                                 <option value="Incremental">Incremental</option>
                                 <option value="Sostenible">Sostenible</option>
                                 <option value="Decremental">Decremental</option>
                             </select>
                         </div>
-                        <div><label>PESO (%) <span>*</span></label><input type="number" class="in-p" oninput="calc()" placeholder="0"></div>
+                        <div><label>PESO <span>*</span></label><input type="number" class="in-p" oninput="calc()" placeholder="0"></div>
                     </div>
-                    
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
-                        <div><label>FECHA INICIO <span>*</span></label><input type="date" class="in-i"></div>
-                        <div><label>FECHA FIN <span>*</span></label><input type="date" class="in-f"></div>
+                        <div><label>INICIO <span>*</span></label><input type="date" class="in-i"></div>
+                        <div><label>FIN <span>*</span></label><input type="date" class="in-f"></div>
                     </div>
                 </div>
             </div>
 
-            <h3 style="color:var(--active-red); font-size:1rem; margin-top:40px;"><i class="fas fa-star"></i> Competencias Organizacionales</h3>
+            <h3 style="color:var(--active-red); font-size:1rem; margin-top:40px;"><i class="fas fa-star"></i> Competencias</h3>
             <div class="comp-grid">
-                <div class="comp-item c1"><i class="fas fa-handshake"></i> <strong>Confianza y Respeto</strong></div>
-                <div class="comp-item c2"><i class="fas fa-check-circle"></i> <strong>Ejecución Impecable</strong></div>
-                <div class="comp-item c3"><i class="fas fa-sync-alt"></i> <strong>Mejora Continua</strong></div>
-                <div class="comp-item c4"><i class="fas fa-heart"></i> <strong>Pasión por el Cliente</strong></div>
-                <div class="comp-item c5"><i class="fas fa-users"></i> <strong>Trabajo en Equipo</strong></div>
+                <div class="comp-item c1"><strong>Confianza</strong></div>
+                <div class="comp-item c2"><strong>Ejecución</strong></div>
+                <div class="comp-item c3"><strong>Mejora</strong></div>
+                <div class="comp-item c4"><strong>Cliente</strong></div>
+                <div class="comp-item c5"><strong>Equipo</strong></div>
             </div>
 
-            <div style="display:flex; gap:15px; margin-top:30px;">
-                <button class="btn-send" onclick="send()" id="btnSend"><i class="fas fa-paper-plane"></i> Enviar Objetivos al Formador</button>
-                <button class="btn-draft" onclick="alert('Borrador guardado')">Guardar Borrador</button>
+            <div class="footer-actions" style="display:flex; gap:15px; margin-top:30px;">
+                <button class="btn-send" onclick="send()" id="btnSend"><i class="fas fa-paper-plane"></i> ENVIAR</button>
+                <button class="btn-draft" onclick="alert('Borrador guardado')">GUARDAR</button>
             </div>
         </div>
     </main>
@@ -171,7 +189,6 @@
             const email = document.getElementById('emailInput').value;
             const pass = document.getElementById('passInput').value;
             if(!role || !email || !pass) return alert("Completa los campos.");
-
             try {
                 const res = await fetch(API, { method: "POST", body: JSON.stringify({ action: "login", email, password: pass }) });
                 const data = await res.json();
@@ -180,8 +197,8 @@
                     document.getElementById('uName').innerText = data.nombre;
                     document.getElementById('uRole').innerText = role;
                     document.getElementById('loginScreen').classList.add('hidden');
-                } else { alert("Error de acceso"); }
-            } catch(e) { alert("Error de conexión"); }
+                } else { alert("Error"); }
+            } catch(e) { alert("Error de red"); }
         }
 
         function calc() {
@@ -206,7 +223,6 @@
             if(calc() !== 100) return alert("El peso total debe ser 100%");
             const btn = document.getElementById('btnSend');
             btn.disabled = true; btn.innerText = "ENVIANDO...";
-            
             const objetivos = [];
             document.querySelectorAll('.obj-card').forEach(c => {
                 objetivos.push({
@@ -215,12 +231,11 @@
                     fechaInicio: c.querySelector('.in-i').value, fechaFin: c.querySelector('.in-f').value
                 });
             });
-
             try {
                 const res = await fetch(API, { method: "POST", body: JSON.stringify({ action: "saveObjetivos", email: user.email, objetivos }) });
                 const data = await res.json();
                 if(data.status === "success") { alert("¡Enviado!"); location.reload(); }
-            } catch(e) { alert("Error"); btn.disabled = false; btn.innerText = "ENVIAR"; }
+            } catch(e) { alert("Error"); btn.disabled = false; }
         }
     </script>
 </body>
