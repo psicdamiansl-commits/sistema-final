@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desempeño | UIX Design</title>
+    <title>Dashboard Desempeño | UIX Design</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -13,37 +13,42 @@
             --uix-green: #7CFF01;
             --white: #FFFFFF;
             --text-muted: #BDBDBD;
+            --card-bg: rgba(255, 255, 255, 0.05);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: var(--white); overflow-x: hidden; height: 100vh; }
+        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: var(--white); overflow: hidden; height: 100vh; }
 
-        /* PANTALLA LOGIN */
+        /* LOGIN SCREEN */
         .login-screen { position: fixed; inset: 0; background: radial-gradient(circle, var(--uix-purple-main) 0%, var(--uix-purple-dark) 100%); display: flex; align-items: center; justify-content: center; z-index: 1000; }
         .login-card { background: rgba(255,255,255,0.03); backdrop-filter: blur(15px); padding: 40px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); width: 100%; max-width: 400px; text-align: center; }
-        .brand { font-size: 2.5rem; font-weight: 700; margin-bottom: 30px; }
+        .brand { font-size: 2.5rem; font-weight: 700; margin-bottom: 20px; }
         .brand span { color: var(--uix-green); }
 
-        /* DASHBOARD LAYOUT */
-        .app-container { display: none; min-height: 100vh; width: 100%; }
+        /* LAYOUT */
+        .app-container { display: none; height: 100vh; width: 100%; }
         .sidebar { width: 260px; background: rgba(0,0,0,0.3); height: 100vh; position: fixed; padding: 30px 20px; border-right: 1px solid rgba(255,255,255,0.05); }
-        .main-content { margin-left: 260px; padding: 40px; width: calc(100% - 260px); }
+        .main-content { margin-left: 260px; padding: 40px; width: calc(100% - 260px); height: 100vh; overflow-y: auto; }
 
-        /* ESTILOS DE COMPONENTES */
-        input, select { width: 100%; padding: 14px; margin: 10px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white; font-size: 1rem; }
-        select option { background: var(--uix-purple-dark); color: white; }
+        /* COMPONENTES */
+        .card { background: var(--card-bg); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
+        .btn-uix { background: var(--uix-green); color: var(--uix-purple-dark); border: none; padding: 12px 25px; border-radius: 50px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        .btn-uix:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(124, 255, 1, 0.3); }
         
-        .btn-uix { background: var(--uix-green); color: var(--uix-purple-dark); border: none; padding: 15px; border-radius: 50px; font-weight: 700; cursor: pointer; transition: 0.3s; width: 100%; margin-top: 20px; font-size: 1rem; }
-        .btn-uix:hover { transform: scale(1.02); filter: brightness(1.1); }
-        .btn-uix:disabled { background: #4a4a4a; color: #888; cursor: not-allowed; }
+        input, select { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; color: white; width: 100%; }
         
-        .menu-item { padding: 15px; cursor: pointer; border-radius: 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; transition: 0.3s; color: var(--text-muted); }
-        .menu-item:hover { background: rgba(124, 255, 1, 0.1); color: var(--uix-green); }
+        /* TABLA */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { text-align: left; color: var(--uix-green); padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+        .menu-item { padding: 15px; cursor: pointer; border-radius: 12px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; color: var(--text-muted); transition: 0.3s; }
         .active-menu { background: var(--uix-green); color: var(--uix-purple-dark) !important; font-weight: 700; }
-
-        .card { background: rgba(255,255,255,0.05); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
-        .hidden { display: none; }
         
-        h2 { margin-bottom: 20px; }
+        .grid-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { text-align: center; padding: 20px; background: rgba(124, 255, 1, 0.05); border: 1px solid rgba(124, 255, 1, 0.1); border-radius: 20px; }
+        .stat-card h3 { font-size: 2rem; color: var(--uix-green); }
+
+        .hidden { display: none; }
     </style>
 </head>
 <body>
@@ -51,7 +56,6 @@
     <div id="loginScreen" class="login-screen">
         <div class="login-card">
             <div class="brand">uix<span>.</span></div>
-            <p style="margin-bottom: 25px; color: var(--text-muted);">Acceso Desempeño 2026</p>
             <form id="loginForm">
                 <select id="roleSelect" required>
                     <option value="" disabled selected>Selecciona tu Rol</option>
@@ -60,7 +64,7 @@
                 </select>
                 <input type="email" id="emailInput" placeholder="Correo electrónico" required>
                 <input type="password" id="passInput" placeholder="Contraseña" required>
-                <button type="submit" class="btn-uix" id="loginBtn">Entrar al Sistema</button>
+                <button type="submit" class="btn-uix" id="loginBtn" style="width: 100%; margin-top: 20px;">Entrar al Sistema</button>
             </form>
         </div>
     </div>
@@ -68,123 +72,183 @@
     <div id="app" class="app-container">
         <aside class="sidebar">
             <div class="brand" style="font-size: 1.5rem; margin-bottom: 40px;">uix<span>.</span></div>
-            <div class="menu-item active-menu" id="menu-dash" onclick="showTab('tab-dash', this)"><i class="fas fa-th-large"></i> Inicio</div>
-            <div class="menu-item" id="menu-objs" onclick="showTab('tab-objs', this)"><i class="fas fa-bullseye"></i> Mis Objetivos</div>
-            <div class="menu-item" id="menu-eval" onclick="showTab('tab-eval', this)"><i class="fas fa-star"></i> Evaluación</div>
-            <div class="menu-item" onclick="logout()" style="margin-top: 50px; color: #ff4d4d;"><i class="fas fa-sign-out-alt"></i> Salir</div>
+            <div class="menu-item active-menu" id="m-dash" onclick="showTab('tab-dash', this)"><i class="fas fa-home"></i> Inicio</div>
+            <div class="menu-item" id="m-objs" onclick="showTab('tab-objs', this)"><i class="fas fa-crosshairs"></i> Mis Objetivos</div>
+            <div class="menu-item" id="m-eval" onclick="showTab('tab-eval', this)"><i class="fas fa-tasks"></i> Evaluación</div>
+            <div class="menu-item" onclick="logout()" style="margin-top: 40px; color: #ff5555;"><i class="fas fa-power-off"></i> Salir</div>
         </aside>
 
         <main class="main-content">
+            <header style="margin-bottom: 30px;">
+                <h1 id="welcomeText">Hola, <span id="userName">Cargando...</span></h1>
+                <p style="color: var(--text-muted)">Panel de Desempeño 2026</p>
+            </header>
+
             <div id="tab-dash" class="content-section">
+                <div class="grid-stats">
+                    <div class="stat-card"><h3>0</h3><p>Objetivos Totales</p></div>
+                    <div class="stat-card"><h3>0%</h3><p>Avance General</p></div>
+                    <div class="stat-card"><h3>-</h3><p>Estatus</p></div>
+                </div>
                 <div class="card">
-                    <h2 style="color: var(--uix-green);">Bienvenido, <span id="userName">Usuario</span></h2>
-                    <p style="color: var(--text-muted);">Tu rol actual es: <span id="userRoleBadge" style="color: var(--uix-green);"></span></p>
+                    <h2>Próximos Pasos</h2>
+                    <p>Completa la definición de tus objetivos anuales antes del cierre de mes.</p>
                 </div>
             </div>
 
             <div id="tab-objs" class="content-section hidden">
                 <div class="card">
-                    <h2>🎯 Definición de Objetivos</h2>
-                    <p style="color: var(--text-muted); margin-bottom: 20px;">Aquí podrás registrar tus metas anuales.</p>
-                    <div style="display: grid; gap: 15px;">
-                        <input type="text" placeholder="Nombre del objetivo...">
-                        <input type="number" placeholder="Peso %">
-                        <button class="btn-uix" style="width: auto; padding: 10px 30px;">+ Agregar Objetivo</button>
+                    <h2 style="margin-bottom: 20px;">🎯 Definir Mis Objetivos</h2>
+                    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px; align-items: end;">
+                        <div>
+                            <label style="font-size: 0.8rem; color: var(--text-muted)">Descripción</label>
+                            <input type="text" id="objDesc" placeholder="Ej. Incrementar ventas">
+                        </div>
+                        <div>
+                            <label style="font-size: 0.8rem; color: var(--text-muted)">Peso %</label>
+                            <input type="number" id="objPeso" placeholder="25">
+                        </div>
+                        <div>
+                            <label style="font-size: 0.8rem; color: var(--text-muted)">Meta</label>
+                            <input type="text" id="objMeta" placeholder="100%">
+                        </div>
+                        <button class="btn-uix" onclick="addObjRow()">+</button>
                     </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Descripción</th>
+                                <th>Peso</th>
+                                <th>Meta</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="objTableBody">
+                            </tbody>
+                    </table>
+                    
+                    <button id="sendBtn" class="btn-uix" style="margin-top: 30px; width: 100%;" onclick="saveToSheets()">
+                        Guardar Objetivos en Google Sheets
+                    </button>
                 </div>
             </div>
 
             <div id="tab-eval" class="content-section hidden">
                 <div class="card">
-                    <h2>📝 Autoevaluación Mes 6</h2>
-                    <p style="color: var(--text-muted);">Esta sección estará disponible en el periodo de evaluación correspondiente.</p>
+                    <h2>📝 Evaluación de Desempeño</h2>
+                    <p>La etapa de autoevaluación se habilitará en Junio 2026.</p>
                 </div>
             </div>
         </main>
     </div>
 
     <script>
-        // URL DE TU APPS SCRIPT ACTUALIZADA
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxnqkWYo8s0tu-NKwCpGUJ0bBa46KNqvDolWlqngVXKU7okxZoe6wHq8NYeCFvXTkk/exec";
+        const WEB_APP_URL = "https://script.google.com/macros/library/d/13GgaeEp_VN59yC2f8KyUHq6nICo-jNQ6JHLMKxLUG0BF7X06sffB_2hc/4";
+        let tempObjectives = [];
 
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('loginBtn');
-            const role = document.getElementById('roleSelect').value;
-            const email = document.getElementById('emailInput').value;
-            const password = document.getElementById('passInput').value;
+            const payload = {
+                action: "login",
+                role: document.getElementById('roleSelect').value,
+                email: document.getElementById('emailInput').value,
+                password: document.getElementById('passInput').value
+            };
 
             btn.disabled = true;
-            btn.innerHTML = 'Verificando... <i class="fas fa-spinner fa-spin"></i>';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
             try {
-                // LLAMADA AL APPS SCRIPT (CANDADO REAL)
-                const response = await fetch(WEB_APP_URL, {
-                    method: "POST",
-                    body: JSON.stringify({ 
-                        action: "login", 
-                        email: email, 
-                        password: password, 
-                        role: role 
-                    })
-                });
-
-                const result = await response.json();
-
-                if (result.status === "success") {
-                    // SI TODO ES CORRECTO, ENTRA
-                    enterApp(result.nombre, result.rol, result.email);
+                const resp = await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
+                const res = await resp.json();
+                if(res.status === "success") {
+                    setupApp(res);
                 } else {
-                    // SI FALLA, MUESTRA ERROR Y NO PASA
-                    alert("❌ Error: " + result.message);
-                    btn.disabled = false;
-                    btn.innerHTML = 'Entrar al Sistema';
+                    alert(res.message);
+                    btn.disabled = false; btn.innerText = "Entrar al Sistema";
                 }
-            } catch (error) {
-                console.error("Error:", error);
-                alert("Error de conexión. Verifica que el Apps Script esté publicado correctamente.");
-                btn.disabled = false;
-                btn.innerHTML = 'Entrar al Sistema';
+            } catch(e) { 
+                alert("Error de conexión"); 
+                btn.disabled = false; btn.innerText = "Entrar al Sistema";
             }
         });
 
-        function enterApp(nombre, rol, email) {
+        function setupApp(data) {
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('app').style.display = 'flex';
-            document.getElementById('userName').textContent = nombre;
-            document.getElementById('userRoleBadge').textContent = rol;
-            
-            // Guardar sesión
-            localStorage.setItem('sesion_activa', email);
-            localStorage.setItem('user_name', nombre);
-            localStorage.setItem('user_role', rol);
+            document.getElementById('userName').innerText = data.nombre;
+            localStorage.setItem('uix_user', JSON.stringify(data));
         }
 
-        function showTab(id, el) {
-            // Ocultar todas las secciones
-            document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
-            // Quitar clase activa de todos los menús
-            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active-menu'));
+        function addObjRow() {
+            const desc = document.getElementById('objDesc').value;
+            const peso = document.getElementById('objPeso').value;
+            const meta = document.getElementById('objMeta').value;
+
+            if(!desc || !peso) return alert("Completa los campos");
+
+            tempObjectives.push({ nombre: desc, peso: peso, meta: meta });
+            renderTable();
             
-            // Mostrar la seleccionada
-            document.getElementById(id).classList.remove('hidden');
+            document.getElementById('objDesc').value = "";
+            document.getElementById('objPeso').value = "";
+            document.getElementById('objMeta').value = "";
+        }
+
+        function renderTable() {
+            const body = document.getElementById('objTableBody');
+            body.innerHTML = tempObjectives.map((o, i) => `
+                <tr>
+                    <td>${o.nombre}</td>
+                    <td>${o.peso}%</td>
+                    <td>${o.meta}</td>
+                    <td><i class="fas fa-trash" style="color:#ff5555; cursor:pointer" onclick="removeObj(${i})"></i></td>
+                </tr>
+            `).join('');
+        }
+
+        function removeObj(index) {
+            tempObjectives.splice(index, 1);
+            renderTable();
+        }
+
+        async function saveToSheets() {
+            if(tempObjectives.length === 0) return alert("No hay objetivos para guardar");
+            const btn = document.getElementById('sendBtn');
+            const user = JSON.parse(localStorage.getItem('uix_user'));
+
+            btn.disabled = true; btn.innerText = "Guardando...";
+
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        action: "saveObjetivos",
+                        email: user.email,
+                        objetivos: tempObjectives
+                    })
+                });
+                alert("¡Éxito! Tus objetivos fueron registrados.");
+                tempObjectives = [];
+                renderTable();
+            } catch(e) { alert("Error al guardar"); }
+            btn.disabled = false; btn.innerText = "Guardar Objetivos en Google Sheets";
+        }
+
+        function showTab(tabId, el) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
+            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active-menu'));
+            document.getElementById(tabId).classList.remove('hidden');
             el.classList.add('active-menu');
         }
 
-        function logout() {
-            localStorage.clear();
-            location.reload();
-        }
+        function logout() { localStorage.clear(); location.reload(); }
 
-        // Al cargar la página, verificar si hay sesión guardada
         window.onload = () => {
-            const email = localStorage.getItem('sesion_activa');
-            const nombre = localStorage.getItem('user_name');
-            const rol = localStorage.getItem('user_role');
-            
-            if(email && nombre && rol) {
-                enterApp(nombre, rol, email);
-            }
+            const saved = localStorage.getItem('uix_user');
+            if(saved) setupApp(JSON.parse(saved));
         }
     </script>
 </body>
