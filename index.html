@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Desempeño | UIX Design</title>
+    <title>Desempeño | UIX Design</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -13,42 +13,42 @@
             --uix-green: #7CFF01;
             --white: #FFFFFF;
             --text-muted: #BDBDBD;
-            --card-bg: rgba(255, 255, 255, 0.05);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: var(--white); overflow: hidden; height: 100vh; }
+        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: var(--white); overflow-x: hidden; height: 100vh; }
 
-        /* LOGIN SCREEN */
+        /* PANTALLA LOGIN */
         .login-screen { position: fixed; inset: 0; background: radial-gradient(circle, var(--uix-purple-main) 0%, var(--uix-purple-dark) 100%); display: flex; align-items: center; justify-content: center; z-index: 1000; }
         .login-card { background: rgba(255,255,255,0.03); backdrop-filter: blur(15px); padding: 40px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); width: 100%; max-width: 400px; text-align: center; }
-        .brand { font-size: 2.5rem; font-weight: 700; margin-bottom: 20px; }
+        .brand { font-size: 2.5rem; font-weight: 700; margin-bottom: 30px; }
         .brand span { color: var(--uix-green); }
 
-        /* LAYOUT */
-        .app-container { display: none; height: 100vh; width: 100%; }
+        /* DASHBOARD LAYOUT */
+        .app-container { display: none; min-height: 100vh; width: 100%; }
         .sidebar { width: 260px; background: rgba(0,0,0,0.3); height: 100vh; position: fixed; padding: 30px 20px; border-right: 1px solid rgba(255,255,255,0.05); }
-        .main-content { margin-left: 260px; padding: 40px; width: calc(100% - 260px); height: 100vh; overflow-y: auto; }
+        .main-content { margin-left: 260px; padding: 40px; width: calc(100% - 260px); }
 
-        /* COMPONENTES */
-        .card { background: var(--card-bg); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
-        .btn-uix { background: var(--uix-green); color: var(--uix-purple-dark); border: none; padding: 12px 25px; border-radius: 50px; font-weight: 700; cursor: pointer; transition: 0.3s; }
-        .btn-uix:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(124, 255, 1, 0.3); }
+        /* ESTILOS DE COMPONENTES */
+        input, select { width: 100%; padding: 14px; margin: 10px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white; font-size: 1rem; }
+        select option { background: var(--uix-purple-dark); color: white; }
         
-        input, select { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; color: white; width: 100%; }
+        .btn-uix { background: var(--uix-green); color: var(--uix-purple-dark); border: none; padding: 15px; border-radius: 50px; font-weight: 700; cursor: pointer; transition: 0.3s; width: 100%; margin-top: 20px; font-size: 1rem; }
+        .btn-uix:hover { transform: scale(1.02); filter: brightness(1.1); }
+        .btn-uix:disabled { background: #4a4a4a; color: #888; cursor: not-allowed; }
         
-        /* TABLA */
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th { text-align: left; color: var(--uix-green); padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-
-        .menu-item { padding: 15px; cursor: pointer; border-radius: 12px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; color: var(--text-muted); transition: 0.3s; }
+        .menu-item { padding: 15px; cursor: pointer; border-radius: 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; transition: 0.3s; color: var(--text-muted); }
+        .menu-item:hover { background: rgba(124, 255, 1, 0.1); color: var(--uix-green); }
         .active-menu { background: var(--uix-green); color: var(--uix-purple-dark) !important; font-weight: 700; }
-        
-        .grid-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .stat-card { text-align: center; padding: 20px; background: rgba(124, 255, 1, 0.05); border: 1px solid rgba(124, 255, 1, 0.1); border-radius: 20px; }
-        .stat-card h3 { font-size: 2rem; color: var(--uix-green); }
 
+        .card { background: rgba(255,255,255,0.05); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
         .hidden { display: none; }
+        
+        h2 { margin-bottom: 20px; }
+
+        /* TABLA DE OBJETIVOS */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { text-align: left; padding: 12px; border-bottom: 1px solid var(--uix-green); color: var(--uix-green); }
+        td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); }
     </style>
 </head>
 <body>
@@ -56,6 +56,7 @@
     <div id="loginScreen" class="login-screen">
         <div class="login-card">
             <div class="brand">uix<span>.</span></div>
+            <p style="margin-bottom: 25px; color: var(--text-muted);">Acceso Desempeño 2026</p>
             <form id="loginForm">
                 <select id="roleSelect" required>
                     <option value="" disabled selected>Selecciona tu Rol</option>
@@ -64,7 +65,7 @@
                 </select>
                 <input type="email" id="emailInput" placeholder="Correo electrónico" required>
                 <input type="password" id="passInput" placeholder="Contraseña" required>
-                <button type="submit" class="btn-uix" id="loginBtn" style="width: 100%; margin-top: 20px;">Entrar al Sistema</button>
+                <button type="submit" class="btn-uix" id="loginBtn">Entrar al Sistema</button>
             </form>
         </div>
     </div>
@@ -72,63 +73,45 @@
     <div id="app" class="app-container">
         <aside class="sidebar">
             <div class="brand" style="font-size: 1.5rem; margin-bottom: 40px;">uix<span>.</span></div>
-            <div class="menu-item active-menu" id="m-dash" onclick="showTab('tab-dash', this)"><i class="fas fa-home"></i> Inicio</div>
-            <div class="menu-item" id="m-objs" onclick="showTab('tab-objs', this)"><i class="fas fa-crosshairs"></i> Mis Objetivos</div>
-            <div class="menu-item" id="m-eval" onclick="showTab('tab-eval', this)"><i class="fas fa-tasks"></i> Evaluación</div>
-            <div class="menu-item" onclick="logout()" style="margin-top: 40px; color: #ff5555;"><i class="fas fa-power-off"></i> Salir</div>
+            <div class="menu-item active-menu" id="menu-dash" onclick="showTab('tab-dash', this)"><i class="fas fa-th-large"></i> Inicio</div>
+            <div class="menu-item" id="menu-objs" onclick="showTab('tab-objs', this)"><i class="fas fa-bullseye"></i> Mis Objetivos</div>
+            <div class="menu-item" id="menu-eval" onclick="showTab('tab-eval', this)"><i class="fas fa-star"></i> Evaluación</div>
+            <div class="menu-item" onclick="logout()" style="margin-top: 50px; color: #ff4d4d;"><i class="fas fa-sign-out-alt"></i> Salir</div>
         </aside>
 
         <main class="main-content">
-            <header style="margin-bottom: 30px;">
-                <h1 id="welcomeText">Hola, <span id="userName">Cargando...</span></h1>
-                <p style="color: var(--text-muted)">Panel de Desempeño 2026</p>
-            </header>
-
             <div id="tab-dash" class="content-section">
-                <div class="grid-stats">
-                    <div class="stat-card"><h3>0</h3><p>Objetivos Totales</p></div>
-                    <div class="stat-card"><h3>0%</h3><p>Avance General</p></div>
-                    <div class="stat-card"><h3>-</h3><p>Estatus</p></div>
-                </div>
                 <div class="card">
-                    <h2>Próximos Pasos</h2>
-                    <p>Completa la definición de tus objetivos anuales antes del cierre de mes.</p>
+                    <h2 style="color: var(--uix-green);">Bienvenido, <span id="userName">Usuario</span></h2>
+                    <p style="color: var(--text-muted);">Tu rol actual es: <span id="userRoleBadge" style="color: var(--uix-green);"></span></p>
                 </div>
             </div>
 
             <div id="tab-objs" class="content-section hidden">
                 <div class="card">
-                    <h2 style="margin-bottom: 20px;">🎯 Definir Mis Objetivos</h2>
+                    <h2>🎯 Definición de Objetivos</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">Agrega tus metas y luego presiona guardar.</p>
+                    
                     <div style="display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px; align-items: end;">
-                        <div>
-                            <label style="font-size: 0.8rem; color: var(--text-muted)">Descripción</label>
-                            <input type="text" id="objDesc" placeholder="Ej. Incrementar ventas">
-                        </div>
-                        <div>
-                            <label style="font-size: 0.8rem; color: var(--text-muted)">Peso %</label>
-                            <input type="number" id="objPeso" placeholder="25">
-                        </div>
-                        <div>
-                            <label style="font-size: 0.8rem; color: var(--text-muted)">Meta</label>
-                            <input type="text" id="objMeta" placeholder="100%">
-                        </div>
-                        <button class="btn-uix" onclick="addObjRow()">+</button>
+                        <input type="text" id="objNombre" placeholder="Nombre del objetivo...">
+                        <input type="number" id="objPeso" placeholder="Peso %">
+                        <input type="text" id="objMeta" placeholder="Meta">
+                        <button class="btn-uix" onclick="agregarFila()" style="margin:0; width: 50px; height: 50px; border-radius: 12px;">+</button>
                     </div>
 
-                    <table>
+                    <table id="tablaObjetivos">
                         <thead>
                             <tr>
-                                <th>Descripción</th>
+                                <th>Objetivo</th>
                                 <th>Peso</th>
                                 <th>Meta</th>
                                 <th>Acción</th>
                             </tr>
                         </thead>
-                        <tbody id="objTableBody">
-                            </tbody>
+                        <tbody></tbody>
                     </table>
-                    
-                    <button id="sendBtn" class="btn-uix" style="margin-top: 30px; width: 100%;" onclick="saveToSheets()">
+
+                    <button class="btn-uix" id="btnGuardarTodo" onclick="guardarEnSheets()" style="display:none; margin-top:30px;">
                         Guardar Objetivos en Google Sheets
                     </button>
                 </div>
@@ -136,119 +119,139 @@
 
             <div id="tab-eval" class="content-section hidden">
                 <div class="card">
-                    <h2>📝 Evaluación de Desempeño</h2>
-                    <p>La etapa de autoevaluación se habilitará en Junio 2026.</p>
+                    <h2>📝 Autoevaluación Mes 6</h2>
+                    <p style="color: var(--text-muted);">Esta sección estará disponible en el periodo de evaluación correspondiente.</p>
                 </div>
             </div>
         </main>
     </div>
 
     <script>
-        const WEB_APP_URL = "https://script.google.com/macros/library/d/13GgaeEp_VN59yC2f8KyUHq6nICo-jNQ6JHLMKxLUG0BF7X06sffB_2hc/4";
-        let tempObjectives = [];
+        // RECUERDA USAR LA URL QUE TERMINA EN /exec
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxnqkWYo8s0tu-NKwCpGUJ0bBa46KNqvDolWlqngVXKU7okxZoe6wHq8NYeCFvXTkk/exec";
 
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        let listaObjetivos = [];
+
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = document.getElementById('loginBtn');
-            const payload = {
-                action: "login",
-                role: document.getElementById('roleSelect').value,
-                email: document.getElementById('emailInput').value,
-                password: document.getElementById('passInput').value
-            };
+            const role = document.getElementById('roleSelect').value;
+            const email = document.getElementById('emailInput').value;
+            const password = document.getElementById('passInput').value;
 
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            btn.innerHTML = 'Verificando... <i class="fas fa-spinner fa-spin"></i>';
 
             try {
-                const resp = await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
-                const res = await resp.json();
-                if(res.status === "success") {
-                    setupApp(res);
+                const response = await fetch(WEB_APP_URL, {
+                    method: "POST",
+                    body: JSON.stringify({ action: "login", email: email, password: password, role: role })
+                });
+                const result = await response.json();
+
+                if (result.status === "success") {
+                    enterApp(result.nombre, result.rol, result.email);
                 } else {
-                    alert(res.message);
-                    btn.disabled = false; btn.innerText = "Entrar al Sistema";
+                    alert("❌ Error: " + result.message);
+                    btn.disabled = false;
+                    btn.innerHTML = 'Entrar al Sistema';
                 }
-            } catch(e) { 
-                alert("Error de conexión"); 
-                btn.disabled = false; btn.innerText = "Entrar al Sistema";
+            } catch (error) {
+                alert("Error de conexión. Revisa la URL /exec del script.");
+                btn.disabled = false;
+                btn.innerHTML = 'Entrar al Sistema';
             }
         });
 
-        function setupApp(data) {
+        function enterApp(nombre, rol, email) {
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('app').style.display = 'flex';
-            document.getElementById('userName').innerText = data.nombre;
-            localStorage.setItem('uix_user', JSON.stringify(data));
+            document.getElementById('userName').textContent = nombre;
+            document.getElementById('userRoleBadge').textContent = rol;
+            localStorage.setItem('sesion_activa', email);
+            localStorage.setItem('user_name', nombre);
+            localStorage.setItem('user_role', rol);
         }
 
-        function addObjRow() {
-            const desc = document.getElementById('objDesc').value;
+        // --- LÓGICA DE LA TABLA ---
+        function agregarFila() {
+            const nombre = document.getElementById('objNombre').value;
             const peso = document.getElementById('objPeso').value;
             const meta = document.getElementById('objMeta').value;
 
-            if(!desc || !peso) return alert("Completa los campos");
+            if(!nombre || !peso) return alert("Llena al menos nombre y peso");
 
-            tempObjectives.push({ nombre: desc, peso: peso, meta: meta });
-            renderTable();
-            
-            document.getElementById('objDesc').value = "";
+            listaObjetivos.push({ nombre, peso, meta });
+            actualizarTablaUI();
+
+            document.getElementById('objNombre').value = "";
             document.getElementById('objPeso').value = "";
             document.getElementById('objMeta').value = "";
         }
 
-        function renderTable() {
-            const body = document.getElementById('objTableBody');
-            body.innerHTML = tempObjectives.map((o, i) => `
-                <tr>
-                    <td>${o.nombre}</td>
-                    <td>${o.peso}%</td>
-                    <td>${o.meta}</td>
-                    <td><i class="fas fa-trash" style="color:#ff5555; cursor:pointer" onclick="removeObj(${i})"></i></td>
-                </tr>
-            `).join('');
+        function actualizarTablaUI() {
+            const tbody = document.querySelector("#tablaObjetivos tbody");
+            tbody.innerHTML = "";
+            listaObjetivos.forEach((obj, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${obj.nombre}</td>
+                        <td>${obj.peso}%</td>
+                        <td>${obj.meta}</td>
+                        <td><i class="fas fa-trash" style="color:#ff4d4d; cursor:pointer;" onclick="eliminarFila(${index})"></i></td>
+                    </tr>
+                `;
+            });
+            document.getElementById('btnGuardarTodo').style.display = listaObjetivos.length > 0 ? "block" : "none";
         }
 
-        function removeObj(index) {
-            tempObjectives.splice(index, 1);
-            renderTable();
+        function eliminarFila(index) {
+            listaObjetivos.splice(index, 1);
+            actualizarTablaUI();
         }
 
-        async function saveToSheets() {
-            if(tempObjectives.length === 0) return alert("No hay objetivos para guardar");
-            const btn = document.getElementById('sendBtn');
-            const user = JSON.parse(localStorage.getItem('uix_user'));
+        async function guardarEnSheets() {
+            const btn = document.getElementById('btnGuardarTodo');
+            btn.disabled = true;
+            btn.innerHTML = "Guardando... <i class='fas fa-spinner fa-spin'></i>";
 
-            btn.disabled = true; btn.innerText = "Guardando...";
+            const email = localStorage.getItem('sesion_activa');
 
             try {
                 await fetch(WEB_APP_URL, {
                     method: "POST",
                     body: JSON.stringify({
                         action: "saveObjetivos",
-                        email: user.email,
-                        objetivos: tempObjectives
+                        email: email,
+                        objetivos: listaObjetivos
                     })
                 });
-                alert("¡Éxito! Tus objetivos fueron registrados.");
-                tempObjectives = [];
-                renderTable();
-            } catch(e) { alert("Error al guardar"); }
-            btn.disabled = false; btn.innerText = "Guardar Objetivos en Google Sheets";
+                alert("✅ ¡Objetivos guardados con éxito!");
+                listaObjetivos = [];
+                actualizarTablaUI();
+            } catch (error) {
+                alert("Error al guardar");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = "Guardar Objetivos en Google Sheets";
+            }
         }
 
-        function showTab(tabId, el) {
+        function showTab(id, el) {
             document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
             document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active-menu'));
-            document.getElementById(tabId).classList.remove('hidden');
+            document.getElementById(id).classList.remove('hidden');
             el.classList.add('active-menu');
         }
 
-        function logout() { localStorage.clear(); location.reload(); }
+        function logout() {
+            localStorage.clear();
+            location.reload();
+        }
 
         window.onload = () => {
-            const saved = localStorage.getItem('uix_user');
-            if(saved) setupApp(JSON.parse(saved));
+            const email = localStorage.getItem('sesion_activa');
+            if(email) enterApp(localStorage.getItem('user_name'), localStorage.getItem('user_role'), email);
         }
     </script>
 </body>
