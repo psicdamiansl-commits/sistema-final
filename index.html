@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Desempeño | UIX V3</title>
+    <title>Sistema de Desempeño | UIX V3 Corregida</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -18,29 +18,24 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: var(--white); height: 100vh; display: flex; overflow: hidden; }
 
-        /* PANTALLA LOGIN */
+        /* LOGIN */
         #loginScreen { position: fixed; inset: 0; background: radial-gradient(circle, var(--uix-purple-main) 0%, var(--uix-purple-dark) 100%); z-index: 10000; display: flex; align-items: center; justify-content: center; }
-        .login-card { background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; width: 350px; text-align: center; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); }
+        .login-card { background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; width: 360px; text-align: center; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); }
 
-        /* BARRA LATERAL (SIDEBAR) */
+        /* SIDEBAR */
         .sidebar { width: 280px; background: rgba(0,0,0,0.2); padding: 30px 20px; border-right: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; }
-        .user-profile { text-align: center; margin-bottom: 40px; }
         .user-avatar { width: 70px; height: 70px; background: var(--uix-purple-main); border-radius: 50%; margin: 0 auto 15px; border: 2px solid var(--uix-green); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; }
-        
         .nav-item { padding: 12px 15px; border-radius: 10px; margin-bottom: 8px; cursor: pointer; display: flex; align-items: center; gap: 12px; color: var(--text-muted); transition: 0.3s; font-size: 0.9rem; }
-        .nav-item:hover, .nav-item.active { background: rgba(124, 255, 1, 0.1); color: var(--uix-green); font-weight: 600; }
+        .nav-item.active { background: rgba(124, 255, 1, 0.1); color: var(--uix-green); font-weight: 600; }
 
-        /* CONTENIDO PRINCIPAL */
-        .main-container { flex-grow: 1; overflow-y: auto; background: transparent; }
+        /* MAIN CONTENT */
+        .main-container { flex-grow: 1; overflow-y: auto; }
         .top-tabs { display: flex; background: rgba(0,0,0,0.2); border-bottom: 1px solid rgba(255,255,255,0.05); position: sticky; top: 0; z-index: 100; }
-        .top-tab { padding: 20px 25px; cursor: pointer; color: var(--text-muted); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .top-tab { padding: 20px 25px; cursor: pointer; color: var(--text-muted); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; }
         .top-tab.active { color: var(--uix-green); border-bottom: 3px solid var(--uix-green); }
 
         .content-body { padding: 40px; max-width: 950px; margin: 0 auto; }
-
-        /* TARJETAS DE OBJETIVOS */
-        .obj-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid rgba(124, 255, 1, 0.2); padding-bottom: 10px; }
-        .obj-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 25px; border-radius: 15px; margin-bottom: 20px; position: relative; }
+        .obj-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 25px; border-radius: 15px; margin-bottom: 20px; }
         
         label { display: block; font-size: 0.7rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; text-transform: uppercase; }
         .req { color: var(--uix-green); margin-left: 3px; }
@@ -48,18 +43,15 @@
         input:focus { border-color: var(--uix-green); outline: none; }
 
         /* COMPETENCIAS */
-        .comp-section { margin-top: 50px; }
         .comp-card { background: rgba(124, 255, 1, 0.03); border: 1px solid rgba(124, 255, 1, 0.1); padding: 15px; border-radius: 12px; margin-bottom: 12px; display: flex; align-items: center; gap: 15px; }
         .comp-card i { color: var(--uix-green); font-size: 1.2rem; min-width: 30px; text-align: center; }
         .comp-card h4 { font-size: 0.9rem; color: var(--uix-green); margin-bottom: 3px; }
-        .comp-card p { font-size: 0.75rem; color: var(--text-muted); line-height: 1.3; }
+        .comp-card p { font-size: 0.75rem; color: var(--text-muted); }
 
         /* BOTONES */
-        .btn-main { background: var(--uix-green); color: var(--uix-purple-dark); padding: 18px 35px; border-radius: 50px; border: none; font-weight: 700; cursor: pointer; font-size: 1rem; transition: 0.3s; }
-        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 5px 20px rgba(124, 255, 1, 0.4); }
-        .btn-main:disabled { background: #4a4a4a; color: #888; cursor: not-allowed; transform: none; box-shadow: none; }
-        
-        .btn-draft { background: transparent; border: 1px solid var(--uix-green); color: var(--uix-green); padding: 15px; border-radius: 50%; width: 55px; height: 55px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .btn-main { background: var(--uix-green); color: var(--uix-purple-dark); padding: 18px; border-radius: 50px; border: none; font-weight: 700; cursor: pointer; width: 100%; margin-top: 30px; transition: 0.3s; }
+        .btn-main:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(124, 255, 1, 0.3); }
+        .btn-main:disabled { background: #4a4a4a; color: #888; cursor: not-allowed; }
 
         .hidden { display: none !important; }
     </style>
@@ -68,21 +60,22 @@
 
     <div id="loginScreen">
         <div class="login-card">
-            <h1 style="color:var(--uix-green); margin-bottom:10px;">uix<span>.</span></h1>
-            <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:25px;">Acceso Colaboradores 2026</p>
-            <form id="loginForm">
-                <input type="email" id="emailInput" placeholder="Correo Corporativo" required>
-                <input type="password" id="passInput" placeholder="Contraseña" required>
-                <button type="submit" class="btn-main" style="width:100%;" id="loginBtn">Ingresar</button>
-            </form>
+            <h1 style="color:var(--uix-green); margin-bottom:20px;">uix<span>.</span></h1>
+            <select id="roleSelect" style="margin-bottom:10px;">
+                <option value="Colaborador Externo">Colaborador Externo</option>
+                <option value="Lider/Formador">Lider/Formador</option>
+            </select>
+            <input type="email" id="emailInput" placeholder="Correo Corporativo">
+            <input type="password" id="passInput" placeholder="Contraseña">
+            <button class="btn-main" onclick="handleLogin()" id="loginBtn">Ingresar</button>
         </div>
     </div>
 
     <aside class="sidebar">
         <div class="user-profile">
             <div class="user-avatar"><i class="fas fa-user"></i></div>
-            <h3 id="uName">Usuario</h3>
-            <p id="uRole" style="font-size:0.75rem; color:var(--uix-green)">Cargando...</p>
+            <h3 id="uName">Cargando...</h3>
+            <p id="uRole" style="font-size:0.75rem; color:var(--uix-green)">Rol</p>
         </div>
         <nav style="flex-grow:1">
             <div class="nav-item"><i class="fas fa-th-large"></i> Dashboard</div>
@@ -90,7 +83,7 @@
             <div class="nav-item"><i class="fas fa-history"></i> Historial</div>
             <div class="nav-item"><i class="fas fa-bell"></i> Notificaciones</div>
         </nav>
-        <div class="nav-item" onclick="location.reload()" style="color:var(--error); margin-top:20px;"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</div>
+        <div class="nav-item" onclick="location.reload()" style="color:var(--error); margin-top:20px;"><i class="fas fa-sign-out-alt"></i> Salir</div>
     </aside>
 
     <main class="main-container">
@@ -101,172 +94,123 @@
         </div>
 
         <div class="content-body">
-            <div class="obj-header">
-                <h2>Registro de Objetivos (Máximo 5)</h2>
-                <div style="text-align:right">
-                    <p style="font-size:0.8rem; color:var(--text-muted)">Total Pesos:</p>
-                    <p style="font-size:1.5rem; color:var(--uix-green); font-weight:700;"><span id="totalPeso">0</span>%</p>
-                </div>
-            </div>
+            <h2 style="margin-bottom:20px;">Registro de Objetivos (Máximo 5)</h2>
+            <p style="margin-bottom:20px; font-size:0.9rem;">Total Pesos: <span id="totalPeso" style="color:var(--uix-green); font-weight:700;">0</span>% (Debe sumar 100%)</p>
 
             <div id="objsContainer">
                 <div class="obj-card">
-                    <h4 style="color:var(--uix-green); margin-bottom:20px;">Objetivo <span class="obj-num">1</span> <span class="req">*</span></h4>
-                    <label>Descripción del Objetivo <span class="req">*</span></label>
-                    <input type="text" class="in-nombre" placeholder="¿Qué vas a lograr este año?">
+                    <h4 style="color:var(--uix-green); margin-bottom:15px;">Objetivo <span class="num">1</span> <span class="req">*</span></h4>
+                    <label>Objetivo <span class="req">*</span></label>
+                    <input type="text" class="in-n" placeholder="Descripción del objetivo">
                     
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
-                        <div>
-                            <label>Meta Anual <span class="req">*</span></label>
-                            <input type="text" class="in-meta" placeholder="Ej: 100% de cumplimiento">
-                        </div>
-                        <div>
-                            <label>Tendencia <span class="req">*</span></label>
-                            <select class="in-tendencia">
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                        <div><label>Meta Anual <span class="req">*</span></label><input type="text" class="in-m" placeholder="Ej: 100%"></div>
+                        <div><label>Tendencia <span class="req">*</span></label>
+                            <select class="in-t">
                                 <option value="">Seleccionar...</option>
                                 <option value="Incremental">Incremental</option>
-                                <option value="Sostenible">Sostenible</option>
                                 <option value="Decremental">Decremental</option>
                             </select>
                         </div>
-                        <div>
-                            <label>Peso (%) <span class="req">*</span></label>
-                            <input type="number" class="in-peso" placeholder="20" onchange="actualizarPesos()">
-                        </div>
+                        <div><label>Peso (%) <span class="req">*</span></label><input type="number" class="in-p" placeholder="20" onchange="calc()"></div>
                         <div style="display:flex; gap:10px;">
-                            <div style="flex:1"><label>Fecha Inicio <span class="req">*</span></label><input type="date" class="in-inicio"></div>
-                            <div style="flex:1"><label>Fecha Fin <span class="req">*</span></label><input type="date" class="in-fin"></div>
+                            <div style="flex:1"><label>Fecha Inicio <span class="req">*</span></label><input type="date" class="in-i"></div>
+                            <div style="flex:1"><label>Fecha Fin <span class="req">*</span></label><input type="date" class="in-f"></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <button onclick="agregarObjetivo()" style="background:none; border:1px dashed var(--uix-green); color:var(--uix-green); padding:15px; width:100%; border-radius:12px; cursor:pointer; margin-bottom:40px; font-weight:600;">
-                <i class="fas fa-plus-circle"></i> Añadir otro objetivo
-            </button>
+            <button onclick="add()" style="background:none; border:1px dashed var(--uix-green); color:var(--uix-green); padding:12px; width:100%; border-radius:10px; cursor:pointer; font-weight:600;">+ Añadir Objetivo (Máx 5)</button>
 
-            <div class="comp-section">
-                <h3 style="color:var(--uix-green); margin-bottom:10px;">Competencias Organizacionales</h3>
-                <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:20px;">Estas competencias serán evaluadas en tu autoevaluación del 6° mes.</p>
-                
-                <div class="comp-card"><i class="fas fa-handshake"></i><div><h4>Confianza y Respeto Mutuo</h4><p>Establece relaciones basadas en la honestidad, transparencia y respeto hacia todos los colaboradores.</p></div></div>
-                <div class="comp-card"><i class="fas fa-check-circle"></i><div><h4>Ejecución Impecable</h4><p>Cumple con los compromisos adquiridos con la máxima calidad y en los tiempos establecidos.</p></div></div>
-                <div class="comp-card"><i class="fas fa-sync-alt"></i><div><h4>Mejora Continua</h4><p>Busca constantemente formas de optimizar procesos, herramientas y resultados.</p></div></div>
-                <div class="comp-card"><i class="fas fa-heart"></i><div><h4>Pasión por el Cliente</h4><p>Pone al cliente en el centro de todas sus decisiones y acciones, superando expectativas.</p></div></div>
-                <div class="comp-card"><i class="fas fa-users"></i><div><h4>Trabajo en Equipo</h4><p>Colabora activamente con otros para alcanzar objetivos comunes, valorando la diversidad.</p></div></div>
+            <div style="margin-top:40px;">
+                <h3 style="color:var(--uix-green); margin-bottom:15px;">Competencias Organizacionales</h3>
+                <div class="comp-card"><i class="fas fa-handshake"></i><div><h4>Confianza y Respeto Mutuo</h4><p>Relaciones basadas en la honestidad y transparencia.</p></div></div>
+                <div class="comp-card"><i class="fas fa-check-circle"></i><div><h4>Ejecución Impecable</h4><p>Compromisos con máxima calidad y tiempo.</p></div></div>
+                <div class="comp-card"><i class="fas fa-sync-alt"></i><div><h4>Mejora Continua</h4><p>Optimización constante de resultados.</p></div></div>
+                <div class="comp-card"><i class="fas fa-users"></i><div><h4>Pasión por el Cliente</h4><p>El cliente en el centro de las decisiones.</p></div></div>
+                <div class="comp-card"><i class="fas fa-project-diagram"></i><div><h4>Trabajo en Equipo</h4><p>Colaboración para objetivos comunes.</p></div></div>
             </div>
 
-            <div style="display:flex; gap:15px; margin-top:50px; align-items:center;">
-                <button class="btn-main" style="flex:1" onclick="enviarAlSheets()" id="btnEnviar">Enviar Objetivos al Formador</button>
-                <button class="btn-draft" title="Guardar Borrador"><i class="fas fa-save"></i></button>
-            </div>
+            <button class="btn-main" onclick="send()" id="btnSend">Enviar Objetivos al Formador</button>
         </div>
     </main>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbycywc1ygv8Ibg9Yw5U1xR6CG4EMkLRZMTQ11zZgy_6h4ohfmQ56zJnlgLti8sSFmk/exec";
-        let sessionUser = null;
+        const API = "https://script.google.com/macros/s/AKfycbwdmkMy3QXgyChcwI8mqhHWDgqy88-NfA8ETmLEr7_RrcVHRzRNuutVk/exec";
+        let user = null;
 
-        // MANEJO DE LOGIN
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
+        async function handleLogin() {
             const btn = document.getElementById('loginBtn');
-            btn.disabled = true; btn.innerText = "Verificando...";
-
-            const payload = {
-                action: "login",
-                email: document.getElementById('emailInput').value,
-                password: document.getElementById('passInput').value
-            };
-
+            btn.innerText = "Cargando...";
+            const email = document.getElementById('emailInput').value;
+            const pass = document.getElementById('passInput').value;
+            const role = document.getElementById('roleSelect').value;
+            
             try {
-                const response = await fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) });
-                const data = await response.json();
+                const res = await fetch(API, {method:"POST", body:JSON.stringify({action:"login", email, password:pass, role})});
+                const data = await res.json();
                 if(data.status === "success") {
-                    sessionUser = data;
+                    user = data;
                     document.getElementById('uName').innerText = data.nombre;
                     document.getElementById('uRole').innerText = data.rol;
                     document.getElementById('loginScreen').classList.add('hidden');
-                } else {
-                    alert("⚠️ " + data.message);
-                    btn.disabled = false; btn.innerText = "Ingresar";
-                }
-            } catch(err) {
-                alert("❌ Error de conexión con el servidor.");
-                btn.disabled = false; btn.innerText = "Ingresar";
-            }
-        });
-
-        // LÓGICA DE TABLA Y PESOS
-        function actualizarPesos() {
-            let total = 0;
-            document.querySelectorAll('.in-peso').forEach(input => total += Number(input.value || 0));
-            document.getElementById('totalPeso').innerText = total;
-            return total;
+                } else { alert("Error: " + data.message); btn.innerText = "Ingresar"; }
+            } catch(e) { alert("Error de conexión"); btn.innerText = "Ingresar"; }
         }
 
-        function agregarObjetivo() {
+        function calc() {
+            let t = 0;
+            document.querySelectorAll('.in-p').forEach(i => t += Number(i.value || 0));
+            document.getElementById('totalPeso').innerText = t;
+            return t;
+        }
+
+        function add() {
             const container = document.getElementById('objsContainer');
-            const num = container.querySelectorAll('.obj-card').length;
-            if(num >= 5) return alert("Máximo 5 objetivos permitidos.");
-            
-            const clone = container.querySelector('.obj-card').cloneNode(true);
-            clone.querySelector('.obj-num').innerText = num + 1;
+            const cards = container.querySelectorAll('.obj-card');
+            if(cards.length >= 5) return alert("Máximo 5 objetivos.");
+            const clone = cards[0].cloneNode(true);
+            clone.querySelector('.num').innerText = cards.length + 1;
             clone.querySelectorAll('input, select').forEach(i => i.value = "");
             container.appendChild(clone);
         }
 
-        // VALIDACIÓN Y ENVÍO (20260307_V3)
-        async function enviarAlSheets() {
-            // 1. Validar Peso Total
-            if(actualizarPesos() !== 100) {
-                return alert("❌ Error: La suma de los pesos debe ser exactamente 100%.");
-            }
-
-            // 2. Validar Campos Vacíos
-            let incompleto = false;
+        async function send() {
+            if(calc() !== 100) return alert("La suma de pesos debe ser exactamente 100%");
+            
+            let empty = false;
             const objs = [];
-            document.querySelectorAll('.obj-card').forEach(card => {
-                const data = {
-                    nombre: card.querySelector('.in-nombre').value,
-                    meta: card.querySelector('.in-meta').value,
-                    tendencia: card.querySelector('.in-tendencia').value,
-                    peso: card.querySelector('.in-peso').value,
-                    fechaInicio: card.querySelector('.in-inicio').value,
-                    fechaFin: card.querySelector('.in-fin').value
+            document.querySelectorAll('.obj-card').forEach(c => {
+                const o = {
+                    nombre: c.querySelector('.in-n').value,
+                    meta: c.querySelector('.in-m').value,
+                    tendencia: c.querySelector('.in-t').value,
+                    peso: c.querySelector('.in-p').value,
+                    fechaInicio: c.querySelector('.in-i').value,
+                    fechaFin: c.querySelector('.in-f').value
                 };
-                
-                if(!data.nombre || !data.meta || !data.tendencia || !data.peso || !data.fechaInicio || !data.fechaFin) {
-                    incompleto = true;
-                }
-                objs.push(data);
+                if(!o.nombre || !o.meta || !o.tendencia || !o.peso || !o.fechaInicio || !o.fechaFin) empty = true;
+                objs.push(o);
             });
 
-            if(incompleto) {
-                return alert("❌ Error: Todos los campos marcados con * son obligatorios para todos los objetivos.");
-            }
+            if(empty) return alert("❌ Error: Todos los campos con (*) son obligatorios.");
 
-            const btn = document.getElementById('btnEnviar');
-            btn.disabled = true; btn.innerText = "Enviando y Notificando al Líder...";
+            const btn = document.getElementById('btnSend');
+            btn.disabled = true; btn.innerText = "Enviando y Notificando...";
 
             try {
-                const response = await fetch(SCRIPT_URL, {
-                    method: "POST",
-                    body: JSON.stringify({
-                        action: "saveObjetivos",
-                        email: sessionUser.email,
-                        objetivos: objs
-                    })
-                });
-                const res = await response.json();
-                if(res.status === "success") {
-                    alert("✅ ¡Éxito! Objetivos guardados y correo de notificación enviado a tu Líder.");
-                    location.reload(); // Limpiar
+                const res = await fetch(API, {method:"POST", body:JSON.stringify({action:"saveObjetivos", email:user.email, objetivos:objs})});
+                const data = await res.json();
+                
+                if(data.status === "success") {
+                    alert("✅ Éxito: Objetivos guardados y correo enviado al líder.");
+                    location.reload();
+                } else {
+                    alert("⚠️ " + data.message);
+                    location.reload();
                 }
-            } catch(e) {
-                alert("❌ Error al guardar. Intenta de nuevo.");
-                btn.disabled = false; btn.innerText = "Enviar Objetivos al Formador";
-            }
+            } catch(e) { alert("Error al conectar"); btn.disabled = false; btn.innerText = "Enviar Objetivos al Formador"; }
         }
     </script>
 </body>
