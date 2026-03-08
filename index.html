@@ -54,10 +54,7 @@
     <div id="loginScreen">
         <div class="login-card">
             <h1 style="color:var(--uix-green); margin-bottom:10px;">uix<span>.</span></h1>
-            <select id="roleSelect" style="margin-bottom:10px;">
-                <option value="Colaborador Externo">Colaborador Externo</option>
-                <option value="Lider/Formador">Lider/Formador</option>
-            </select>
+            <p style="font-size: 0.8rem; margin-bottom: 20px; color: var(--text-muted);">Acceso Colaboradores 2026</p>
             <input type="email" id="emailInput" placeholder="Correo Corporativo">
             <input type="password" id="passInput" placeholder="Contraseña">
             <button class="btn-main" onclick="handleLogin()" id="loginBtn">Ingresar</button>
@@ -94,17 +91,18 @@
                 <div class="obj-card">
                     <h4 style="color:var(--uix-green); margin-bottom:15px;">Objetivo <span class="num">1</span> *</h4>
                     <label>Descripción Objetivo *</label>
-                    <input type="text" class="in-n">
+                    <input type="text" class="in-n" placeholder="Ej: Cumplir con la cuota de ventas">
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-                        <div><label>Meta Anual *</label><input type="text" class="in-m"></div>
+                        <div><label>Meta Anual *</label><input type="text" class="in-m" placeholder="Ej: 100%"></div>
                         <div><label>Tendencia *</label>
                             <select class="in-t">
                                 <option value="">Seleccionar...</option>
                                 <option value="Incremental">Incremental</option>
+                                <option value="Sostenible">Sostenible</option>
                                 <option value="Decremental">Decremental</option>
                             </select>
                         </div>
-                        <div><label>Peso (%) *</label><input type="number" class="in-p" onchange="calc()"></div>
+                        <div><label>Peso (%) *</label><input type="number" class="in-p" onchange="calc()" placeholder="Ej: 20"></div>
                         <div style="display:flex; gap:10px;">
                             <div style="flex:1"><label>Inicio *</label><input type="date" class="in-i"></div>
                             <div style="flex:1"><label>Fin *</label><input type="date" class="in-f"></div>
@@ -113,12 +111,13 @@
                 </div>
             </div>
 
-            <button onclick="add()" style="background:none; border:1px dashed var(--uix-green); color:var(--uix-green); padding:12px; width:100%; border-radius:10px; cursor:pointer;">+ Añadir Objetivo</button>
+            <button onclick="add()" style="background:none; border:1px dashed var(--uix-green); color:var(--uix-green); padding:12px; width:100%; border-radius:10px; cursor:pointer; font-family: 'Sora';">+ Añadir otro objetivo (Máx 5)</button>
 
             <div style="margin-top: 40px;">
                 <h3 style="color:var(--uix-green); margin-bottom:15px;">Competencias Organizacionales</h3>
-                <div class="comp-card"><i class="fas fa-handshake"></i><div><h4>Confianza y Respeto Mutuo</h4><p>Relaciones basadas en la honestidad.</p></div></div>
-                <div class="comp-card"><i class="fas fa-check-circle"></i><div><h4>Ejecución Impecable</h4><p>Compromisos con máxima calidad.</p></div></div>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px;">Estas competencias serán evaluadas en tu autoevaluación del 6º mes.</p>
+                <div class="comp-card"><i class="fas fa-handshake"></i><div><h4>Confianza y Respeto Mutuo</h4><p>Relaciones basadas en la honestidad y transparencia.</p></div></div>
+                <div class="comp-card"><i class="fas fa-check-circle"></i><div><h4>Ejecución Impecable</h4><p>Cumplimiento con máxima calidad y tiempo.</p></div></div>
                 <div class="comp-card"><i class="fas fa-sync-alt"></i><div><h4>Mejora Continua</h4><p>Optimización constante de procesos.</p></div></div>
             </div>
 
@@ -127,8 +126,8 @@
     </main>
 
     <script>
-        // URL ACTUALIZADA
-        const API = "https://script.google.com/macros/s/AKfycbxjaQMGiUipergpjZdRUi91oPdxprDPzSrnSE0tk5kz7IeHI71oKVY1xrKmH1KqSIo/exec";
+        // URL ACTUALIZADA SEGÚN TU ÚLTIMA IMPLEMENTACIÓN
+        const API = "https://script.google.com/macros/s/AKfycbxd1vCbXl3byT1ooOovYzlLJaoKhOyEBgft420IFHyLQo3SAOuZmGHPF6y_5MdJ-lE/exec";
         let user = null;
 
         async function handleLogin() {
@@ -136,7 +135,7 @@
             const email = document.getElementById('emailInput').value;
             const pass = document.getElementById('passInput').value;
             
-            if(!email || !pass) return alert("Ingresa tus credenciales.");
+            if(!email || !pass) return alert("Por favor, ingresa correo y contraseña.");
             
             btn.innerText = "Verificando...";
             btn.disabled = true;
@@ -154,12 +153,12 @@
                     document.getElementById('uRole').innerText = data.rol;
                     document.getElementById('loginScreen').classList.add('hidden');
                 } else {
-                    alert("Credenciales incorrectas.");
+                    alert("Error: Credenciales incorrectas.");
                     btn.innerText = "Ingresar";
                     btn.disabled = false;
                 }
             } catch(e) {
-                alert("Error de conexión con el servidor.");
+                alert("Error de conexión. Asegúrate de haber publicado el Apps Script correctamente.");
                 btn.innerText = "Ingresar";
                 btn.disabled = false;
             }
@@ -169,13 +168,15 @@
             let t = 0;
             document.querySelectorAll('.in-p').forEach(i => t += Number(i.value || 0));
             document.getElementById('totalPeso').innerText = t;
+            const span = document.getElementById('totalPeso');
+            span.style.color = (t === 100) ? "var(--uix-green)" : "var(--error)";
             return t;
         }
 
         function add() {
             const container = document.getElementById('objsContainer');
             const num = container.querySelectorAll('.obj-card').length;
-            if(num >= 5) return alert("Máximo 5 objetivos.");
+            if(num >= 5) return alert("No puedes agregar más de 5 objetivos.");
             const clone = container.querySelector('.obj-card').cloneNode(true);
             clone.querySelector('.num').innerText = num + 1;
             clone.querySelectorAll('input, select').forEach(i => i.value = "");
@@ -183,7 +184,7 @@
         }
 
         async function send() {
-            if(calc() !== 100) return alert("❌ La suma de pesos debe ser 100%");
+            if(calc() !== 100) return alert("❌ El peso total debe sumar exactamente 100%.");
             
             let empty = false;
             const objs = [];
@@ -200,7 +201,7 @@
                 objs.push(o);
             });
 
-            if(empty) return alert("❌ Completa todos los campos obligatorios (*)");
+            if(empty) return alert("❌ Por favor, completa todos los campos obligatorios (*).");
 
             const btn = document.getElementById('btnSend');
             btn.disabled = true; btn.innerText = "Enviando...";
@@ -213,14 +214,13 @@
                 const data = await res.json();
                 
                 if(data.status === "success") {
-                    alert("✅ Éxito: Objetivos guardados y correo enviado al líder.");
+                    alert("✅ ¡Objetivos enviados al Formador correctamente!");
                     location.reload();
                 } else {
-                    alert("⚠️ " + data.message);
-                    location.reload();
+                    alert("⚠️ Aviso: " + (data.message || "Error al procesar."));
                 }
             } catch(e) {
-                alert("Error al guardar.");
+                alert("Error crítico al intentar guardar.");
                 btn.disabled = false;
                 btn.innerText = "Enviar Objetivos al Formador";
             }
