@@ -3,52 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Desempeño | UIX V4 Final</title>
+    <title>uix. Sistema de Desempeño</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --uix-purple-dark: #1A0033;
-            --uix-purple-main: #2D0056;
+            --uix-purple-dark: #120129;
+            --uix-purple-card: #1d0a35;
             --uix-green: #7CFF01;
             --white: #FFFFFF;
-            --text-muted: #BDBDBD;
-            --error: #ff4d4d;
+            --text-muted: #8e82a3;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: var(--white); height: 100vh; display: flex; overflow: hidden; }
+        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: var(--white); height: 100vh; overflow: hidden; display: flex; }
 
-        /* LOGIN SCREEN */
-        #loginScreen { position: fixed; inset: 0; background: radial-gradient(circle, var(--uix-purple-main) 0%, var(--uix-purple-dark) 100%); z-index: 10000; display: flex; align-items: center; justify-content: center; }
-        .login-card { background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; width: 380px; text-align: center; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); }
+        /* LOGIN CON LISTA DESPLEGABLE */
+        #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
+        .login-card { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 25px; width: 400px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
+        .login-card h1 { color: var(--uix-green); font-size: 2.5rem; margin-bottom: 5px; }
+        .login-card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 30px; }
 
-        /* LAYOUT */
-        .sidebar { width: 280px; background: rgba(0,0,0,0.2); padding: 30px 20px; border-right: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; }
-        .main-container { flex-grow: 1; overflow-y: auto; background: var(--uix-purple-dark); }
+        input, select { 
+            width: 100%; background: #1a0830; border: 1px solid #3d2b56; padding: 15px; 
+            border-radius: 12px; color: white; margin-bottom: 15px; font-family: 'Sora'; font-size: 0.9rem;
+        }
         
-        /* ELEMENTS */
-        .user-avatar { width: 60px; height: 60px; background: var(--uix-purple-main); border-radius: 50%; margin: 0 auto 15px; border: 2px solid var(--uix-green); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
-        .nav-item { padding: 12px 15px; border-radius: 10px; margin-bottom: 8px; cursor: pointer; display: flex; align-items: center; gap: 12px; color: var(--text-muted); transition: 0.3s; }
-        .nav-item.active { background: rgba(124, 255, 1, 0.1); color: var(--uix-green); font-weight: 600; }
+        .btn-ingresar { 
+            background: var(--uix-green); color: #000; width: 100%; padding: 15px; 
+            border-radius: 30px; border: none; font-weight: 700; cursor: pointer; font-size: 1rem; margin-top: 10px;
+        }
 
-        .top-tabs { display: flex; background: rgba(0,0,0,0.2); border-bottom: 1px solid rgba(255,255,255,0.05); position: sticky; top: 0; z-index: 100; }
-        .top-tab { padding: 20px 25px; cursor: pointer; color: var(--text-muted); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; }
-        .top-tab.active { color: var(--uix-green); border-bottom: 3px solid var(--uix-green); }
+        /* SIDEBAR */
+        .sidebar { width: 260px; background: rgba(0,0,0,0.2); padding: 30px 20px; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); }
+        .nav-item { padding: 12px 15px; border-radius: 12px; margin-bottom: 5px; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; gap: 12px; transition: 0.2s; }
+        .nav-item.active { background: #26163d; color: var(--uix-green); }
 
-        .content-body { padding: 40px; max-width: 900px; margin: 0 auto; }
-        .obj-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 25px; border-radius: 15px; margin-bottom: 20px; }
-        
-        label { display: block; font-size: 0.7rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; text-transform: uppercase; }
-        input, select { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 8px; color: white; margin-bottom: 15px; font-family: 'Sora'; }
-        
-        /* COMPETENCIAS */
-        .comp-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 15px; }
-        .comp-card i { color: var(--uix-green); width: 20px; text-align: center; }
-        .comp-card h4 { font-size: 0.85rem; color: var(--white); margin-bottom: 2px; }
-        .comp-card p { font-size: 0.75rem; color: var(--text-muted); }
+        /* MAIN CONTENT */
+        .main-container { flex: 1; overflow-y: auto; padding: 40px; }
+        .header-tabs { display: flex; gap: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
+        .tab { padding-bottom: 15px; color: var(--text-muted); cursor: pointer; font-size: 0.8rem; font-weight: 600; }
+        .tab.active { color: var(--uix-green); border-bottom: 2px solid var(--uix-green); }
 
-        .btn-main { background: var(--uix-green); color: var(--uix-purple-dark); padding: 18px; border-radius: 50px; border: none; font-weight: 700; cursor: pointer; width: 100%; transition: 0.3s; }
-        .btn-main:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(124, 255, 1, 0.3); }
+        .obj-card { background: var(--uix-purple-card); padding: 25px; border-radius: 20px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.05); }
+        .comp-card { background: rgba(255,255,255,0.03); padding: 15px 20px; border-radius: 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 15px; }
+        .comp-card i { color: var(--uix-green); font-size: 1.1rem; }
+
         .hidden { display: none !important; }
     </style>
 </head>
@@ -56,120 +55,125 @@
 
     <div id="loginScreen">
         <div class="login-card">
-            <h1 style="color:var(--uix-green); margin-bottom:5px;">uix<span>.</span></h1>
-            <p style="font-size: 0.8rem; margin-bottom: 25px; color: var(--text-muted);">Acceso Colaboradores 2026</p>
+            <h1>uix<span>.</span></h1>
+            <p>Acceso Colaboradores 2026</p>
+            
+            <select id="roleInput">
+                <option value="" disabled selected>Selecciona tu Rol</option>
+                <option value="Colaborador Externo">Colaborador Externo</option>
+                <option value="Formador/Lider">Formador/Lider</option>
+            </select>
+            
             <input type="email" id="emailInput" placeholder="Correo Corporativo">
             <input type="password" id="passInput" placeholder="Contraseña">
-            <button class="btn-main" onclick="handleLogin()" id="loginBtn">Ingresar</button>
+            
+            <button class="btn-ingresar" id="loginBtn" onclick="handleLogin()">Ingresar</button>
         </div>
     </div>
 
     <aside class="sidebar">
-        <div class="user-profile" style="text-align: center; margin-bottom: 40px;">
-            <div class="user-avatar"><i class="fas fa-user"></i></div>
-            <h3 id="uName" style="font-size: 1rem;">Cargando...</h3>
-            <p id="uRole" style="font-size:0.7rem; color:var(--uix-green); text-transform: uppercase; font-weight: 700;">Rol</p>
+        <div style="text-align:center; margin-bottom:40px;">
+            <div style="width:60px; height:60px; background:#3d2b56; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center;">
+                <i class="fas fa-user"></i>
+            </div>
+            <h4 id="uName">Usuario</h4>
+            <p id="uRole" style="font-size:0.7rem; color:var(--uix-green);">Rol</p>
         </div>
-        <nav style="flex-grow:1">
-            <div class="nav-item"><i class="fas fa-th-large"></i> Dashboard</div>
-            <div class="nav-item active"><i class="fas fa-bullseye"></i> Mis Objetivos</div>
-            <div class="nav-item"><i class="fas fa-history"></i> Historial</div>
-            <div class="nav-item"><i class="fas fa-bell"></i> Notificaciones</div>
-        </nav>
-        <div class="nav-item" onclick="location.reload()" style="color:var(--error);"><i class="fas fa-sign-out-alt"></i> Salir</div>
+        <div class="nav-item"><i class="fas fa-home"></i> Inicio</div>
+        <div class="nav-item active"><i class="fas fa-bullseye"></i> Mis Objetivos</div>
+        <div class="nav-item"><i class="fas fa-star"></i> Evaluación</div>
+        <div class="nav-item" style="margin-top:auto; color:#ff4d4d;" onclick="location.reload()"><i class="fas fa-sign-out-alt"></i> Salir</div>
     </aside>
 
     <main class="main-container">
-        <div class="top-tabs">
-            <div class="top-tab active">Objetivos y Competencias</div>
-            <div class="top-tab">Autoevaluación Mes 6</div>
-            <div class="top-tab">Evaluación Final Mes 12</div>
+        <div class="header-tabs">
+            <div class="tab active">OBJETIVOS Y COMPETENCIAS</div>
+            <div class="tab">AUTOEVALUACIÓN MES 6</div>
+            <div class="tab">EVALUACIÓN FINAL MES 12</div>
         </div>
 
-        <div class="content-body">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                <h2>Registro de Objetivos (Máx 5)</h2>
-                <p>Total Pesos: <span id="totalPeso" style="color:var(--uix-green); font-weight:700; font-size: 1.2rem;">0</span>%</p>
+        <div id="view-objetivos">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h2>Registro de Objetivos (Máximo 5)</h2>
+                <div style="text-align:right;">
+                    <span style="font-size:0.8rem; color:var(--text-muted);">Total Pesos:</span><br>
+                    <span id="totalPeso" style="font-size:1.5rem; color:var(--uix-green); font-weight:700;">0%</span>
+                </div>
             </div>
 
             <div id="objsContainer">
                 <div class="obj-card">
-                    <h4 style="color:var(--uix-green); margin-bottom:15px; font-size: 0.9rem;">OBJETIVO <span class="num">1</span> *</h4>
-                    <label>Descripción del Objetivo *</label>
-                    <input type="text" class="in-n" placeholder="Ej: Cumplir con la cuota de ventas anual">
+                    <h4 style="color:var(--uix-green); margin-bottom:15px;">Objetivo 1 *</h4>
+                    <label style="font-size:0.7rem; color:var(--text-muted);">DESCRIPCIÓN DEL OBJETIVO</label>
+                    <input type="text" class="in-n" placeholder="Nombre del objetivo...">
+                    
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-                        <div><label>Meta Anual *</label><input type="text" class="in-m" placeholder="Ej: 100%"></div>
-                        <div><label>Tendencia *</label>
+                        <div><label style="font-size:0.7rem;">META ANUAL</label><input type="text" class="in-m" placeholder="Ej: 100"></div>
+                        <div><label style="font-size:0.7rem;">TENDENCIA</label>
                             <select class="in-t">
-                                <option value="">Seleccionar...</option>
                                 <option value="Incremental">Incremental</option>
                                 <option value="Sostenible">Sostenible</option>
                                 <option value="Decremental">Decremental</option>
                             </select>
                         </div>
-                        <div><label>Peso (%) *</label><input type="number" class="in-p" onchange="calc()" placeholder="0"></div>
+                        <div><label style="font-size:0.7rem;">PESO (%)</label><input type="number" class="in-p" oninput="calc()" placeholder="0"></div>
                         <div style="display:flex; gap:10px;">
-                            <div style="flex:1"><label>Inicio *</label><input type="date" class="in-i"></div>
-                            <div style="flex:1"><label>Fin *</label><input type="date" class="in-f"></div>
+                            <div style="flex:1"><label style="font-size:0.7rem;">INICIO</label><input type="date" class="in-i"></div>
+                            <div style="flex:1"><label style="font-size:0.7rem;">FIN</label><input type="date" class="in-f"></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <button onclick="add()" style="background:none; border:1px dashed var(--uix-green); color:var(--uix-green); padding:15px; width:100%; border-radius:10px; cursor:pointer; font-family: 'Sora'; margin-bottom: 40px;">+ Añadir otro objetivo</button>
+            <button onclick="add()" style="width:100%; background:none; border:1px dashed var(--uix-green); color:var(--uix-green); padding:12px; border-radius:10px; cursor:pointer; margin-bottom:30px;">+ Añadir otro objetivo (Máx 5)</button>
 
-            <div style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px;">
-                <h3 style="color:var(--uix-green); margin-bottom:15px;">Competencias Organizacionales</h3>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 20px;">Estas competencias serán evaluadas en tu autoevaluación del 6º mes.</p>
-                
-                <div class="comp-card"><i class="fas fa-handshake"></i><div><h4>Confianza y Respeto Mutuo</h4><p>Relaciones basadas en la honestidad y transparencia hacia todos los colaboradores.</p></div></div>
-                <div class="comp-card"><i class="fas fa-check-circle"></i><div><h4>Ejecución Impecable</h4><p>Cumple con los compromisos adquiridos con la máxima calidad y en los tiempos establecidos.</p></div></div>
-                <div class="comp-card"><i class="fas fa-sync-alt"></i><div><h4>Mejora Continua</h4><p>Busca constantemente formas de optimizar procesos, herramientas y resultados.</p></div></div>
-                <div class="comp-card"><i class="fas fa-heart"></i><div><h4>Pasión por el Cliente</h4><p>Pone al cliente en el centro de todas sus decisiones y acciones, superando expectativas.</p></div></div>
-                <div class="comp-card"><i class="fas fa-users"></i><div><h4>Trabajo en Equipo</h4><p>Colabora activamente con otros para alcanzar objetivos comunes, valorando la diversidad.</p></div></div>
+            <h3 style="margin-bottom:15px; color:var(--uix-green);">Competencias Organizacionales</h3>
+            <div id="competenciasList">
+                <div class="comp-card"><i class="fas fa-handshake"></i> <div><strong>Confianza y Respeto Mutuo</strong><br><small>Relaciones basadas en la honestidad y transparencia.</small></div></div>
+                <div class="comp-card"><i class="fas fa-check-circle"></i> <div><strong>Ejecución Impecable</strong><br><small>Cumplimiento con máxima calidad y tiempo.</small></div></div>
+                <div class="comp-card"><i class="fas fa-sync-alt"></i> <div><strong>Mejora Continua</strong><br><small>Optimización constante de procesos.</small></div></div>
+                <div class="comp-card"><i class="fas fa-heart"></i> <div><strong>Pasión por el Cliente</strong><br><small>El cliente en el centro de todas las acciones.</small></div></div>
+                <div class="comp-card"><i class="fas fa-users"></i> <div><strong>Trabajo en Equipo</strong><br><small>Colaboración para objetivos comunes.</small></div></div>
             </div>
 
-            <div style="margin-top: 40px;">
-                <button class="btn-main" onclick="send()" id="btnSend">Enviar Objetivos al Formador</button>
-            </div>
+            <button class="btn-ingresar" style="margin-top:30px;" onclick="send()" id="btnSend">Enviar Objetivos al Formador</button>
         </div>
     </main>
 
     <script>
-        // URL DE TU APPS SCRIPT (YA TIENE PERMISOS DE MAIL)
         const API = "https://script.google.com/macros/s/AKfycbxd1vCbXl3byT1ooOovYzlLJaoKhOyEBgft420IFHyLQo3SAOuZmGHPF6y_5MdJ-lE/exec";
         let user = null;
 
-        // LOGIN FUNCIONAL RESTAURADO
         async function handleLogin() {
             const btn = document.getElementById('loginBtn');
+            const role = document.getElementById('roleInput').value;
             const email = document.getElementById('emailInput').value;
             const pass = document.getElementById('passInput').value;
-            
-            if(!email || !pass) return alert("Por favor, ingresa correo y contraseña.");
-            
-            btn.innerText = "Verificando...";
+
+            if(!role || !email || !pass) return alert("Completa todos los campos del login.");
+
+            btn.innerText = "Validando...";
             btn.disabled = true;
 
             try {
                 const response = await fetch(API, {
                     method: "POST",
-                    body: JSON.stringify({ action: "login", email: email, password: pass })
+                    body: JSON.stringify({ action: "login", email, password: pass, role })
                 });
                 const data = await response.json();
-                
+
                 if(data.status === "success") {
                     user = data;
                     document.getElementById('uName').innerText = data.nombre;
                     document.getElementById('uRole').innerText = data.rol;
                     document.getElementById('loginScreen').classList.add('hidden');
                 } else {
-                    alert("Error: Credenciales incorrectas.");
+                    alert("Credenciales incorrectas para el rol seleccionado.");
                     btn.innerText = "Ingresar";
                     btn.disabled = false;
                 }
             } catch(e) {
-                alert("Error de conexión con el servidor.");
+                alert("Error de conexión.");
                 btn.innerText = "Ingresar";
                 btn.disabled = false;
             }
@@ -178,14 +182,56 @@
         function calc() {
             let t = 0;
             document.querySelectorAll('.in-p').forEach(i => t += Number(i.value || 0));
-            document.getElementById('totalPeso').innerText = t;
-            const span = document.getElementById('totalPeso');
-            span.style.color = (t === 100) ? "var(--uix-green)" : "var(--error)";
+            document.getElementById('totalPeso').innerText = t + "%";
+            document.getElementById('totalPeso').style.color = (t === 100) ? "#7CFF01" : "#ff4d4d";
             return t;
         }
 
         function add() {
             const container = document.getElementById('objsContainer');
-            const num = container.querySelectorAll('.obj-card').length;
-            if(num >= 5) return alert("Máximo 5 objetivos permitidos.");
+            if(container.querySelectorAll('.obj-card').length >= 5) return alert("Máximo 5 objetivos.");
             const clone = container.querySelector('.obj-card').cloneNode(true);
+            clone.querySelector('h4').innerText = `Objetivo ${container.querySelectorAll('.obj-card').length + 1} *`;
+            clone.querySelectorAll('input').forEach(i => i.value = "");
+            container.appendChild(clone);
+        }
+
+        async function send() {
+            if(calc() !== 100) return alert("El peso total debe ser exactamente 100%.");
+            
+            const btn = document.getElementById('btnSend');
+            btn.disabled = true; btn.innerText = "Enviando...";
+
+            const objetivos = [];
+            document.querySelectorAll('.obj-card').forEach(card => {
+                objetivos.push({
+                    nombre: card.querySelector('.in-n').value,
+                    meta: card.querySelector('.in-m').value,
+                    tendencia: card.querySelector('.in-t').value,
+                    peso: card.querySelector('.in-p').value,
+                    fechaInicio: card.querySelector('.in-i').value,
+                    fechaFin: card.querySelector('.in-f').value
+                });
+            });
+
+            try {
+                const res = await fetch(API, {
+                    method: "POST",
+                    body: JSON.stringify({ action: "saveObjetivos", email: user.email, objetivos })
+                });
+                const data = await res.json();
+                if(data.status === "success") {
+                    alert("✅ ¡Objetivos enviados correctamente!");
+                    location.reload();
+                } else {
+                    alert("Error: " + data.message);
+                    btn.disabled = false; btn.innerText = "Enviar Objetivos al Formador";
+                }
+            } catch(e) {
+                alert("Error al guardar.");
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
