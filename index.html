@@ -3,38 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uix. Sistema de Desempeño - GitHub Version</title>
+    <title>uix. Sistema de Desempeño - V6 GitHub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --uix-purple-dark: #0a0118; --uix-red-main: #8b0000; --uix-green: #7CFF01; --card-bg: #150a2e; }
+        :root {
+            --uix-purple-dark: #0a0118;
+            --uix-red-main: #8b0000;
+            --uix-green: #7CFF01;
+            --card-bg: #150a2e;
+            --sidebar-bg: #070111;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: white; height: 100vh; display: flex; overflow: hidden; }
 
-        /* LOGIN */
+        /* LOGIN SCREEN */
         #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
         .login-card { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 20px; width: 380px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
-        .login-card select, .login-card input { width: 100%; background: #eef2f7; border: none; padding: 15px; border-radius: 10px; margin-bottom: 15px; color: #333; font-family: 'Sora'; }
-        .btn-login { background: var(--uix-green); color: black; width: 100%; padding: 15px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; }
+        .login-card h1 { color: var(--uix-green); font-size: 2.5rem; margin-bottom: 5px; }
+        .login-card h1 span { color: white; }
+        .login-card select, .login-card input { width: 100%; background: #eef2f7; border: none; padding: 15px; border-radius: 10px; margin-bottom: 15px; font-family: 'Sora'; color: #333; }
+        .btn-login { background: var(--uix-green); color: black; width: 100%; padding: 15px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
 
         /* SIDEBAR */
-        .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); }
+        .sidebar { width: 260px; background: var(--sidebar-bg); padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); }
         .user-profile { padding: 0 25px 30px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
-        .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; color: #a094b7; font-size: 0.85rem; }
+        .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: #a094b7; font-size: 0.85rem; }
         .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
-        .btn-logout { margin-top: auto; padding: 25px; color: #ff4d4d; font-weight: 700; cursor: pointer; border-top: 1px solid rgba(255,255,255,0.05); }
+        .btn-logout { margin-top: auto; padding: 25px; color: #ff4d4d; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 10px; border-top: 1px solid rgba(255,255,255,0.05); }
 
-        /* CONTENIDO */
+        /* MAIN AREA */
         .main-container { flex: 1; overflow-y: auto; padding: 20px 40px; }
         .tab-menu { display: flex; gap: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
-        .tab-item { padding-bottom: 10px; font-size: 0.75rem; color: #888; cursor: pointer; }
+        .tab-item { padding-bottom: 10px; font-size: 0.75rem; color: #888; cursor: pointer; font-weight: 600; }
         .tab-item.active { color: var(--uix-green); border-bottom: 2px solid var(--uix-green); }
 
+        /* ALERTS & CARDS */
+        .alert-pesos { background: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.8rem; border-left: 5px solid #ffeeba; display: flex; align-items: center; gap: 10px; }
         .obj-card { background: var(--card-bg); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--uix-red-main); position: relative; }
-        .btn-remove { position: absolute; top: 15px; right: 15px; background: #d93025; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; }
+        .btn-remove { position: absolute; top: 15px; right: 15px; background: #d93025; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; font-weight: bold; }
         
         label { font-size: 0.6rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
         input, select { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 10px; border-radius: 6px; width: 100%; margin-bottom: 12px; font-family: 'Sora'; }
+
+        .comp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 15px; }
+        .comp-card { background: rgba(85, 74, 209, 0.2); padding: 12px; border-radius: 8px; font-size: 0.6rem; border-bottom: 3px solid var(--uix-red-main); }
 
         .hidden { display: none !important; }
     </style>
@@ -43,9 +56,10 @@
 
     <div id="loginScreen">
         <div class="login-card">
-            <h1 style="color:var(--uix-green); font-size:2.5rem; margin-bottom:10px;">uix<span>.</span></h1>
-            <p style="color:white; font-size:0.7rem; margin-bottom:25px; opacity:0.6;">Acceso Externo (GitHub Server)</p>
+            <h1>uix<span>.</span></h1>
+            <p style="color:white; font-size:0.7rem; margin-bottom:25px; opacity:0.6;">Acceso Externo v2026</p>
             <select id="roleInput">
+                <option value="" disabled selected>Selecciona tu Rol</option>
                 <option value="Colaborador">Colaborador Externo</option>
                 <option value="Lider">Formador/Lider</option>
             </select>
@@ -71,20 +85,25 @@
     <main class="main-container hidden" id="mainArea">
         <div class="tab-menu">
             <div class="tab-item active">Objetivos y Competencias</div>
-            <div class="tab-item">Autoevaluación Mes 6</div>
-            <div class="tab-item">Evaluación Final Mes 12</div>
+            <div class="tab-item">Autoevaluación</div>
         </div>
 
         <h2 style="font-size: 1.1rem; margin-bottom: 5px;">Registro de Objetivos (Máximo 5)</h2>
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
             <p style="font-size:0.7rem; color:#888;">Objetivos: <span id="countObj">1</span>/5</p>
-            <button onclick="agregarObjetivo()" style="background:var(--uix-green); color:black; border:none; padding:8px 15px; border-radius:5px; font-weight:bold; cursor:pointer;">+ Agregar Objetivo</button>
+            <button onclick="agregarObjetivo()" style="background:var(--uix-green); border:none; padding:8px 15px; border-radius:5px; font-weight:bold; cursor:pointer;">+ Agregar Objetivo</button>
+        </div>
+
+        <div class="alert-pesos">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div><strong>Total de pesos: 0%</strong><br>La suma debe ser exactamente 100%</div>
         </div>
 
         <div id="regContainer">
             <div class="obj-card" id="obj1">
-                <label>OBJETIVO 1 *</label>
-                <input type="text" placeholder="Nombre del objetivo">
+                <label style="color:var(--uix-green); font-size:0.8rem; margin-bottom:15px;">Objetivo 1 *</label>
+                <label>NOMBRE DEL OBJETIVO *</label>
+                <input type="text" placeholder="Ej: Cumplimiento de meta de ventas">
                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
                     <div><label>META *</label><input type="number" placeholder="0"></div>
                     <div><label>TENDENCIA *</label><select><option>Incremental</option></select></div>
@@ -93,14 +112,19 @@
             </div>
         </div>
 
-        <div style="margin-top:30px;">
-            <button style="background:var(--uix-red-main); color:white; width:100%; padding:15px; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">ENVIAR A FORMADOR</button>
+        <h3 style="color:var(--uix-red-main); font-size:0.8rem; margin-top:30px;"><i class="fas fa-star"></i> Competencias Organizacionales</h3>
+        <div class="comp-grid">
+            <div class="comp-card"><strong>Trabajo en Equipo</strong></div>
+            <div class="comp-card"><strong>Mejora Continua</strong></div>
+            <div class="comp-card"><strong>Pasión por Cliente</strong></div>
+            <div class="comp-card"><strong>Ejecución</strong></div>
+            <div class="comp-card"><strong>Confianza</strong></div>
         </div>
     </main>
 
     <script>
-        // TU URL DE APPS SCRIPT
-        const API_URL = "https://script.google.com/macros/s/AKfycbwP2Togr16eqTksGqDEaiyK2XOUJPc24fxQhMKGdEPNx9JU4qG-w9HgYyTUtcjotNI/exec";
+        // NUEVA URL PROPORCIONADA
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxsT-gMrSIk9XdMkXhjd9fDfs1JF4yQKQ0WZTBrWLGMrmWU33TCSRIdvzRdsZnlWm0/exec";
         let total = 1;
 
         async function validaAcceso() {
@@ -110,8 +134,8 @@
             const btn = document.getElementById('btnLogin');
             const msg = document.getElementById('loginMsg');
 
-            if(!email || !pass) {
-                msg.innerText = "Completa los campos.";
+            if(!email || !pass || !role) {
+                msg.innerText = "Por favor, completa todos los campos.";
                 return;
             }
 
@@ -119,19 +143,10 @@
             btn.disabled = true;
 
             try {
-                // MÉTODO FETCH PARA SERVIDOR EXTERNO (GITHUB)
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    mode: 'no-cors', // Necesario para Google Script desde fuera
-                    body: JSON.stringify({ email: email, password: pass })
-                });
-
-                // Como usamos no-cors, no podemos leer la respuesta directamente por seguridad del navegador.
-                // Sin embargo, para Apps Script y GitHub, la mejor opción es usar un proxy o cambiar el modo.
-                // Intentaremos el modo normal:
-                
-                const response2 = await fetch(API_URL + "?email=" + encodeURIComponent(email) + "&pass=" + encodeURIComponent(pass));
-                const res = await response2.json();
+                // PETICIÓN EXTERNA POR GET PARA EVITAR ERRORES DE REDIRECCIÓN
+                const fetchUrl = `${WEB_APP_URL}?email=${encodeURIComponent(email)}&password=${encodeURIComponent(pass)}`;
+                const response = await fetch(fetchUrl);
+                const res = await response.json();
 
                 if(res && res.autorizado) {
                     document.getElementById('uName').innerText = res.nombre;
@@ -140,39 +155,38 @@
                     document.getElementById('sidebar').classList.remove('hidden');
                     document.getElementById('mainArea').classList.remove('hidden');
                 } else {
-                    msg.innerText = res.mensaje || "Error de acceso.";
+                    msg.innerText = res.mensaje || "Credenciales inválidas.";
                     btn.innerText = "INGRESAR";
                     btn.disabled = false;
                 }
             } catch (error) {
-                // Si el fetch falla por CORS, intentaremos enviarlo por redirección
-                msg.innerText = "Error de conexión con el servidor de Google.";
+                console.error(error);
+                msg.innerText = "Error de conexión con el servidor.";
                 btn.innerText = "INGRESAR";
                 btn.disabled = false;
             }
         }
 
         function logout() {
-            location.reload(); // En GitHub es más seguro recargar la página
+            location.reload();
         }
 
         function agregarObjetivo() {
             if(total >= 5) return;
             total++;
-            const container = document.getElementById('regContainer');
             const card = document.createElement('div');
             card.className = 'obj-card';
             card.id = `obj${total}`;
             card.innerHTML = `
                 <button class="btn-remove" onclick="eliminarObj('${card.id}')">Eliminar</button>
-                <label>OBJETIVO ${total} *</label>
+                <label style="color:var(--uix-green); font-size:0.8rem; margin-bottom:15px;">Objetivo ${total} *</label>
                 <input type="text" placeholder="Nombre del objetivo">
                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
                     <div><label>META *</label><input type="number"></div>
                     <div><label>TENDENCIA *</label><select><option>Incremental</option></select></div>
                     <div><label>PESO *</label><input type="number"></div>
                 </div>`;
-            container.appendChild(card);
+            document.getElementById('regContainer').appendChild(card);
             document.getElementById('countObj').innerText = total;
         }
 
