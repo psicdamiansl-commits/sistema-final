@@ -22,13 +22,13 @@
         .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: #a094b7; font-size: 0.85rem; transition: 0.3s; }
         .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
 
-        /* CONTENT */
+        /* MAIN */
         .main-container { flex: 1; overflow-y: auto; padding: 20px 40px; }
         .tab-menu { display: flex; gap: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
         .tab-item { padding-bottom: 10px; font-size: 0.75rem; color: #888; cursor: pointer; }
         .tab-item.active { color: var(--uix-green); border-bottom: 2px solid var(--uix-green); }
 
-        /* ALERT PESO */
+        /* WEIGHT TRACKER */
         .weight-alert { background: rgba(255, 255, 255, 0.03); border: 1px dashed var(--uix-green); padding: 15px; border-radius: 10px; margin-bottom: 25px; }
         .weight-bar-bg { width: 100%; height: 8px; background: #222; border-radius: 4px; margin-top: 8px; overflow: hidden; }
         .weight-bar-fill { height: 100%; width: 0%; background: var(--uix-green); transition: 0.4s; }
@@ -89,7 +89,6 @@
     </aside>
 
     <main class="main-container hidden" id="mainArea">
-        
         <div id="misObjetivosSection">
             <div id="formContent">
                 <div class="tab-menu">
@@ -99,7 +98,7 @@
                 </div>
 
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                    <h2>Registro de Objetivos (Máximo 5)</h2>
+                    <h2>Registro de Objetivos</h2>
                     <button onclick="agregarObjetivo()" style="background:var(--uix-green); color:black; border:none; padding:8px 18px; border-radius:5px; font-weight:bold; cursor:pointer;">+ Agregar Objetivo</button>
                 </div>
 
@@ -145,20 +144,19 @@
             <div id="successScreen" class="hidden">
                 <i class="fas fa-rocket success-icon"></i>
                 <h2 style="color:var(--uix-green); font-size:2.2rem; margin-bottom:10px;">¡Felicidades, <span id="userNameSuccess"></span>!</h2>
-                <p style="color:#a094b7; max-width:550px; margin: 0 auto 35px; line-height:1.6;">Tus objetivos estratégicos han sido enviados con éxito. Se ha enviado una notificación automática a tu formador para su validación.</p>
-                <button onclick="location.reload()" style="background:var(--uix-red-main); color:white; border:none; padding:15px 50px; border-radius:30px; font-weight:bold; cursor:pointer; text-transform:uppercase;">Entendido</button>
+                <p style="color:#a094b7; max-width:550px; margin: 0 auto 35px; line-height:1.6;">Tus objetivos estratégicos han sido enviados con éxito.</p>
+                <button onclick="location.reload()" style="background:var(--uix-red-main); color:white; border:none; padding:15px 50px; border-radius:30px; font-weight:bold; cursor:pointer;">ENTENDIDO</button>
             </div>
         </div>
 
-        <div id="dashboardSection" class="hidden"><h2>Dashboard</h2><p>Estadísticas en tiempo real.</p></div>
-        <div id="historialSection" class="hidden"><h2>Historial</h2><p>Registros anteriores.</p></div>
-        <div id="notificacionesSection" class="hidden"><h2>Notificaciones</h2><p>Avisos del sistema.</p></div>
-
+        <div id="dashboardSection" class="hidden"><h2>Dashboard</h2></div>
+        <div id="historialSection" class="hidden"><h2>Historial</h2></div>
+        <div id="notificacionesSection" class="hidden"><h2>Notificaciones</h2></div>
     </main>
 
     <script>
-        // URL DE TU APPSCRIPT ACTUALIZADA
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwEnn0pa7OBv-VhLi2KzE8uth9MFwy5cj6Njj_FhalTYYotrDewsb7TUlawUNjowHA/exec";
+        // URL DE TU SCRIPT INTEGRADA
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbynfJcSHIhScR6pkZ0Q2KJDrZ7kUEtQDVl9JEss3ocIzvTSxdq1qfJfJ--Zl1d5r9Q/exec";
         
         let userData = {};
         let totalObj = 1;
@@ -170,8 +168,8 @@
             const btn = event.currentTarget;
             const msg = document.getElementById('loginMsg');
 
-            if(!email || !pass) { msg.innerText = "Ingresa tus datos"; return; }
-            btn.innerText = "VALIDANDO..."; btn.disabled = true;
+            if(!email || !pass) { msg.innerText = "Completa los campos"; return; }
+            btn.innerText = "VERIFICANDO..."; btn.disabled = true;
 
             google.script.run.withSuccessHandler(res => {
                 if(res.autorizado) {
@@ -202,8 +200,7 @@
                     <div><label>TENDENCIA</label><select class="obj-tendencia"><option>Incremental</option><option>Decremental</option></select></div>
                     <div><label>PESO (%)</label><input type="number" class="obj-peso" value="0" oninput="recalc()"></div>
                 </div>
-                <button onclick="this.parentElement.remove(); recalc();" style="color:#ff4d4d; border:none; background:none; cursor:pointer; font-size:0.65rem; margin-top:10px; font-weight:700;">[ ELIMINAR OBJETIVO ]</button>
-            `;
+                <button onclick="this.parentElement.remove(); recalc();" style="color:#ff4d4d; border:none; background:none; cursor:pointer; font-size:0.65rem; margin-top:10px;">[ ELIMINAR ]</button>`;
             document.getElementById('regContainer').appendChild(div);
             recalc();
         }
@@ -211,29 +208,16 @@
         function recalc() {
             let s = 0;
             document.querySelectorAll('.obj-peso').forEach(i => s += Number(i.value) || 0);
-            const bar = document.getElementById('pesoBar');
-            const txt = document.getElementById('pesoTotalTxt');
-            const msg = document.getElementById('pesoMsg');
-            const btn = document.getElementById('btnEnviar');
-
-            txt.innerText = s + '%';
-            bar.style.width = Math.min(s, 100) + '%';
-            
-            if(s === 100) {
-                bar.style.background = '#7CFF01';
-                msg.innerText = "✓ Peso completo"; msg.style.color = "#7CFF01";
-                btn.disabled = false;
-            } else {
-                bar.style.background = '#ff4d4d';
-                msg.innerText = s > 100 ? "¡Exceso de peso!" : "Falta peso";
-                msg.style.color = "#ff4d4d";
-                btn.disabled = true;
-            }
+            document.getElementById('pesoTotalTxt').innerText = s + '%';
+            document.getElementById('pesoBar').style.width = Math.min(s, 100) + '%';
+            document.getElementById('btnEnviar').disabled = (s !== 100);
+            document.getElementById('pesoMsg').innerText = s === 100 ? "✓ Listo" : "Debe sumar 100%";
+            document.getElementById('pesoMsg').style.color = s === 100 ? "#7CFF01" : "#ff4d4d";
         }
 
         function enviarObjetivos() {
             const btn = document.getElementById('btnEnviar');
-            btn.innerText = "ENVIANDO DATOS..."; btn.disabled = true;
+            btn.innerText = "ENVIANDO..."; btn.disabled = true;
 
             const goals = [];
             document.querySelectorAll('.obj-card').forEach(card => {
@@ -253,7 +237,7 @@
                     document.getElementById('successScreen').classList.remove('hidden');
                 } else {
                     alert("Error: " + res.error);
-                    btn.innerText = "ENVIAR OBJETIVOS AL FORMADOR"; btn.disabled = false;
+                    btn.innerText = "ENVIAR"; btn.disabled = false;
                 }
             }).guardarObjetivos({
                 userEmail: userData.email,
@@ -263,19 +247,11 @@
             });
         }
 
-        function switchMainTab(sectionId, element) {
-            // Ocultar todas las secciones
-            document.getElementById('misObjetivosSection').classList.add('hidden');
-            document.getElementById('dashboardSection').classList.add('hidden');
-            document.getElementById('historialSection').classList.add('hidden');
-            document.getElementById('notificacionesSection').classList.add('hidden');
-            
-            // Mostrar la seleccionada
-            document.getElementById(sectionId + 'Section').classList.remove('hidden');
-            
-            // Actualizar active en menú
+        function switchMainTab(id, el) {
+            ['dashboard','misObjetivos','historial','notificaciones'].forEach(s => document.getElementById(s+'Section').classList.add('hidden'));
+            document.getElementById(id+'Section').classList.remove('hidden');
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            element.classList.add('active');
+            el.classList.add('active');
         }
     </script>
 </body>
