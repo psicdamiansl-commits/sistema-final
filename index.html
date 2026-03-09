@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uix. Sistema de Desempeño - 20260309_V7_FINAL</title>
+    <title>uix. Sistema de Desempeño - 20260309_V7</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -11,25 +11,24 @@
             --uix-purple-dark: #0a0118;
             --uix-red-main: #8b0000;
             --uix-green: #7CFF01;
-            --white: #FFFFFF;
             --text-muted: #666;
             --bg-light: #f4f7f9;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: #333; height: 100vh; display: flex; overflow: hidden; }
 
-        /* LOGIN CON VALIDACIÓN */
+        /* LOGIN SCREEN - REFERENCIA image_30ad5d.png */
         #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; color: white; }
         .login-card { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 20px; width: 380px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
-        .login-card input { width: 100%; background: #eef2f7; border: none; padding: 15px; border-radius: 10px; margin-bottom: 15px; color: #333; }
-        .btn-login { background: var(--uix-green); color: black; width: 100%; padding: 15px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; }
+        .login-card select, .login-card input { width: 100%; background: #eef2f7; border: none; padding: 15px; border-radius: 10px; margin-bottom: 15px; color: #333; font-family: 'Sora'; }
+        .btn-login { background: var(--uix-green); color: black; width: 100%; padding: 15px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; }
 
-        /* SIDEBAR */
+        /* SIDEBAR - REFERENCIA image_30a9d4.png */
         .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); color: white; }
         .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: #a094b7; font-size: 0.85rem; }
         .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
 
-        /* CONTENT */
+        /* MAIN CONTENT - REFERENCIA image_3040fd.png */
         .main-container { flex: 1; overflow-y: auto; background: var(--bg-light); }
         .header-content { padding: 25px 40px; background: white; border-bottom: 1px solid #ddd; }
         .top-tabs { display: flex; gap: 30px; margin-top: 15px; }
@@ -37,22 +36,14 @@
         .tab-link.active { color: var(--uix-red-main); border-bottom-color: var(--uix-red-main); }
 
         .content-body { padding: 30px 40px; }
-        .alert-banner { background: #fff9db; color: #856404; padding: 12px; border-radius: 6px; margin-bottom: 20px; font-size: 0.75rem; border: 1px solid #ffe58f; }
-
-        /* CARDS */
-        .obj-card { background: white; padding: 25px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid var(--uix-red-main); box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: relative; }
+        .obj-card { background: white; padding: 25px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid var(--uix-red-main); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         label { font-size: 0.65rem; color: #777; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
         input, select, textarea { width: 100%; border: 1px solid #dce1e7; padding: 10px; border-radius: 6px; margin-bottom: 15px; font-family: 'Sora'; font-size: 0.85rem; }
 
-        /* COMPETENCIAS */
-        .comp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 20px; }
-        .comp-item { padding: 15px; border-radius: 8px; color: white; min-height: 140px; font-size: 0.65rem; }
-        .c1 { background: #5a4ca5; } .c2 { background: #5c78d6; } .c3 { background: #5e48ad; } .c4 { background: #4a54b3; } .c5 { background: #7162ad; }
-
-        /* FOOTER BUTTONS */
+        /* BOTONES PIE DE PÁGINA */
         .action-footer { display: flex; gap: 15px; margin-top: 30px; padding-bottom: 50px; }
-        .btn-send-main { background: var(--uix-red-main); color: white; flex: 1; padding: 15px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.8rem; }
-        .btn-draft { background: #6c757d; color: white; width: 180px; padding: 15px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-send-main { background: var(--uix-red-main); color: white; flex: 1; padding: 15px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.8rem; text-transform: uppercase; }
+        .btn-draft { background: #6c757d; color: white; width: 180px; padding: 15px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 8px; text-transform: uppercase; }
 
         .hidden { display: none !important; }
         .star-rating i { color: #ddd; cursor: pointer; margin-right: 3px; font-size: 1.1rem; }
@@ -64,8 +55,16 @@
     <div id="loginScreen">
         <div class="login-card">
             <h1 style="color:var(--uix-green); font-size:2.5rem; margin-bottom:20px;">uix<span>.</span></h1>
+            
+            <select id="roleInput">
+                <option value="" disabled selected>Selecciona tu Rol</option>
+                <option value="Colaborador Externo">Colaborador Externo</option>
+                <option value="Formador/Lider">Formador/Lider</option>
+            </select>
+            
             <input type="email" id="emailInput" placeholder="Correo Corporativo">
             <input type="password" id="passInput" placeholder="Contraseña">
+            
             <button onclick="validaAcceso()" id="btnLogin" class="btn-login">INGRESAR</button>
             <p id="loginMsg" style="font-size:0.7rem; margin-top:15px; color:#ff4d4d;"></p>
         </div>
@@ -73,8 +72,8 @@
 
     <aside class="sidebar">
         <div style="padding:0 25px 30px; border-bottom:1px solid rgba(255,255,255,0.05); margin-bottom:20px;">
-            <p style="color:var(--uix-green); font-size:0.6rem; font-weight:700;">Colaborador Externo</p>
-            <h5 id="userName">Cargando...</h5>
+            <p id="uDisplayRole" style="color:var(--uix-green); font-size:0.6rem; font-weight:700;">Rol</p>
+            <h5 id="uDisplayName">Usuario</h5>
         </div>
         <nav>
             <div class="nav-item"><i class="fas fa-home"></i> Dashboard</div>
@@ -99,64 +98,47 @@
         <div id="tab1-content" class="content-body">
             <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
                 <h3 style="font-size:1rem;">Registro de Objetivos (Máximo 5)</h3>
-                <button onclick="addObj()" style="background:var(--uix-green-btn); color:white; border:none; padding:8px 15px; border-radius:4px; background:#21a366; cursor:pointer; font-weight:600;">+ Agregar Objetivo</button>
+                <button onclick="addObj()" style="background:#21a366; color:white; border:none; padding:8px 15px; border-radius:4px; cursor:pointer; font-weight:600;">+ Agregar Objetivo</button>
             </div>
-            <div class="alert-banner">
-                <i class="fas fa-exclamation-triangle"></i> Total de pesos: <strong id="pesoTotal">0%</strong>. La suma de todos los pesos debe ser exactamente 100%.
-            </div>
-
+            
             <div id="regContainer"></div>
 
-            <h3 style="margin:40px 0 15px; color:var(--uix-red-main);"><i class="fas fa-star"></i> Competencias Organizacionales</h3>
-            <div class="comp-grid" id="compRegGrid"></div>
-
             <div class="action-footer">
-                <button class="btn-send-main"><i class="fas fa-paper-plane"></i> ENVIAR OBJETIVOS AL FORMADOR</button>
-                <button class="btn-draft"><i class="fas fa-save"></i> GUARDAR BORRADOR</button>
+                <button class="btn-send-main"><i class="fas fa-paper-plane"></i> Enviar Objetivos al Formador</button>
+                <button class="btn-draft"><i class="fas fa-lock"></i> Guardar Borrador</button>
             </div>
         </div>
 
         <div id="tab2-content" class="content-body hidden">
-            <div style="background:#e1f5fe; color:#01579b; padding:15px; border-radius:8px; margin-bottom:25px; font-size:0.8rem;">
-                <i class="fas fa-info-circle"></i> Evalúa tu desempeño en cada objetivo y competencias.
-            </div>
             <div id="evalContainer"></div>
-            <h3 style="color:var(--uix-red-main); margin-top:40px;">Sección B: Autoevaluación de Competencias</h3>
-            <div id="compEvalContainer"></div>
             <button class="btn-send-main" style="width:100%; margin-top:20px; padding:20px;">ENVIAR AUTOEVALUACIÓN AL FORMADOR</button>
         </div>
     </main>
 
     <script>
         let objs = [{ id: 1, nombre: '', meta: 0, tendencia: '', peso: 0, inicio: '', fin: '' }];
-        const compInfo = [
-            { t: "Confianza y Respeto Mutuo", d: "Establece relaciones basadas en la honestidad, transparencia y respeto." },
-            { t: "Ejecución Impecable", d: "Cumple compromisos con máxima calidad y en tiempos establecidos." },
-            { t: "Mejora Continua", d: "Busca optimizar procesos, herramientas y resultados." },
-            { t: "Pasión por el Cliente", d: "Pone al cliente en el centro de todas sus decisiones." },
-            { t: "Trabajo en Equipo", d: "Colabora activamente para alcanzar objetivos comunes." }
-        ];
 
-        // VALIDACIÓN REAL CONTRA APPSCRIPT
         function validaAcceso() {
+            const role = document.getElementById('roleInput').value;
             const email = document.getElementById('emailInput').value;
             const pass = document.getElementById('passInput').value;
-            const msg = document.getElementById('loginMsg');
             const btn = document.getElementById('btnLogin');
+            const msg = document.getElementById('loginMsg');
 
-            if(!email || !pass) { msg.innerText = "Completa todos los campos"; return; }
+            if(!role || !email || !pass) { msg.innerText = "Completa todos los campos"; return; }
             
             btn.innerText = "VALIDANDO...";
             btn.disabled = true;
 
-            // Esta es la llamada real al backend de Google Sheets
+            // LLAMADA REAL AL SCRIPT DE GOOGLE
             google.script.run.withSuccessHandler(res => {
-                if(res.autorizado) {
-                    document.getElementById('userName').innerText = res.nombre;
+                if(res && res.autorizado) {
+                    document.getElementById('uDisplayName').innerText = res.nombre;
+                    document.getElementById('uDisplayRole').innerText = role;
                     document.getElementById('loginScreen').classList.add('hidden');
                     renderReg();
                 } else {
-                    msg.innerText = "Credenciales incorrectas";
+                    msg.innerText = "Credenciales incorrectas o usuario no encontrado";
                     btn.innerText = "INGRESAR";
                     btn.disabled = false;
                 }
@@ -177,33 +159,21 @@
                     <label>Objetivo ${i+1}</label>
                     <input type="text" value="${o.nombre}" onchange="objs[${i}].nombre = this.value" placeholder="Nombre del objetivo">
                     <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
-                        <div><label>Meta Anual</label><input type="number" value="${o.meta}" onchange="objs[${i}].meta = this.value"></div>
+                        <div><label>Meta Anual</label><input type="number" value="${o.meta}"></div>
                         <div><label>Tendencia</label>
-                            <select onchange="objs[${i}].tendencia = this.value">
-                                <option value="" disabled ${!o.tendencia ? 'selected':''}>Seleccionar...</option>
-                                <option value="Incremental" ${o.tendencia==='Incremental'?'selected':''}>Incremental</option>
-                                <option value="Decremental" ${o.tendencia==='Decremental'?'selected':''}>Decremental</option>
+                            <select>
+                                <option value="Incremental">Incremental</option>
+                                <option value="Decremental">Decremental</option>
                             </select>
                         </div>
-                        <div><label>Peso (%)</label><input type="number" class="p-input" value="${o.peso}" onchange="objs[${i}].peso = this.value; calcPeso();"></div>
+                        <div><label>Peso (%)</label><input type="number" value="${o.peso}"></div>
                     </div>
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-                        <div><label>Fecha Inicio</label><input type="date" value="${o.inicio}" onchange="objs[${i}].inicio = this.value"></div>
-                        <div><label>Fecha Fin</label><input type="date" value="${o.fin}" onchange="objs[${i}].fin = this.value"></div>
+                        <div><label>Fecha Inicio</label><input type="date"></div>
+                        <div><label>Fecha Fin</label><input type="date"></div>
                     </div>
                 </div>
             `).join('');
-
-            document.getElementById('compRegGrid').innerHTML = compInfo.map((c, i) => `
-                <div class="comp-item c${i+1}"><strong>${c.t}</strong><p>${c.d}</p></div>
-            `).join('');
-            calcPeso();
-        }
-
-        function calcPeso() {
-            let total = 0;
-            document.querySelectorAll('.p-input').forEach(input => total += Number(input.value || 0));
-            document.getElementById('pesoTotal').innerText = total + "%";
         }
 
         function showTab(num) {
@@ -211,41 +181,6 @@
             document.getElementById('tab2-content').classList.toggle('hidden', num !== 2);
             document.getElementById('tab1-btn').classList.toggle('active', num === 1);
             document.getElementById('tab2-btn').classList.toggle('active', num === 2);
-            if(num === 2) renderEval();
-        }
-
-        function renderEval() {
-            const container = document.getElementById('evalContainer');
-            container.innerHTML = objs.map((o, i) => `
-                <div class="obj-card">
-                    <strong>${o.nombre || 'Objetivo '+(i+1)}</strong>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-top:15px;">
-                        <div><label>Avance Alcanzado</label><input type="number" oninput="calcComp(${i}, this.value, ${o.meta})"></div>
-                        <div><label>% Cumplimiento</label><input type="text" id="cp-${i}" style="background:#f8f9fa;" value="0%" readonly></div>
-                    </div>
-                    <label>Calificación (1-5)</label>
-                    <div class="star-rating">${[1,2,3,4,5].map(n => `<i class="fas fa-star" onclick="setStar(this, ${n})"></i>`).join('')}</div>
-                    <textarea placeholder="Comentarios..."></textarea>
-                </div>
-            `).join('');
-
-            document.getElementById('compEvalContainer').innerHTML = compInfo.map((c, i) => `
-                <div class="obj-card">
-                    <strong>${c.t}</strong>
-                    <div class="star-rating" style="margin:10px 0;">${[1,2,3,4,5].map(n => `<i class="fas fa-star" onclick="setStar(this, ${n})"></i>`).join('')}</div>
-                    <textarea placeholder="Comentarios sobre esta competencia..."></textarea>
-                </div>
-            `).join('');
-        }
-
-        function calcComp(i, val, meta) {
-            const perc = meta > 0 ? Math.round((val / meta) * 100) : 0;
-            document.getElementById(`cp-${i}`).value = perc + "%";
-        }
-
-        function setStar(el, n) {
-            const stars = el.parentElement.querySelectorAll('i');
-            stars.forEach((s, i) => s.classList.toggle('active', i < n));
         }
     </script>
 </body>
