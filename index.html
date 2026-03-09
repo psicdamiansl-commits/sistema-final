@@ -37,14 +37,27 @@
         .obj-card { background: var(--card-bg); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 5px solid var(--uix-red-main); position: relative; }
         label { font-size: 0.65rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
         input, select { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 12px; border-radius: 6px; width: 100%; margin-bottom: 15px; font-family: 'Sora'; }
+        
+        select option { color: white; background-color: var(--uix-purple-dark); }
 
-        /* --- MEJORA DE CONTRASTE --- */
-        /* Forzamos que el color del texto en los desplegables sea blanco para que resalte contra el fondo oscuro */
-        select option {
-            color: white; 
-            background-color: var(--uix-purple-dark); /* Aseguramos que el fondo de la lista siga siendo oscuro */
+        /* BOTÓN ELIMINAR (Nuevo estilo superior derecho) */
+        .btn-delete-obj {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 77, 77, 0.1);
+            color: #ff4d4d;
+            border: 1px solid rgba(255, 77, 77, 0.3);
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
-        /* --- FIN DE MEJORA --- */
+        .btn-delete-obj:hover { background: #ff4d4d; color: white; }
 
         /* COMPETENCIAS GRID */
         .comp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 20px; }
@@ -58,7 +71,6 @@
         .btn-send:disabled { opacity: 0.3; cursor: not-allowed; }
         .btn-draft { background: #333; color: white; border: none; padding: 18px; border-radius: 8px; width: 23%; font-weight: bold; cursor: pointer; }
 
-        /* LOGIN */
         #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
         .hidden { display: none !important; }
     </style>
@@ -132,7 +144,9 @@
                     </div>
                 </div>
 
-                <h3 style="color:#ff4d4d; font-size:0.85rem; margin:40px 0 20px;"><i class="fas fa-star"></i> Competencias Organizacionales</h3>
+                <h3 style="color:#ff4d4d; font-size:0.85rem; margin:40px 0 5px;"><i class="fas fa-star"></i> Competencias Organizacionales</h3>
+                <p style="font-size: 0.7rem; color: #888; margin-bottom: 20px;">Estas competencias serán evaluadas en tu autoevaluación del 6° mes. Por ahora solo se registran como parte de tu perfil.</p>
+                
                 <div class="comp-grid">
                     <div class="comp-card">
                         <i class="fas fa-handshake"></i>
@@ -221,6 +235,9 @@
             const div = document.createElement('div');
             div.className = 'obj-card';
             div.innerHTML = `
+                <button class="btn-delete-obj" onclick="this.parentElement.remove(); recalc();">
+                    <i class="fas fa-trash"></i> Eliminar
+                </button>
                 <label>OBJETIVO ${totalObj} *</label>
                 <input type="text" class="obj-nombre" placeholder="Nombre de la meta">
                 <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px;">
@@ -228,7 +245,10 @@
                     <div><label>TENDENCIA</label><select class="obj-tendencia"><option>Incremental</option><option>Decremental</option></select></div>
                     <div><label>PESO (%)</label><input type="number" class="obj-peso" value="0" oninput="recalc()"></div>
                 </div>
-                <button onclick="this.parentElement.remove(); recalc();" style="color:#ff4d4d; border:none; background:none; cursor:pointer; font-size:0.65rem; margin-top:10px;">[ ELIMINAR ]</button>`;
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                    <div><label>FECHA INICIO</label><input type="date" class="obj-inicio"></div>
+                    <div><label>FECHA FIN</label><input type="date" class="obj-fin"></div>
+                </div>`;
             document.getElementById('regContainer').appendChild(div);
             recalc();
         }
