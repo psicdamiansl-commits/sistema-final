@@ -16,7 +16,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: white; height: 100vh; display: flex; overflow: hidden; }
 
-        /* LOGIN SCREEN */
+        /* LOGIN */
         #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
         .login-card { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 20px; width: 380px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
         .login-card select, .login-card input { width: 100%; background: #eef2f7; border: none; padding: 15px; border-radius: 10px; margin-bottom: 15px; font-family: 'Sora'; color: #333; }
@@ -34,8 +34,13 @@
         .tab-item { padding-bottom: 10px; font-size: 0.75rem; color: #888; cursor: pointer; font-weight: 600; }
         .tab-item.active { color: var(--uix-green); border-bottom: 2px solid var(--uix-green); }
 
-        /* CARDS & ALERTS */
-        .alert-pesos { background: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.8rem; border-left: 5px solid #ffeeba; display: flex; align-items: center; gap: 10px; }
+        /* BARRA DE PESO DINÁMICA */
+        .weight-tracker { background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px dashed var(--uix-green); }
+        .weight-text { font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; display: flex; justify-content: space-between; }
+        .progress-bg { width: 100%; height: 8px; background: #333; border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; width: 0%; background: var(--uix-green); transition: width 0.3s ease; }
+
+        /* CARDS */
         .obj-card { background: var(--card-bg); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--uix-red-main); position: relative; }
         .btn-remove { position: absolute; top: 15px; right: 15px; background: #d93025; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; font-weight: bold; }
 
@@ -45,12 +50,11 @@
 
         .comp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 15px; }
         .comp-card { background: rgba(85, 74, 209, 0.2); padding: 12px; border-radius: 8px; font-size: 0.6rem; border-bottom: 3px solid var(--uix-red-main); }
-        .comp-card strong { display: block; margin-bottom: 4px; }
-        .comp-card span { opacity: 0.7; font-size: 0.55rem; }
         
         .footer-btns { display: flex; gap: 15px; margin-top: 30px; padding-bottom: 40px; }
         .btn-primary { background: var(--uix-red-main); color: white; flex: 4; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
         .btn-secondary { background: #333; color: white; flex: 1; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(1); }
 
         .hidden { display: none !important; }
     </style>
@@ -64,7 +68,7 @@
             <select id="roleInput">
                 <option value="" disabled selected>Selecciona tu Rol</option>
                 <option value="Colaborador">Colaborador</option>
-                <option value="Lider">Líder</option>
+                <option value="Líder">Líder</option>
             </select>
             <input type="email" id="emailInput" placeholder="Correo electrónico">
             <input type="password" id="passInput" placeholder="Contraseña">
@@ -100,6 +104,16 @@
             </div>
         </div>
 
+        <div class="weight-tracker">
+            <div class="weight-text">
+                <span>Sumatoria de Peso:</span>
+                <span id="pesoTotalTxt">0% / 100%</span>
+            </div>
+            <div class="progress-bg">
+                <div class="progress-fill" id="pesoBar"></div>
+            </div>
+        </div>
+
         <div id="regContainer">
             <div class="obj-card" id="obj1">
                 <label style="color:var(--uix-green); font-size:0.8rem; margin-bottom:15px;">Objetivo 1 *</label>
@@ -115,7 +129,7 @@
                             <option value="Decremental">Decremental</option>
                         </select>
                     </div>
-                    <div><label>PESO (%) *</label><input type="number" class="obj-peso" placeholder="0"></div>
+                    <div><label>PESO (%) *</label><input type="number" class="obj-peso" placeholder="0" oninput="calcularPesos()"></div>
                 </div>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
                     <div><label>FECHA INICIO *</label><input type="date" class="obj-inicio"></div>
@@ -126,11 +140,11 @@
 
         <h3 style="color:var(--uix-red-main); font-size:0.8rem; margin-top:30px;"><i class="fas fa-star"></i> Competencias Organizacionales</h3>
         <div class="comp-grid">
-            <div class="comp-card"><strong>Confianza y Respeto</strong><span>Relaciones basadas en honestidad.</span></div>
-            <div class="comp-card"><strong>Ejecución Impecable</strong><span>Cumplir compromisos con calidad.</span></div>
-            <div class="comp-card"><strong>Mejora Continua</strong><span>Optimizar procesos y resultados.</span></div>
-            <div class="comp-card"><strong>Pasión por el Cliente</strong><span>Superar expectativas del cliente.</span></div>
-            <div class="comp-card"><strong>Trabajo en Equipo</strong><span>Colaborar para metas comunes.</span></div>
+            <div class="comp-card"><strong>Confianza y Respeto</strong><span>Honestidad y transparencia.</span></div>
+            <div class="comp-card"><strong>Ejecución Impecable</strong><span>Calidad en entregas.</span></div>
+            <div class="comp-card"><strong>Mejora Continua</strong><span>Optimizar resultados.</span></div>
+            <div class="comp-card"><strong>Pasión por el Cliente</strong><span>Superar expectativas.</span></div>
+            <div class="comp-card"><strong>Trabajo en Equipo</strong><span>Colaboración mutua.</span></div>
         </div>
 
         <div class="footer-btns">
@@ -140,9 +154,7 @@
     </main>
 
     <script>
-        // NUEVA URL INTEGRADA
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxoX961b0uHWRVslHAtHr59mQspchrTS5O5p4SrfSCW3i-Xr3nPkCh1TYum-gkPpxA/exec";
-        
         let total = 1;
         let userData = {};
 
@@ -153,21 +165,15 @@
             const btn = document.getElementById('btnLogin');
             const msg = document.getElementById('loginMsg');
 
-            if(!email || !pass || !role) {
-                msg.innerText = "Por favor, completa todos los campos.";
-                return;
-            }
-
-            btn.innerText = "VALIDANDO...";
-            btn.disabled = true;
+            if(!email || !pass || !role) { msg.innerText = "Completa todos los campos."; return; }
+            btn.innerText = "VALIDANDO..."; btn.disabled = true;
 
             try {
-                // Se envía la acción 'login' para que el AppScript sepa qué hacer
                 const fetchUrl = `${WEB_APP_URL}?action=login&email=${encodeURIComponent(email)}&password=${encodeURIComponent(pass)}&role=${encodeURIComponent(role)}`;
                 const response = await fetch(fetchUrl);
                 const res = await response.json();
 
-                if(res && res.autorizado) {
+                if(res.autorizado) {
                     userData = { email: email, nombre: res.nombre, role: role };
                     document.getElementById('uName').innerText = res.nombre;
                     document.getElementById('uRole').innerText = role;
@@ -175,48 +181,68 @@
                     document.getElementById('sidebar').classList.remove('hidden');
                     document.getElementById('mainArea').classList.remove('hidden');
                 } else {
-                    msg.innerText = res.mensaje || "Credenciales o Rol inválidos.";
-                    btn.innerText = "INGRESAR";
-                    btn.disabled = false;
+                    msg.innerText = res.mensaje;
+                    btn.innerText = "INGRESAR"; btn.disabled = false;
                 }
-            } catch (error) {
-                msg.innerText = "Error de conexión con el servidor.";
-                btn.innerText = "INGRESAR";
-                btn.disabled = false;
+            } catch (e) {
+                msg.innerText = "Error de conexión.";
+                btn.innerText = "INGRESAR"; btn.disabled = false;
             }
         }
 
+        function calcularPesos() {
+            const pesos = document.querySelectorAll('.obj-peso');
+            let suma = 0;
+            pesos.forEach(p => { suma += Number(p.value) || 0; });
+
+            const txt = document.getElementById('pesoTotalTxt');
+            const bar = document.getElementById('pesoBar');
+            txt.innerText = `${suma}% / 100%`;
+            bar.style.width = `${Math.min(suma, 100)}%`;
+
+            if(suma === 100) {
+                bar.style.background = "#7CFF01";
+                txt.style.color = "#7CFF01";
+            } else {
+                bar.style.background = "#ff4d4d";
+                txt.style.color = "#ff4d4d";
+            }
+            return suma;
+        }
+
         async function enviarDatos() {
+            const sumaTotal = calcularPesos();
+            if(sumaTotal !== 100) {
+                alert("No se pueden enviar objetivos porque el peso de los objetivos debe ser igual al 100%");
+                return;
+            }
+
             const btn = document.getElementById('btnEnviar');
             const cards = document.querySelectorAll('.obj-card');
             let objetivos = [];
 
-            cards.forEach(card => {
-                objetivos.push({
+            for(let card of cards) {
+                const obj = {
                     nombre: card.querySelector('.obj-nombre').value,
                     meta: card.querySelector('.obj-meta').value,
                     tendencia: card.querySelector('.obj-tendencia').value,
                     peso: card.querySelector('.obj-peso').value,
                     inicio: card.querySelector('.obj-inicio').value,
                     fin: card.querySelector('.obj-fin').value
-                });
-            });
-
-            // Validación simple antes de enviar
-            if (objetivos.some(o => !o.nombre || !o.meta || o.tendencia === "")) {
-                alert("Por favor completa todos los campos de los objetivos.");
-                return;
+                };
+                if(!obj.nombre || !obj.meta || !obj.tendencia) {
+                    alert("Por favor completa todos los campos obligatorios.");
+                    return;
+                }
+                objetivos.push(obj);
             }
 
-            btn.innerText = "PROCESANDO...";
-            btn.disabled = true;
+            btn.innerText = "ENVIANDO..."; btn.disabled = true;
 
             try {
                 await fetch(WEB_APP_URL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    cache: 'no-cache',
-                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         action: 'saveGoals',
                         userEmail: userData.email,
@@ -226,9 +252,9 @@
                     })
                 });
                 alert("¡Éxito! Tus objetivos han sido enviados correctamente.");
-                btn.innerText = "ENVIADO CON ÉXITO";
+                btn.innerText = "ENVIADO";
             } catch (e) {
-                alert("Hubo un error al enviar los datos.");
+                alert("Error al enviar datos.");
                 btn.disabled = false;
                 btn.innerText = "ENVIAR OBJETIVOS AL FORMADOR";
             }
@@ -237,7 +263,6 @@
         function agregarObjetivo() {
             if(total >= 5) return;
             total++;
-            const container = document.getElementById('regContainer');
             const card = document.createElement('div');
             card.className = 'obj-card';
             card.id = `obj${total}`;
@@ -256,20 +281,22 @@
                             <option value="Decremental">Decremental</option>
                         </select>
                     </div>
-                    <div><label>PESO (%) *</label><input type="number" class="obj-peso" placeholder="0"></div>
+                    <div><label>PESO (%) *</label><input type="number" class="obj-peso" placeholder="0" oninput="calcularPesos()"></div>
                 </div>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
                     <div><label>FECHA INICIO *</label><input type="date" class="obj-inicio"></div>
                     <div><label>FECHA FIN *</label><input type="date" class="obj-fin"></div>
                 </div>`;
-            container.appendChild(card);
+            document.getElementById('regContainer').appendChild(card);
             document.getElementById('countObj').innerText = total;
+            calcularPesos();
         }
 
         function eliminarObj(id) {
             document.getElementById(id).remove();
             total--;
             document.getElementById('countObj').innerText = total;
+            calcularPesos();
         }
 
         function logout() { location.reload(); }
