@@ -22,13 +22,13 @@
         .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: #a094b7; font-size: 0.85rem; transition: 0.3s; }
         .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
 
-        /* MAIN */
+        /* MAIN CONTENT */
         .main-container { flex: 1; overflow-y: auto; padding: 20px 40px; }
         .tab-menu { display: flex; gap: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
         .tab-item { padding-bottom: 10px; font-size: 0.75rem; color: #888; cursor: pointer; }
         .tab-item.active { color: var(--uix-green); border-bottom: 2px solid var(--uix-green); }
 
-        /* WEIGHT TRACKER */
+        /* WEIGHT ALERT */
         .weight-alert { background: rgba(255, 255, 255, 0.03); border: 1px dashed var(--uix-green); padding: 15px; border-radius: 10px; margin-bottom: 25px; }
         .weight-bar-bg { width: 100%; height: 8px; background: #222; border-radius: 4px; margin-top: 8px; overflow: hidden; }
         .weight-bar-fill { height: 100%; width: 0%; background: var(--uix-green); transition: 0.4s; }
@@ -48,11 +48,12 @@
         .btn-send:disabled { opacity: 0.3; cursor: not-allowed; }
         .btn-draft { background: #333; color: white; border: none; padding: 18px; border-radius: 8px; width: 23%; font-weight: bold; cursor: pointer; }
 
-        /* SUCCESS SCREEN */
+        /* SUCCESS (COHETE) */
         #successScreen { text-align: center; padding: 80px 20px; }
         .success-icon { font-size: 6rem; color: var(--uix-green); margin-bottom: 25px; animation: bounce 2s infinite; }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
 
+        /* LOGIN */
         #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
         .hidden { display: none !important; }
     </style>
@@ -69,7 +70,7 @@
             </select>
             <input type="email" id="emailInput" placeholder="Correo electrónico">
             <input type="password" id="passInput" placeholder="Contraseña">
-            <button onclick="validaAcceso()" style="background:var(--uix-green); color:black; width:100%; padding:15px; border-radius:30px; border:none; font-weight:800; cursor:pointer; margin-top:10px;">INGRESAR</button>
+            <button onclick="validaAcceso()" id="btnLogin" style="background:var(--uix-green); color:black; width:100%; padding:15px; border-radius:30px; border:none; font-weight:800; cursor:pointer; margin-top:10px;">INGRESAR</button>
             <p id="loginMsg" style="color:#ff4d4d; font-size:0.75rem; margin-top:15px;"></p>
         </div>
     </div>
@@ -79,7 +80,7 @@
             <p id="uRole" style="color:var(--uix-green); font-size:0.6rem; font-weight:700;">ROL</p>
             <h5 id="uName" style="color:white; font-size:1rem;">Usuario</h5>
         </div>
-        <nav id="sideNav">
+        <nav>
             <div class="nav-item" onclick="switchMainTab('dashboard', this)"><i class="fas fa-th-large"></i> Dashboard</div>
             <div class="nav-item active" onclick="switchMainTab('misObjetivos', this)"><i class="fas fa-bullseye"></i> Mis objetivos</div>
             <div class="nav-item" onclick="switchMainTab('historial', this)"><i class="fas fa-history"></i> Historial</div>
@@ -105,7 +106,7 @@
                 <div class="weight-alert">
                     <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
                         <span>Sumatoria de Pesos: <strong id="pesoTotalTxt">0%</strong> / 100%</span>
-                        <span id="pesoMsg" style="color:#ff4d4d;">Faltan objetivos</span>
+                        <span id="pesoMsg" style="color:#ff4d4d;">Debe sumar 100%</span>
                     </div>
                     <div class="weight-bar-bg"><div id="pesoBar" class="weight-bar-fill"></div></div>
                 </div>
@@ -113,15 +114,15 @@
                 <div id="regContainer">
                     <div class="obj-card" id="obj1">
                         <label>OBJETIVO 1 *</label>
-                        <input type="text" class="obj-nombre" placeholder="Nombre del objetivo">
+                        <input type="text" class="obj-nombre" placeholder="Nombre de la meta">
                         <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
-                            <div><label>META ANUAL *</label><input type="number" class="obj-meta" value="0"></div>
-                            <div><label>TENDENCIA *</label><select class="obj-tendencia"><option>Incremental</option><option>Decremental</option></select></div>
-                            <div><label>PESO (%) *</label><input type="number" class="obj-peso" value="0" oninput="recalc()"></div>
+                            <div><label>META ANUAL</label><input type="number" class="obj-meta" value="0"></div>
+                            <div><label>TENDENCIA</label><select class="obj-tendencia"><option>Incremental</option><option>Decremental</option></select></div>
+                            <div><label>PESO (%)</label><input type="number" class="obj-peso" value="0" oninput="recalc()"></div>
                         </div>
                         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-                            <div><label>FECHA INICIO *</label><input type="date" class="obj-inicio"></div>
-                            <div><label>FECHA FIN *</label><input type="date" class="obj-fin"></div>
+                            <div><label>FECHA INICIO</label><input type="date" class="obj-inicio"></div>
+                            <div><label>FECHA FIN</label><input type="date" class="obj-fin"></div>
                         </div>
                     </div>
                 </div>
@@ -136,7 +137,7 @@
                 </div>
 
                 <div style="margin-top:40px; display:flex; justify-content:space-between;">
-                    <button id="btnEnviar" onclick="enviarObjetivos()" class="btn-send" disabled><i class="fas fa-paper-plane"></i> ENVIAR OBJETIVOS AL FORMADOR</button>
+                    <button id="btnEnviar" onclick="enviarObjetivos()" class="btn-send" disabled><i class="fas fa-paper-plane"></i> ENVIAR AL FORMADOR</button>
                     <button class="btn-draft">GUARDAR BORRADOR</button>
                 </div>
             </div>
@@ -144,7 +145,7 @@
             <div id="successScreen" class="hidden">
                 <i class="fas fa-rocket success-icon"></i>
                 <h2 style="color:var(--uix-green); font-size:2.2rem; margin-bottom:10px;">¡Felicidades, <span id="userNameSuccess"></span>!</h2>
-                <p style="color:#a094b7; max-width:550px; margin: 0 auto 35px; line-height:1.6;">Tus objetivos estratégicos han sido enviados con éxito.</p>
+                <p style="color:#a094b7; max-width:550px; margin: 0 auto 35px; line-height:1.6;">Tus objetivos han sido enviados con éxito a la base de datos.</p>
                 <button onclick="location.reload()" style="background:var(--uix-red-main); color:white; border:none; padding:15px 50px; border-radius:30px; font-weight:bold; cursor:pointer;">ENTENDIDO</button>
             </div>
         </div>
@@ -155,23 +156,27 @@
     </main>
 
     <script>
-        // URL DE TU SCRIPT INTEGRADA
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbynfJcSHIhScR6pkZ0Q2KJDrZ7kUEtQDVl9JEss3ocIzvTSxdq1qfJfJ--Zl1d5r9Q/exec";
+        // TU NUEVO URL DE PRODUCCIÓN
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbytznFP0SbTrPaE679QR9iugPOYFhgeNT-4TDvI9qSb4ZDpiYkyL5nY4noHiCkdO8I/exec";
         
         let userData = {};
         let totalObj = 1;
 
-        function validaAcceso() {
+        async function validaAcceso() {
             const email = document.getElementById('emailInput').value;
             const pass = document.getElementById('passInput').value;
             const role = document.getElementById('roleInput').value;
-            const btn = event.currentTarget;
             const msg = document.getElementById('loginMsg');
+            const btn = document.getElementById('btnLogin');
 
             if(!email || !pass) { msg.innerText = "Completa los campos"; return; }
             btn.innerText = "VERIFICANDO..."; btn.disabled = true;
 
-            google.script.run.withSuccessHandler(res => {
+            try {
+                const url = `${WEB_APP_URL}?action=login&email=${encodeURIComponent(email)}&pass=${encodeURIComponent(pass)}&role=${encodeURIComponent(role)}`;
+                const response = await fetch(url);
+                const res = await response.json();
+
                 if(res.autorizado) {
                     userData = { email, nombre: res.nombre, role };
                     document.getElementById('uName').innerText = res.nombre;
@@ -183,7 +188,10 @@
                 } else {
                     msg.innerText = res.mensaje; btn.innerText = "INGRESAR"; btn.disabled = false;
                 }
-            }).verificarUsuario(email, pass, role);
+            } catch (e) {
+                msg.innerText = "Error de conexión. Revisa el Apps Script.";
+                btn.innerText = "INGRESAR"; btn.disabled = false;
+            }
         }
 
         function agregarObjetivo() {
@@ -191,16 +199,7 @@
             totalObj++;
             const div = document.createElement('div');
             div.className = 'obj-card';
-            div.id = 'obj' + totalObj;
-            div.innerHTML = `
-                <label>OBJETIVO ${totalObj} *</label>
-                <input type="text" class="obj-nombre" placeholder="Nombre de la meta">
-                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px;">
-                    <div><label>META</label><input type="number" class="obj-meta" value="0"></div>
-                    <div><label>TENDENCIA</label><select class="obj-tendencia"><option>Incremental</option><option>Decremental</option></select></div>
-                    <div><label>PESO (%)</label><input type="number" class="obj-peso" value="0" oninput="recalc()"></div>
-                </div>
-                <button onclick="this.parentElement.remove(); recalc();" style="color:#ff4d4d; border:none; background:none; cursor:pointer; font-size:0.65rem; margin-top:10px;">[ ELIMINAR ]</button>`;
+            div.innerHTML = `<label>OBJETIVO ${totalObj} *</label><input type="text" class="obj-nombre" placeholder="Nombre de la meta"><div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px;"><div><label>META</label><input type="number" class="obj-meta" value="0"></div><div><label>TENDENCIA</label><select class="obj-tendencia"><option>Incremental</option><option>Decremental</option></select></div><div><label>PESO (%)</label><input type="number" class="obj-peso" value="0" oninput="recalc()"></div></div><button onclick="this.parentElement.remove(); recalc();" style="color:#ff4d4d; border:none; background:none; cursor:pointer; font-size:0.65rem; margin-top:10px;">[ ELIMINAR ]</button>`;
             document.getElementById('regContainer').appendChild(div);
             recalc();
         }
@@ -215,7 +214,7 @@
             document.getElementById('pesoMsg').style.color = s === 100 ? "#7CFF01" : "#ff4d4d";
         }
 
-        function enviarObjetivos() {
+        async function enviarObjetivos() {
             const btn = document.getElementById('btnEnviar');
             btn.innerText = "ENVIANDO..."; btn.disabled = true;
 
@@ -231,24 +230,32 @@
                 });
             });
 
-            google.script.run.withSuccessHandler(res => {
-                if(res.exito) {
-                    document.getElementById('formContent').classList.add('hidden');
-                    document.getElementById('successScreen').classList.remove('hidden');
-                } else {
-                    alert("Error: " + res.error);
-                    btn.innerText = "ENVIAR"; btn.disabled = false;
-                }
-            }).guardarObjetivos({
-                userEmail: userData.email,
-                userName: userData.nombre,
-                userRole: userData.role,
-                goals: goals
-            });
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify({
+                        action: "guardar",
+                        userEmail: userData.email,
+                        userName: userData.nombre,
+                        userRole: userData.role,
+                        goals: goals
+                    })
+                });
+                // Como es no-cors no leemos respuesta, si no falla el fetch, pasamos al éxito
+                document.getElementById('formContent').classList.add('hidden');
+                document.getElementById('successScreen').classList.remove('hidden');
+            } catch (e) {
+                alert("Error de red."); btn.innerText = "ENVIAR AL FORMADOR"; btn.disabled = false;
+            }
         }
 
         function switchMainTab(id, el) {
-            ['dashboard','misObjetivos','historial','notificaciones'].forEach(s => document.getElementById(s+'Section').classList.add('hidden'));
+            ['dashboard','misObjetivos','historial','notificaciones'].forEach(s => {
+                const sec = document.getElementById(s+'Section');
+                if(sec) sec.classList.add('hidden');
+            });
             document.getElementById(id+'Section').classList.remove('hidden');
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             el.classList.add('active');
