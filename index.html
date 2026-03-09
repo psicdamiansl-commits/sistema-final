@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uix. Sistema de Desempeño - V6 Final</title>
+    <title>uix. Sistema de Desempeño - 20260903_V7</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -16,7 +16,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: white; height: 100vh; display: flex; overflow: hidden; }
 
-        /* LOGIN SCREEN (Basado en tu imagen image_f49e51.png) */
+        /* LOGIN SCREEN */
         #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
         .login-card { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 20px; width: 380px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
         .login-card select, .login-card input { width: 100%; background: #eef2f7; border: none; padding: 15px; border-radius: 10px; margin-bottom: 15px; font-family: 'Sora'; color: #333; }
@@ -34,7 +34,7 @@
         .tab-item { padding-bottom: 10px; font-size: 0.75rem; color: #888; cursor: pointer; font-weight: 600; }
         .tab-item.active { color: var(--uix-green); border-bottom: 2px solid var(--uix-green); }
 
-        /* CARDS & ALERTS (Basado en image_f4bfc0.png) */
+        /* CARDS & ALERTS */
         .alert-pesos { background: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.8rem; border-left: 5px solid #ffeeba; display: flex; align-items: center; gap: 10px; }
         .obj-card { background: var(--card-bg); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--uix-red-main); position: relative; }
         .btn-remove { position: absolute; top: 15px; right: 15px; background: #d93025; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; font-weight: bold; }
@@ -42,7 +42,7 @@
         label { font-size: 0.6rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
         input, select { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 10px; border-radius: 6px; width: 100%; margin-bottom: 12px; font-family: 'Sora'; }
 
-        /* COMPETENCIAS (Basado en image_f51214.png) */
+        /* COMPETENCIAS */
         .comp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 15px; }
         .comp-card { background: rgba(85, 74, 209, 0.2); padding: 12px; border-radius: 8px; font-size: 0.6rem; border-bottom: 3px solid var(--uix-red-main); }
         .comp-card strong { display: block; margin-bottom: 4px; }
@@ -116,7 +116,14 @@
                 <input type="text" placeholder="Nombre del objetivo">
                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
                     <div><label>META ANUAL *</label><input type="number" placeholder="0"></div>
-                    <div><label>TENDENCIA *</label><select><option>Seleccionar...</option><option>Incremental</option></select></div>
+                    <div>
+                        <label>TENDENCIA *</label>
+                        <select>
+                            <option value="" disabled selected>Seleccionar...</option>
+                            <option value="Incremental">1. Incremental</option>
+                            <option value="Decremental">2. Decremental</option>
+                        </select>
+                    </div>
                     <div><label>PESO (%) *</label><input type="number" placeholder="0"></div>
                 </div>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
@@ -199,7 +206,14 @@
                 <input type="text" placeholder="Nombre del objetivo">
                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
                     <div><label>META ANUAL *</label><input type="number" placeholder="0"></div>
-                    <div><label>TENDENCIA *</label><select><option>Seleccionar...</option><option>Incremental</option></select></div>
+                    <div>
+                        <label>TENDENCIA *</label>
+                        <select>
+                            <option value="" disabled selected>Seleccionar...</option>
+                            <option value="Incremental">1. Incremental</option>
+                            <option value="Decremental">2. Decremental</option>
+                        </select>
+                    </div>
                     <div><label>PESO (%) *</label><input type="number" placeholder="0"></div>
                 </div>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
