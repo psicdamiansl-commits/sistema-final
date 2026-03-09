@@ -12,6 +12,7 @@
             --uix-red-main: #8b0000;
             --uix-green: #7CFF01;
             --card-bg: #150a2e;
+            /* Degradado morado fiel a la captura de competencias */
             --grad-comp: linear-gradient(135deg, #6a5af9 0%, #4d3df2 100%);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -38,20 +39,17 @@
         label { font-size: 0.65rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
         input, select { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 12px; border-radius: 6px; width: 100%; margin-bottom: 15px; font-family: 'Sora'; }
 
-        /* COMPETENCIAS */
+        /* COMPETENCIAS GRID */
         .comp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 20px; }
-        .comp-card { background: var(--grad-comp); padding: 15px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .comp-card h4 { font-size: 0.75rem; margin-bottom: 5px; display: flex; align-items: center; gap: 6px; }
-        .comp-card p { font-size: 0.58rem; opacity: 0.9; line-height: 1.3; }
+        .comp-card { background: var(--grad-comp); padding: 15px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: 0.3s; }
+        .comp-card:hover { transform: translateY(-5px); }
+        .comp-card i { font-size: 1.2rem; margin-bottom: 10px; display: block; }
+        .comp-card h4 { font-size: 0.7rem; margin-bottom: 8px; font-weight: 700; }
+        .comp-card p { font-size: 0.55rem; opacity: 0.9; line-height: 1.4; }
 
         .btn-send { background: var(--uix-red-main); color: white; border: none; padding: 18px; border-radius: 8px; width: 75%; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .btn-send:disabled { opacity: 0.3; cursor: not-allowed; }
         .btn-draft { background: #333; color: white; border: none; padding: 18px; border-radius: 8px; width: 23%; font-weight: bold; cursor: pointer; }
-
-        /* SUCCESS (COHETE) */
-        #successScreen { text-align: center; padding: 80px 20px; }
-        .success-icon { font-size: 6rem; color: var(--uix-green); margin-bottom: 25px; animation: bounce 2s infinite; }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
 
         /* LOGIN */
         #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
@@ -129,11 +127,31 @@
 
                 <h3 style="color:#ff4d4d; font-size:0.85rem; margin:40px 0 20px;"><i class="fas fa-star"></i> Competencias Organizacionales</h3>
                 <div class="comp-grid">
-                    <div class="comp-card"><i class="fas fa-handshake"></i><h4>Confianza y Respeto</h4><p>Establece relaciones basadas en la honestidad y transparencia.</p></div>
-                    <div class="comp-card"><i class="fas fa-check-double"></i><h4>Ejecución Impecable</h4><p>Cumple compromisos con la máxima calidad y tiempos.</p></div>
-                    <div class="comp-card"><i class="fas fa-chart-line"></i><h4>Mejora Continua</h4><p>Busca optimizar procesos, herramientas y resultados.</p></div>
-                    <div class="comp-card"><i class="fas fa-heart"></i><h4>Pasión por el Cliente</h4><p>Supera expectativas poniendo al cliente en el centro.</p></div>
-                    <div class="comp-card"><i class="fas fa-users"></i><h4>Trabajo en Equipo</h4><p>Colabora activamente para alcanzar objetivos comunes.</p></div>
+                    <div class="comp-card">
+                        <i class="fas fa-handshake"></i>
+                        <h4>Confianza y Respeto Mutuo</h4>
+                        <p>Establece relaciones basadas en la honestidad, transparencia y respeto.</p>
+                    </div>
+                    <div class="comp-card">
+                        <i class="fas fa-check-double"></i>
+                        <h4>Ejecución Impecable</h4>
+                        <p>Cumple compromisos con la máxima calidad y en los tiempos establecidos.</p>
+                    </div>
+                    <div class="comp-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Mejora Continua</h4>
+                        <p>Busca constantemente optimizar procesos, herramientas y resultados.</p>
+                    </div>
+                    <div class="comp-card">
+                        <i class="fas fa-heart"></i>
+                        <h4>Pasión por el Cliente</h4>
+                        <p>Pone al cliente en el centro de todas sus decisiones y acciones.</p>
+                    </div>
+                    <div class="comp-card">
+                        <i class="fas fa-users"></i>
+                        <h4>Trabajo en Equipo</h4>
+                        <p>Colabora activamente para alcanzar objetivos comunes, valorando la diversidad.</p>
+                    </div>
                 </div>
 
                 <div style="margin-top:40px; display:flex; justify-content:space-between;">
@@ -142,22 +160,18 @@
                 </div>
             </div>
 
-            <div id="successScreen" class="hidden">
-                <i class="fas fa-rocket success-icon"></i>
+            <div id="successScreen" class="hidden" style="text-align:center; padding:80px 0;">
+                <i class="fas fa-rocket" style="font-size: 6rem; color: var(--uix-green); margin-bottom: 25px;"></i>
                 <h2 style="color:var(--uix-green); font-size:2.2rem; margin-bottom:10px;">¡Felicidades, <span id="userNameSuccess"></span>!</h2>
-                <p style="color:#a094b7; max-width:550px; margin: 0 auto 35px; line-height:1.6;">Tus objetivos han sido enviados con éxito a la base de datos.</p>
-                <button onclick="location.reload()" style="background:var(--uix-red-main); color:white; border:none; padding:15px 50px; border-radius:30px; font-weight:bold; cursor:pointer;">ENTENDIDO</button>
+                <p>Tus objetivos han sido enviados con éxito.</p>
+                <button onclick="location.reload()" style="background:var(--uix-red-main); color:white; border:none; padding:15px 50px; border-radius:30px; margin-top:30px; cursor:pointer;">ENTENDIDO</button>
             </div>
         </div>
-
-        <div id="dashboardSection" class="hidden"><h2>Dashboard</h2></div>
-        <div id="historialSection" class="hidden"><h2>Historial</h2></div>
-        <div id="notificacionesSection" class="hidden"><h2>Notificaciones</h2></div>
     </main>
 
     <script>
-        // TU NUEVO URL DE PRODUCCIÓN
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbytznFP0SbTrPaE679QR9iugPOYFhgeNT-4TDvI9qSb4ZDpiYkyL5nY4noHiCkdO8I/exec";
+        // NUEVA URL INTEGRADA
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxj3FoyZjxYBYNK7XgLrGzCOp02hHBBQKsJZjXufqBvT2Tm0W3Ktu66E-z3neiTtP4/exec";
         
         let userData = {};
         let totalObj = 1;
@@ -173,6 +187,7 @@
             btn.innerText = "VERIFICANDO..."; btn.disabled = true;
 
             try {
+                // LLAMADA GET AL SCRIPT
                 const url = `${WEB_APP_URL}?action=login&email=${encodeURIComponent(email)}&pass=${encodeURIComponent(pass)}&role=${encodeURIComponent(role)}`;
                 const response = await fetch(url);
                 const res = await response.json();
@@ -189,7 +204,8 @@
                     msg.innerText = res.mensaje; btn.innerText = "INGRESAR"; btn.disabled = false;
                 }
             } catch (e) {
-                msg.innerText = "Error de conexión. Revisa el Apps Script.";
+                console.error(e);
+                msg.innerText = "Error de conexión con Google Sheets.";
                 btn.innerText = "INGRESAR"; btn.disabled = false;
             }
         }
@@ -199,7 +215,15 @@
             totalObj++;
             const div = document.createElement('div');
             div.className = 'obj-card';
-            div.innerHTML = `<label>OBJETIVO ${totalObj} *</label><input type="text" class="obj-nombre" placeholder="Nombre de la meta"><div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px;"><div><label>META</label><input type="number" class="obj-meta" value="0"></div><div><label>TENDENCIA</label><select class="obj-tendencia"><option>Incremental</option><option>Decremental</option></select></div><div><label>PESO (%)</label><input type="number" class="obj-peso" value="0" oninput="recalc()"></div></div><button onclick="this.parentElement.remove(); recalc();" style="color:#ff4d4d; border:none; background:none; cursor:pointer; font-size:0.65rem; margin-top:10px;">[ ELIMINAR ]</button>`;
+            div.innerHTML = `
+                <label>OBJETIVO ${totalObj} *</label>
+                <input type="text" class="obj-nombre" placeholder="Nombre de la meta">
+                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px;">
+                    <div><label>META</label><input type="number" class="obj-meta" value="0"></div>
+                    <div><label>TENDENCIA</label><select class="obj-tendencia"><option>Incremental</option><option>Decremental</option></select></div>
+                    <div><label>PESO (%)</label><input type="number" class="obj-peso" value="0" oninput="recalc()"></div>
+                </div>
+                <button onclick="this.parentElement.remove(); recalc();" style="color:#ff4d4d; border:none; background:none; cursor:pointer; font-size:0.65rem; margin-top:10px;">[ ELIMINAR ]</button>`;
             document.getElementById('regContainer').appendChild(div);
             recalc();
         }
@@ -243,11 +267,10 @@
                         goals: goals
                     })
                 });
-                // Como es no-cors no leemos respuesta, si no falla el fetch, pasamos al éxito
                 document.getElementById('formContent').classList.add('hidden');
                 document.getElementById('successScreen').classList.remove('hidden');
             } catch (e) {
-                alert("Error de red."); btn.innerText = "ENVIAR AL FORMADOR"; btn.disabled = false;
+                alert("Error al enviar."); btn.innerText = "ENVIAR AL FORMADOR"; btn.disabled = false;
             }
         }
 
