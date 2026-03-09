@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uix. Sistema de Desempeño - 20260309_V7_FIX</title>
+    <title>uix. Sistema de Desempeño - V7 Final</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -12,33 +12,35 @@
             --uix-red-main: #8b0000;
             --uix-green: #7CFF01;
             --bg-light: #f4f7f9;
+            --card-bg: #150a2e;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); height: 100vh; display: flex; overflow: hidden; }
+        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: white; height: 100vh; display: flex; overflow: hidden; }
 
         /* LOGIN SCREEN */
         #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
         .login-card { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 20px; width: 380px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
-        .login-card select, .login-card input { width: 100%; background: #eef2f7; border: none; padding: 15px; border-radius: 10px; margin-bottom: 15px; font-family: 'Sora'; font-size: 0.9rem; color: #333; }
-        .btn-login { background: var(--uix-green); color: black; width: 100%; padding: 15px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; }
-        
+        .login-card select, .login-card input { width: 100%; background: #eef2f7; border: none; padding: 15px; border-radius: 10px; margin-bottom: 15px; font-family: 'Sora'; color: #333; }
+        .btn-login { background: var(--uix-green); color: black; width: 100%; padding: 15px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        #loginMsg { font-size: 0.75rem; margin-top: 15px; color: #ff4d4d; font-weight: 600; }
+
         /* SIDEBAR */
-        .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); color: white; }
+        .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); }
         .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: #a094b7; font-size: 0.85rem; }
         .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
 
-        /* MAIN CONTENT */
-        .main-container { flex: 1; overflow-y: auto; background: var(--bg-light); color: #333; }
-        .header-content { padding: 25px 40px; background: white; border-bottom: 1px solid #ddd; }
-        .content-body { padding: 30px 40px; }
-        .obj-card { background: white; padding: 25px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid var(--uix-red-main); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        /* MAIN */
+        .main-container { flex: 1; overflow-y: auto; background: var(--uix-purple-dark); padding: 40px; }
+        .header-content { margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px; }
         
-        .action-footer { display: flex; gap: 15px; margin-top: 30px; padding-bottom: 50px; }
-        .btn-send { background: var(--uix-red-main); color: white; flex: 1; padding: 15px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
-        .btn-draft { background: #95a5a6; color: white; width: 180px; padding: 15px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
-
+        /* CARDS */
+        .obj-card { background: var(--card-bg); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--uix-green); }
+        label { font-size: 0.65rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
+        input, select { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 12px; border-radius: 8px; width: 100%; margin-bottom: 15px; }
+        
+        .action-footer { display: flex; gap: 15px; margin-top: 30px; }
+        .btn-send { background: var(--uix-red-main); color: white; flex: 1; padding: 15px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
         .hidden { display: none !important; }
-        label { font-size: 0.65rem; color: #777; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
     </style>
 </head>
 <body>
@@ -47,67 +49,61 @@
         <div class="login-card">
             <h1 style="color:var(--uix-green); font-size:2.5rem; margin-bottom:10px;">uix<span>.</span></h1>
             <p style="color:white; font-size:0.7rem; margin-bottom:25px; opacity:0.6;">Acceso Colaboradores 2026</p>
-            
             <select id="roleInput">
                 <option value="" disabled selected>Selecciona tu Rol</option>
                 <option value="Colaborador Externo">Colaborador Externo</option>
                 <option value="Formador/Lider">Formador/Lider</option>
             </select>
-            
-            <input type="email" id="emailInput" placeholder="psic.damian.sl@gmail.com">
-            <input type="password" id="passInput" placeholder="••••">
-            
+            <input type="email" id="emailInput" placeholder="Correo corporativo">
+            <input type="password" id="passInput" placeholder="Contraseña">
             <button onclick="validaAcceso()" id="btnLogin" class="btn-login">INGRESAR</button>
-            <p id="loginMsg" style="font-size:0.75rem; margin-top:15px; color:#ff4d4d; font-weight:600;"></p>
+            <p id="loginMsg"></p>
         </div>
     </div>
 
-    <aside class="sidebar">
+    <aside class="sidebar hidden" id="sidebar">
         <div style="padding:0 25px 30px; border-bottom:1px solid rgba(255,255,255,0.05); margin-bottom:20px;">
             <p id="uDisplayRole" style="color:var(--uix-green); font-size:0.6rem; font-weight:700;">ROL</p>
-            <h5 id="uDisplayName">Cargando...</h5>
+            <h5 id="uDisplayName" style="color:white;">Usuario</h5>
         </div>
         <nav>
             <div class="nav-item"><i class="fas fa-home"></i> Dashboard</div>
             <div class="nav-item active"><i class="fas fa-bullseye"></i> Mis Objetivos</div>
             <div class="nav-item"><i class="fas fa-history"></i> Historial</div>
-            <div class="nav-item"><i class="fas fa-bell"></i> Notificaciones</div>
         </nav>
-        <button onclick="location.reload()" style="margin: auto 20px 20px; background:#e14d4d; color:white; border:none; padding:10px; border-radius:8px; cursor:pointer;"><i class="fas fa-sign-out-alt"></i> Salir</button>
     </aside>
 
-    <main class="main-container">
+    <main class="main-container hidden" id="mainArea">
         <div class="header-content">
             <h2>Mis Objetivos</h2>
             <p style="font-size:0.8rem; color:#888;">Gestiona tus objetivos y competencias organizacionales</p>
         </div>
 
-        <div class="content-body">
-            <div id="regContainer">
-                <div class="obj-card">
-                    <label>Objetivo 1 *</label>
-                    <input type="text" placeholder="Nombre del objetivo" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ddd; border-radius:5px;">
-                    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
-                        <div><label>Meta Anual</label><input type="number" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:5px;"></div>
-                        <div><label>Tendencia</label>
-                            <select style="width:100%; padding:10px; border:1px solid #ddd; border-radius:5px;">
-                                <option value="Incremental">Incremental</option>
-                                <option value="Decremental">Decremental</option>
-                            </select>
-                        </div>
-                        <div><label>Peso (%)</label><input type="number" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:5px;"></div>
+        <div id="regContainer">
+            <div class="obj-card">
+                <label>Objetivo 1 *</label>
+                <input type="text" placeholder="Nombre del objetivo">
+                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
+                    <div><label>Meta Anual</label><input type="number" placeholder="0"></div>
+                    <div><label>Tendencia</label>
+                        <select>
+                            <option value="Incremental">Incremental</option>
+                            <option value="Decremental">Decremental</option>
+                            <option value="Sostenible">Sostenible</option>
+                        </select>
                     </div>
+                    <div><label>Peso (%)</label><input type="number" placeholder="0"></div>
                 </div>
             </div>
+        </div>
 
-            <div class="action-footer">
-                <button class="btn-send">Enviar Objetivos al Formador</button>
-                <button class="btn-draft"><i class="fas fa-lock"></i> Guardar Borrador</button>
-            </div>
+        <div class="action-footer">
+            <button class="btn-send">Enviar Objetivos al Formador</button>
         </div>
     </main>
 
     <script>
+        // ESTA FUNCIÓN ES LA QUE CONECTA CON EL LINK QUE PASASTE
         function validaAcceso() {
             const role = document.getElementById('roleInput').value;
             const email = document.getElementById('emailInput').value;
@@ -115,21 +111,20 @@
             const btn = document.getElementById('btnLogin');
             const msg = document.getElementById('loginMsg');
 
-            if(!role || !email || !pass) { 
-                msg.innerText = "Error: Completa todos los campos."; 
-                return; 
-            }
+            if(!role || !email || !pass) { msg.innerText = "Completa los campos"; return; }
             
             btn.innerText = "VALIDANDO...";
             btn.disabled = true;
-            msg.innerText = "";
 
+            // google.script.run funciona porque Vercel lo carga dentro del iframe de Apps Script
             google.script.run
                 .withSuccessHandler(res => {
                     if(res && res.autorizado) {
                         document.getElementById('uDisplayName').innerText = res.nombre;
                         document.getElementById('uDisplayRole').innerText = role;
                         document.getElementById('loginScreen').classList.add('hidden');
+                        document.getElementById('sidebar').classList.remove('hidden');
+                        document.getElementById('mainArea').classList.remove('hidden');
                     } else {
                         msg.innerText = res.mensaje || "Contraseña incorrecta.";
                         btn.innerText = "INGRESAR";
@@ -137,7 +132,7 @@
                     }
                 })
                 .withFailureHandler(err => {
-                    msg.innerText = "Error de conexión con el servidor.";
+                    msg.innerText = "Error de servidor.";
                     btn.innerText = "INGRESAR";
                     btn.disabled = false;
                 })
