@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uix. Sistema de Desempeño - 20260309_V7</title>
+    <title>uix. Sistema de Desempeño - V7_STABLE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -11,25 +11,24 @@
             --uix-purple-dark: #0a0118;
             --uix-red-main: #8b0000;
             --uix-green: #7CFF01;
-            --text-muted: #666;
             --bg-light: #f4f7f9;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: #333; height: 100vh; display: flex; overflow: hidden; }
+        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); height: 100vh; display: flex; overflow: hidden; }
 
-        /* LOGIN SCREEN - REFERENCIA image_30ad5d.png */
-        #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; color: white; }
+        /* LOGIN - Referencia image_302dda.png */
+        #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
         .login-card { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 20px; width: 380px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
-        .login-card select, .login-card input { width: 100%; background: #eef2f7; border: none; padding: 15px; border-radius: 10px; margin-bottom: 15px; color: #333; font-family: 'Sora'; }
+        .login-card select, .login-card input { width: 100%; background: #eef2f7; border: none; padding: 15px; border-radius: 10px; margin-bottom: 15px; font-family: 'Sora'; }
         .btn-login { background: var(--uix-green); color: black; width: 100%; padding: 15px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; }
 
-        /* SIDEBAR - REFERENCIA image_30a9d4.png */
+        /* SIDEBAR */
         .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); color: white; }
         .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: #a094b7; font-size: 0.85rem; }
         .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
 
-        /* MAIN CONTENT - REFERENCIA image_3040fd.png */
-        .main-container { flex: 1; overflow-y: auto; background: var(--bg-light); }
+        /* MAIN CONTENT - Referencia image_3040fd.png */
+        .main-container { flex: 1; overflow-y: auto; background: var(--bg-light); color: #333; }
         .header-content { padding: 25px 40px; background: white; border-bottom: 1px solid #ddd; }
         .top-tabs { display: flex; gap: 30px; margin-top: 15px; }
         .tab-link { font-size: 0.75rem; font-weight: 600; color: #888; cursor: pointer; padding-bottom: 8px; border-bottom: 2px solid transparent; }
@@ -38,16 +37,14 @@
         .content-body { padding: 30px 40px; }
         .obj-card { background: white; padding: 25px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid var(--uix-red-main); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         label { font-size: 0.65rem; color: #777; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
-        input, select, textarea { width: 100%; border: 1px solid #dce1e7; padding: 10px; border-radius: 6px; margin-bottom: 15px; font-family: 'Sora'; font-size: 0.85rem; }
+        input, select { width: 100%; border: 1px solid #dce1e7; padding: 10px; border-radius: 6px; margin-bottom: 15px; font-family: 'Sora'; }
 
-        /* BOTONES PIE DE PÁGINA */
+        /* FOOTER - Referencia image_309e77.png */
         .action-footer { display: flex; gap: 15px; margin-top: 30px; padding-bottom: 50px; }
-        .btn-send-main { background: var(--uix-red-main); color: white; flex: 1; padding: 15px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.8rem; text-transform: uppercase; }
-        .btn-draft { background: #6c757d; color: white; width: 180px; padding: 15px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 8px; text-transform: uppercase; }
+        .btn-send { background: var(--uix-red-main); color: white; flex: 1; padding: 15px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 0.8rem; }
+        .btn-draft { background: #95a5a6; color: white; width: 180px; padding: 15px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.8rem; }
 
         .hidden { display: none !important; }
-        .star-rating i { color: #ddd; cursor: pointer; margin-right: 3px; font-size: 1.1rem; }
-        .star-rating i.active { color: #ffca28; }
     </style>
 </head>
 <body>
@@ -55,16 +52,12 @@
     <div id="loginScreen">
         <div class="login-card">
             <h1 style="color:var(--uix-green); font-size:2.5rem; margin-bottom:20px;">uix<span>.</span></h1>
-            
             <select id="roleInput">
-                <option value="" disabled selected>Selecciona tu Rol</option>
                 <option value="Colaborador Externo">Colaborador Externo</option>
                 <option value="Formador/Lider">Formador/Lider</option>
             </select>
-            
             <input type="email" id="emailInput" placeholder="Correo Corporativo">
             <input type="password" id="passInput" placeholder="Contraseña">
-            
             <button onclick="validaAcceso()" id="btnLogin" class="btn-login">INGRESAR</button>
             <p id="loginMsg" style="font-size:0.7rem; margin-top:15px; color:#ff4d4d;"></p>
         </div>
@@ -72,8 +65,8 @@
 
     <aside class="sidebar">
         <div style="padding:0 25px 30px; border-bottom:1px solid rgba(255,255,255,0.05); margin-bottom:20px;">
-            <p id="uDisplayRole" style="color:var(--uix-green); font-size:0.6rem; font-weight:700;">Rol</p>
-            <h5 id="uDisplayName">Usuario</h5>
+            <p id="uRole" style="color:var(--uix-green); font-size:0.6rem; font-weight:700;">Rol</p>
+            <h5 id="uName">Usuario</h5>
         </div>
         <nav>
             <div class="nav-item"><i class="fas fa-home"></i> Dashboard</div>
@@ -81,7 +74,6 @@
             <div class="nav-item"><i class="fas fa-history"></i> Historial</div>
             <div class="nav-item"><i class="fas fa-bell"></i> Notificaciones</div>
         </nav>
-        <button onclick="location.reload()" style="margin-top:auto; background: #e14d4d; color:white; border:none; padding:12px; margin: 20px; border-radius:8px; cursor:pointer; font-weight:bold;"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
     </aside>
 
     <main class="main-container">
@@ -89,98 +81,79 @@
             <h2>Mis Objetivos</h2>
             <p style="font-size:0.8rem; color:#888;">Gestiona tus objetivos y competencias organizacionales</p>
             <div class="top-tabs">
-                <div class="tab-link active" id="tab1-btn" onclick="showTab(1)">Objetivos y Competencias</div>
-                <div class="tab-link" id="tab2-btn" onclick="showTab(2)">Autoevaluación Mes 6</div>
+                <div class="tab-link active">Objetivos y Competencias</div>
+                <div class="tab-link">Autoevaluación Mes 6</div>
                 <div class="tab-link">Evaluación Final Mes 12</div>
             </div>
         </div>
 
-        <div id="tab1-content" class="content-body">
+        <div class="content-body">
             <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
                 <h3 style="font-size:1rem;">Registro de Objetivos (Máximo 5)</h3>
-                <button onclick="addObj()" style="background:#21a366; color:white; border:none; padding:8px 15px; border-radius:4px; cursor:pointer; font-weight:600;">+ Agregar Objetivo</button>
+                <button style="background:#21a366; color:white; border:none; padding:8px 15px; border-radius:4px; cursor:pointer;">+ Agregar Objetivo</button>
             </div>
-            
-            <div id="regContainer"></div>
 
-            <div class="action-footer">
-                <button class="btn-send-main"><i class="fas fa-paper-plane"></i> Enviar Objetivos al Formador</button>
-                <button class="btn-draft"><i class="fas fa-lock"></i> Guardar Borrador</button>
-            </div>
-        </div>
-
-        <div id="tab2-content" class="content-body hidden">
-            <div id="evalContainer"></div>
-            <button class="btn-send-main" style="width:100%; margin-top:20px; padding:20px;">ENVIAR AUTOEVALUACIÓN AL FORMADOR</button>
-        </div>
-    </main>
-
-    <script>
-        let objs = [{ id: 1, nombre: '', meta: 0, tendencia: '', peso: 0, inicio: '', fin: '' }];
-
-        function validaAcceso() {
-            const role = document.getElementById('roleInput').value;
-            const email = document.getElementById('emailInput').value;
-            const pass = document.getElementById('passInput').value;
-            const btn = document.getElementById('btnLogin');
-            const msg = document.getElementById('loginMsg');
-
-            if(!role || !email || !pass) { msg.innerText = "Completa todos los campos"; return; }
-            
-            btn.innerText = "VALIDANDO...";
-            btn.disabled = true;
-
-            // LLAMADA REAL AL SCRIPT DE GOOGLE
-            google.script.run.withSuccessHandler(res => {
-                if(res && res.autorizado) {
-                    document.getElementById('uDisplayName').innerText = res.nombre;
-                    document.getElementById('uDisplayRole').innerText = role;
-                    document.getElementById('loginScreen').classList.add('hidden');
-                    renderReg();
-                } else {
-                    msg.innerText = "Credenciales incorrectas o usuario no encontrado";
-                    btn.innerText = "INGRESAR";
-                    btn.disabled = false;
-                }
-            }).verificarUsuario(email, pass);
-        }
-
-        function addObj() {
-            if(objs.length < 5) {
-                objs.push({ id: Date.now(), nombre: '', meta: 0, tendencia: '', peso: 0, inicio: '', fin: '' });
-                renderReg();
-            }
-        }
-
-        function renderReg() {
-            const container = document.getElementById('regContainer');
-            container.innerHTML = objs.map((o, i) => `
+            <div id="regContainer">
                 <div class="obj-card">
-                    <label>Objetivo ${i+1}</label>
-                    <input type="text" value="${o.nombre}" onchange="objs[${i}].nombre = this.value" placeholder="Nombre del objetivo">
+                    <label>Objetivo 1</label>
+                    <input type="text" placeholder="Nombre del objetivo">
                     <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
-                        <div><label>Meta Anual</label><input type="number" value="${o.meta}"></div>
+                        <div><label>Meta Anual</label><input type="number"></div>
                         <div><label>Tendencia</label>
                             <select>
                                 <option value="Incremental">Incremental</option>
                                 <option value="Decremental">Decremental</option>
                             </select>
                         </div>
-                        <div><label>Peso (%)</label><input type="number" value="${o.peso}"></div>
+                        <div><label>Peso (%)</label><input type="number"></div>
                     </div>
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
                         <div><label>Fecha Inicio</label><input type="date"></div>
                         <div><label>Fecha Fin</label><input type="date"></div>
                     </div>
                 </div>
-            `).join('');
-        }
+            </div>
 
-        function showTab(num) {
-            document.getElementById('tab1-content').classList.toggle('hidden', num !== 1);
-            document.getElementById('tab2-content').classList.toggle('hidden', num !== 2);
-            document.getElementById('tab1-btn').classList.toggle('active', num === 1);
-            document.getElementById('tab2-btn').classList.toggle('active', num === 2);
+            <div class="action-footer">
+                <button class="btn-send"><i class="fas fa-paper-plane"></i> Enviar Objetivos al Formador</button>
+                <button class="btn-draft"><i class="fas fa-lock"></i> Guardar Borrador</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function validaAcceso() {
+            const email = document.getElementById('emailInput').value;
+            const pass = document.getElementById('passInput').value;
+            const role = document.getElementById('roleInput').value;
+            const btn = document.getElementById('btnLogin');
+            const msg = document.getElementById('loginMsg');
+
+            if(!email || !pass) { msg.innerText = "Faltan datos"; return; }
+            
+            btn.innerText = "VALIDANDO...";
+            btn.disabled = true;
+
+            // ESTA ES LA CONEXIÓN CON TU APPSCRIPT
+            if (typeof google !== 'undefined') {
+                google.script.run.withSuccessHandler(res => {
+                    if(res && res.autorizado) {
+                        document.getElementById('uName').innerText = res.nombre;
+                        document.getElementById('uRole').innerText = role;
+                        document.getElementById('loginScreen').classList.add('hidden');
+                    } else {
+                        msg.innerText = "Contraseña o usuario incorrecto";
+                        btn.innerText = "INGRESAR";
+                        btn.disabled = false;
+                    }
+                }).verificarUsuario(email, pass);
+            } else {
+                // Fallback para pruebas locales si no estás en el entorno de Google
+                console.warn("Entorno Google Script no detectado.");
+                btn.innerText = "INGRESAR";
+                btn.disabled = false;
+                msg.innerText = "Error de conexión con el servidor.";
+            }
         }
     </script>
 </body>
