@@ -3,89 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uix. Sistema de Desempeño - 20260309_V7</title>
+    <title>uix. Sistema de Desempeño - 20260309_V7_FINAL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --uix-purple-dark: #0a0118;
-            --uix-purple-card: #140529;
+            --uix-red-main: #8b0000;
             --uix-green: #7CFF01;
-            --uix-green-btn: #21a366;
             --white: #FFFFFF;
-            --text-muted: #a094b7;
-            --active-red: #8b0000;
-            --delete-red: #e14d4d;
+            --text-muted: #666;
+            --bg-light: #f4f7f9;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: var(--white); height: 100vh; display: flex; overflow: hidden; }
+        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: #333; height: 100vh; display: flex; overflow: hidden; }
 
-        /* LOGIN */
-        #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
-        .login-card { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 25px; width: 400px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
+        /* LOGIN CON VALIDACIÓN */
+        #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; color: white; }
+        .login-card { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 20px; width: 380px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
+        .login-card input { width: 100%; background: #eef2f7; border: none; padding: 15px; border-radius: 10px; margin-bottom: 15px; color: #333; }
+        .btn-login { background: var(--uix-green); color: black; width: 100%; padding: 15px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; }
 
         /* SIDEBAR */
-        .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); }
-        .user-info { padding: 0 20px 30px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
-        .nav-item { padding: 15px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: var(--text-muted); font-size: 0.9rem; }
-        .nav-item.active { background: var(--active-red); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
+        .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); color: white; }
+        .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: #a094b7; font-size: 0.85rem; }
+        .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
 
-        /* MAIN CONTENT */
-        .main-container { flex: 1; overflow-y: auto; background: var(--uix-purple-dark); }
-        .top-nav-tabs { display: flex; gap: 30px; padding: 20px 40px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .tab-link { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); cursor: pointer; padding-bottom: 10px; }
-        .tab-link.active { color: var(--uix-green); border-bottom: 2px solid var(--uix-green); }
+        /* CONTENT */
+        .main-container { flex: 1; overflow-y: auto; background: var(--bg-light); }
+        .header-content { padding: 25px 40px; background: white; border-bottom: 1px solid #ddd; }
+        .top-tabs { display: flex; gap: 30px; margin-top: 15px; }
+        .tab-link { font-size: 0.75rem; font-weight: 600; color: #888; cursor: pointer; padding-bottom: 8px; border-bottom: 2px solid transparent; }
+        .tab-link.active { color: var(--uix-red-main); border-bottom-color: var(--uix-red-main); }
 
         .content-body { padding: 30px 40px; }
-        .section-header { margin-bottom: 25px; }
-        .section-header h2 { font-size: 1.5rem; margin-bottom: 5px; }
-        .section-header p { font-size: 0.85rem; color: var(--text-muted); }
-
-        .alert-banner { background: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; margin-bottom: 25px; font-size: 0.8rem; display: flex; align-items: center; gap: 10px; }
+        .alert-banner { background: #fff9db; color: #856404; padding: 12px; border-radius: 6px; margin-bottom: 20px; font-size: 0.75rem; border: 1px solid #ffe58f; }
 
         /* CARDS */
-        .obj-card { background: var(--uix-purple-card); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--active-red); }
-        label { font-size: 0.7rem; color: var(--text-muted); display: block; margin-bottom: 8px; text-transform: uppercase; font-weight: 600; }
-        input, select, textarea { width: 100%; background: #0a0118; border: 1px solid #3d2b56; padding: 12px; border-radius: 8px; color: white; margin-bottom: 15px; font-family: 'Sora'; }
-        
-        /* STARS */
-        .star-rating { display: flex; gap: 8px; margin: 10px 0 20px; }
-        .star-rating i { color: #3d2b56; cursor: pointer; font-size: 1.3rem; }
-        .star-rating i.active { color: #ffca28; }
+        .obj-card { background: white; padding: 25px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid var(--uix-red-main); box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: relative; }
+        label { font-size: 0.65rem; color: #777; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
+        input, select, textarea { width: 100%; border: 1px solid #dce1e7; padding: 10px; border-radius: 6px; margin-bottom: 15px; font-family: 'Sora'; font-size: 0.85rem; }
 
         /* COMPETENCIAS */
         .comp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 20px; }
-        .comp-item { padding: 15px; border-radius: 10px; color: white; min-height: 150px; }
-        .comp-item strong { display: block; font-size: 0.75rem; margin-bottom: 8px; }
-        .comp-item p { font-size: 0.65rem; opacity: 0.8; line-height: 1.3; }
+        .comp-item { padding: 15px; border-radius: 8px; color: white; min-height: 140px; font-size: 0.65rem; }
         .c1 { background: #5a4ca5; } .c2 { background: #5c78d6; } .c3 { background: #5e48ad; } .c4 { background: #4a54b3; } .c5 { background: #7162ad; }
 
+        /* FOOTER BUTTONS */
+        .action-footer { display: flex; gap: 15px; margin-top: 30px; padding-bottom: 50px; }
+        .btn-send-main { background: var(--uix-red-main); color: white; flex: 1; padding: 15px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.8rem; }
+        .btn-draft { background: #6c757d; color: white; width: 180px; padding: 15px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
+
         .hidden { display: none !important; }
-        .btn-add { background: var(--uix-green-btn); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+        .star-rating i { color: #ddd; cursor: pointer; margin-right: 3px; font-size: 1.1rem; }
+        .star-rating i.active { color: #ffca28; }
     </style>
 </head>
 <body>
 
     <div id="loginScreen">
         <div class="login-card">
-            <h1 style="color:var(--uix-green); font-size:2.8rem;">uix<span>.</span></h1>
-            <p style="color:var(--text-muted); margin-bottom:20px;">Acceso Colaboradores 2026</p>
-            <select id="roleInput">
-                <option value="" disabled selected>Selecciona tu Rol</option>
-                <option value="Colaborador Externo">Colaborador Externo</option>
-                <option value="Formador/Lider">Formador/Lider</option>
-            </select>
+            <h1 style="color:var(--uix-green); font-size:2.5rem; margin-bottom:20px;">uix<span>.</span></h1>
             <input type="email" id="emailInput" placeholder="Correo Corporativo">
             <input type="password" id="passInput" placeholder="Contraseña">
-            <button onclick="handleLogin()" style="background:var(--uix-green); color:black; width:100%; padding:14px; border-radius:30px; border:none; font-weight:800; cursor:pointer;">INGRESAR</button>
+            <button onclick="validaAcceso()" id="btnLogin" class="btn-login">INGRESAR</button>
+            <p id="loginMsg" style="font-size:0.7rem; margin-top:15px; color:#ff4d4d;"></p>
         </div>
     </div>
 
     <aside class="sidebar">
-        <div class="user-info">
-            <div style="width:45px; height:45px; background:#1a0830; border-radius:50%; margin-bottom:10px; display:flex; align-items:center; justify-content:center; border:1px solid var(--uix-green);"><i class="fas fa-user"></i></div>
-            <h5 id="uName">Usuario</h5>
-            <p id="uRole" style="font-size:0.6rem; color:var(--uix-green);">Rol</p>
+        <div style="padding:0 25px 30px; border-bottom:1px solid rgba(255,255,255,0.05); margin-bottom:20px;">
+            <p style="color:var(--uix-green); font-size:0.6rem; font-weight:700;">Colaborador Externo</p>
+            <h5 id="userName">Cargando...</h5>
         </div>
         <nav>
             <div class="nav-item"><i class="fas fa-home"></i> Dashboard</div>
@@ -93,77 +82,85 @@
             <div class="nav-item"><i class="fas fa-history"></i> Historial</div>
             <div class="nav-item"><i class="fas fa-bell"></i> Notificaciones</div>
         </nav>
-        <div class="nav-item" style="margin-top:auto; color:var(--delete-red);" onclick="location.reload()"><i class="fas fa-sign-out-alt"></i> Salir</div>
+        <button onclick="location.reload()" style="margin-top:auto; background: #e14d4d; color:white; border:none; padding:12px; margin: 20px; border-radius:8px; cursor:pointer; font-weight:bold;"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
     </aside>
 
     <main class="main-container">
-        <div class="top-nav-tabs">
-            <div class="tab-link active" id="tab1-btn" onclick="showTab(1)">Objetivos y Competencias</div>
-            <div class="tab-link" id="tab2-btn" onclick="showTab(2)">Autoevaluación Mes 6</div>
-            <div class="tab-link">Evaluación Final Mes 12</div>
+        <div class="header-content">
+            <h2>Mis Objetivos</h2>
+            <p style="font-size:0.8rem; color:#888;">Gestiona tus objetivos y competencias organizacionales</p>
+            <div class="top-tabs">
+                <div class="tab-link active" id="tab1-btn" onclick="showTab(1)">Objetivos y Competencias</div>
+                <div class="tab-link" id="tab2-btn" onclick="showTab(2)">Autoevaluación Mes 6</div>
+                <div class="tab-link">Evaluación Final Mes 12</div>
+            </div>
         </div>
 
         <div id="tab1-content" class="content-body">
-            <div class="section-header">
-                <h2>Mis Objetivos</h2>
-                <p>Gestiona tus objetivos y competencias organizacionales</p>
-            </div>
-
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
                 <h3 style="font-size:1rem;">Registro de Objetivos (Máximo 5)</h3>
-                <button class="btn-add" onclick="addObj()">+ Agregar Objetivo</button>
+                <button onclick="addObj()" style="background:var(--uix-green-btn); color:white; border:none; padding:8px 15px; border-radius:4px; background:#21a366; cursor:pointer; font-weight:600;">+ Agregar Objetivo</button>
             </div>
-
             <div class="alert-banner">
-                <i class="fas fa-exclamation-triangle"></i>
-                <div>Total de pesos: <strong id="pesoTotal">0%</strong>. La suma de todos los pesos debe ser exactamente 100%</div>
+                <i class="fas fa-exclamation-triangle"></i> Total de pesos: <strong id="pesoTotal">0%</strong>. La suma de todos los pesos debe ser exactamente 100%.
             </div>
 
             <div id="regContainer"></div>
 
-            <h3 style="margin:40px 0 15px; color:var(--delete-red); font-size:1rem;"><i class="fas fa-star"></i> Competencias Organizacionales</h3>
-            <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:20px; background: rgba(124, 255, 1, 0.05); padding: 10px; border-radius: 5px; border-left: 3px solid var(--uix-green);">Estas competencias serán evaluadas en tu autoevaluación del 6° mes. Por ahora solo se registran como parte de tu perfil.</p>
+            <h3 style="margin:40px 0 15px; color:var(--uix-red-main);"><i class="fas fa-star"></i> Competencias Organizacionales</h3>
             <div class="comp-grid" id="compRegGrid"></div>
+
+            <div class="action-footer">
+                <button class="btn-send-main"><i class="fas fa-paper-plane"></i> ENVIAR OBJETIVOS AL FORMADOR</button>
+                <button class="btn-draft"><i class="fas fa-save"></i> GUARDAR BORRADOR</button>
+            </div>
         </div>
 
         <div id="tab2-content" class="content-body hidden">
-            <div class="section-header">
-                <h2>Autoevaluación Semestral - Mes 6</h2>
+            <div style="background:#e1f5fe; color:#01579b; padding:15px; border-radius:8px; margin-bottom:25px; font-size:0.8rem;">
+                <i class="fas fa-info-circle"></i> Evalúa tu desempeño en cada objetivo y competencias.
             </div>
-            <div style="background: #e1f5fe; color: #01579b; padding: 15px; border-radius: 8px; margin-bottom: 25px; font-size: 0.8rem;">
-                <i class="fas fa-info-circle"></i> Evalúa tu desempeño en cada objetivo y en las competencias organizacionales.
-            </div>
-
-            <h3 style="color:var(--delete-red); margin-bottom:20px; font-size:1rem;">Sección A: Autoevaluación de Objetivos</h3>
             <div id="evalContainer"></div>
-
-            <h3 style="color:var(--delete-red); margin:40px 0 20px; font-size:1rem;">Sección B: Autoevaluación de Competencias</h3>
+            <h3 style="color:var(--uix-red-main); margin-top:40px;">Sección B: Autoevaluación de Competencias</h3>
             <div id="compEvalContainer"></div>
-
-            <button style="background:var(--active-red); color:white; width:100%; padding:20px; border:none; border-radius:8px; font-weight:bold; cursor:pointer; margin-top:20px;">
-                <i class="fas fa-paper-plane"></i> ENVIAR AUTOEVALUACIÓN AL FORMADOR
-            </button>
+            <button class="btn-send-main" style="width:100%; margin-top:20px; padding:20px;">ENVIAR AUTOEVALUACIÓN AL FORMADOR</button>
         </div>
     </main>
 
     <script>
         let objs = [{ id: 1, nombre: '', meta: 0, tendencia: '', peso: 0, inicio: '', fin: '' }];
         const compInfo = [
-            { t: "Confianza y Respeto Mutuo", d: "Establece relaciones basadas en la honestidad, transparencia y respeto hacia todos los colaboradores." },
-            { t: "Ejecución Impecable", d: "Cumple con los compromisos adquiridos con la máxima calidad y en los tiempos establecidos." },
-            { t: "Mejora Continua", d: "Busca constantemente formas de optimizar procesos, herramientas y resultados." },
-            { t: "Pasión por el Cliente", d: "Pone al cliente en el centro de todas sus decisiones y acciones, superando expectativas." },
-            { t: "Trabajo en Equipo", d: "Colabora activamente con otros para alcanzar objetivos comunes, valorando la diversidad." }
+            { t: "Confianza y Respeto Mutuo", d: "Establece relaciones basadas en la honestidad, transparencia y respeto." },
+            { t: "Ejecución Impecable", d: "Cumple compromisos con máxima calidad y en tiempos establecidos." },
+            { t: "Mejora Continua", d: "Busca optimizar procesos, herramientas y resultados." },
+            { t: "Pasión por el Cliente", d: "Pone al cliente en el centro de todas sus decisiones." },
+            { t: "Trabajo en Equipo", d: "Colabora activamente para alcanzar objetivos comunes." }
         ];
 
-        function handleLogin() {
-            const role = document.getElementById('roleInput').value;
+        // VALIDACIÓN REAL CONTRA APPSCRIPT
+        function validaAcceso() {
             const email = document.getElementById('emailInput').value;
-            if(!role || !email) return alert("Completa los datos");
-            document.getElementById('uName').innerText = email.split('@')[0];
-            document.getElementById('uRole').innerText = role;
-            document.getElementById('loginScreen').classList.add('hidden');
-            renderReg();
+            const pass = document.getElementById('passInput').value;
+            const msg = document.getElementById('loginMsg');
+            const btn = document.getElementById('btnLogin');
+
+            if(!email || !pass) { msg.innerText = "Completa todos los campos"; return; }
+            
+            btn.innerText = "VALIDANDO...";
+            btn.disabled = true;
+
+            // Esta es la llamada real al backend de Google Sheets
+            google.script.run.withSuccessHandler(res => {
+                if(res.autorizado) {
+                    document.getElementById('userName').innerText = res.nombre;
+                    document.getElementById('loginScreen').classList.add('hidden');
+                    renderReg();
+                } else {
+                    msg.innerText = "Credenciales incorrectas";
+                    btn.innerText = "INGRESAR";
+                    btn.disabled = false;
+                }
+            }).verificarUsuario(email, pass);
         }
 
         function addObj() {
@@ -173,36 +170,26 @@
             }
         }
 
-        function removeObj(idx) {
-            objs.splice(idx, 1);
-            renderReg();
-        }
-
         function renderReg() {
             const container = document.getElementById('regContainer');
             container.innerHTML = objs.map((o, i) => `
                 <div class="obj-card">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                        <strong style="color:var(--uix-green)">Objetivo ${i+1} *</strong>
-                        ${i > 0 ? `<button onclick="removeObj(${i})" style="color:var(--delete-red); border:none; background:none; cursor:pointer; font-size:0.7rem; font-weight:bold;">ELIMINAR</button>` : ''}
-                    </div>
-                    <label>Objetivo *</label>
+                    <label>Objetivo ${i+1}</label>
                     <input type="text" value="${o.nombre}" onchange="objs[${i}].nombre = this.value" placeholder="Nombre del objetivo">
                     <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
-                        <div><label>Meta Anual *</label><input type="number" value="${o.meta}" onchange="objs[${i}].meta = this.value"></div>
-                        <div><label>Tendencia *</label>
+                        <div><label>Meta Anual</label><input type="number" value="${o.meta}" onchange="objs[${i}].meta = this.value"></div>
+                        <div><label>Tendencia</label>
                             <select onchange="objs[${i}].tendencia = this.value">
                                 <option value="" disabled ${!o.tendencia ? 'selected':''}>Seleccionar...</option>
                                 <option value="Incremental" ${o.tendencia==='Incremental'?'selected':''}>Incremental</option>
-                                <option value="Sostenible" ${o.tendencia==='Sostenible'?'selected':''}>Sostenible</option>
                                 <option value="Decremental" ${o.tendencia==='Decremental'?'selected':''}>Decremental</option>
                             </select>
                         </div>
-                        <div><label>Peso (%) *</label><input type="number" class="p-input" value="${o.peso}" onchange="objs[${i}].peso = this.value; calcPeso();"></div>
+                        <div><label>Peso (%)</label><input type="number" class="p-input" value="${o.peso}" onchange="objs[${i}].peso = this.value; calcPeso();"></div>
                     </div>
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-                        <div><label>Fecha Inicio *</label><input type="date" value="${o.inicio}" onchange="objs[${i}].inicio = this.value"></div>
-                        <div><label>Fecha Fin *</label><input type="date" value="${o.fin}" onchange="objs[${i}].fin = this.value"></div>
+                        <div><label>Fecha Inicio</label><input type="date" value="${o.inicio}" onchange="objs[${i}].inicio = this.value"></div>
+                        <div><label>Fecha Fin</label><input type="date" value="${o.fin}" onchange="objs[${i}].fin = this.value"></div>
                     </div>
                 </div>
             `).join('');
@@ -231,36 +218,29 @@
             const container = document.getElementById('evalContainer');
             container.innerHTML = objs.map((o, i) => `
                 <div class="obj-card">
-                    <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-                        <strong>Objetivo ${i+1}: ${o.nombre || '(Sin nombre)'}</strong>
-                        <div style="font-size:0.7rem; color:var(--text-muted); text-align:right;">
-                            META ANUAL: ${o.meta} | TENDENCIA: ${o.tendencia} | PESO: ${o.peso}%
-                        </div>
+                    <strong>${o.nombre || 'Objetivo '+(i+1)}</strong>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-top:15px;">
+                        <div><label>Avance Alcanzado</label><input type="number" oninput="calcComp(${i}, this.value, ${o.meta})"></div>
+                        <div><label>% Cumplimiento</label><input type="text" id="cp-${i}" style="background:#f8f9fa;" value="0%" readonly></div>
                     </div>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
-                        <div><label>Avance / Resultado Alcanzado</label><input type="number" oninput="calcComp(${i}, this.value, ${o.meta})"></div>
-                        <div><label>% Cumplimiento (Auto-calculado)</label><input type="text" id="comp-${i}" style="background:#1a0830; color:var(--uix-green); font-weight:bold;" value="0%" readonly></div>
-                    </div>
-                    <label>Calificación Propia (1-5)</label>
+                    <label>Calificación (1-5)</label>
                     <div class="star-rating">${[1,2,3,4,5].map(n => `<i class="fas fa-star" onclick="setStar(this, ${n})"></i>`).join('')}</div>
-                    <textarea placeholder="Describe los logros, obstáculos y aprendizajes..."></textarea>
+                    <textarea placeholder="Comentarios..."></textarea>
                 </div>
             `).join('');
 
             document.getElementById('compEvalContainer').innerHTML = compInfo.map((c, i) => `
                 <div class="obj-card">
                     <strong>${c.t}</strong>
-                    <p style="font-size:0.65rem; color:var(--text-muted); margin-bottom:10px;">${c.d}</p>
-                    <label>Calificación (1-5)</label>
-                    <div class="star-rating">${[1,2,3,4,5].map(n => `<i class="fas fa-star" onclick="setStar(this, ${n})"></i>`).join('')}</div>
-                    <textarea placeholder="Comentarios..."></textarea>
+                    <div class="star-rating" style="margin:10px 0;">${[1,2,3,4,5].map(n => `<i class="fas fa-star" onclick="setStar(this, ${n})"></i>`).join('')}</div>
+                    <textarea placeholder="Comentarios sobre esta competencia..."></textarea>
                 </div>
             `).join('');
         }
 
         function calcComp(i, val, meta) {
             const perc = meta > 0 ? Math.round((val / meta) * 100) : 0;
-            document.getElementById(`comp-${i}`).value = perc + "%";
+            document.getElementById(`cp-${i}`).value = perc + "%";
         }
 
         function setStar(el, n) {
