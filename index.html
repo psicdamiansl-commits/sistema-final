@@ -25,20 +25,20 @@
         /* SIDEBAR */
         .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); }
         .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: #a094b7; font-size: 0.85rem; transition: 0.3s; }
-        .nav-item:hover { color: white; background: rgba(255,255,255,0.05); }
         .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
         .btn-logout { margin-top: auto; padding: 25px; color: #ff4d4d; font-weight: 700; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; gap: 10px; border-top: 1px solid rgba(255,255,255,0.05); }
 
         /* MAIN CONTENT */
-        .main-container { flex: 1; overflow-y: auto; background: var(--uix-purple-dark); padding: 20px 40px; position: relative; }
+        .main-container { flex: 1; overflow-y: auto; background: var(--uix-purple-dark); padding: 20px 40px; }
         
-        /* WEIGHT TRACKER */
-        .weight-tracker { background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px dashed var(--uix-green); }
+        /* HEADER OBJETIVOS */
+        .header-content { margin-bottom: 20px; }
+        .weight-tracker { background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 10px; margin-bottom: 25px; border: 1px dashed var(--uix-green); }
         .weight-text { font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; display: flex; justify-content: space-between; }
         .progress-bg { width: 100%; height: 8px; background: #333; border-radius: 4px; overflow: hidden; }
         .progress-fill { height: 100%; width: 0%; background: var(--uix-green); transition: width 0.3s ease; }
 
-        /* CARDS */
+        /* CARDS DE OBJETIVOS (Restaurado) */
         .obj-card { background: var(--card-bg); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--uix-red-main); position: relative; }
         .btn-remove { position: absolute; top: 15px; right: 15px; background: #d93025; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; font-weight: bold; }
 
@@ -83,10 +83,10 @@
             <h5 id="uName" style="color:white;">Usuario</h5>
         </div>
         <nav id="mainNav">
-            <div class="nav-item" onclick="switchTab('dashboard')"><i class="fas fa-th-large"></i> Dashboard</div>
-            <div class="nav-item active" onclick="switchTab('misObjetivos')"><i class="fas fa-bullseye"></i> Mis objetivos</div>
-            <div class="nav-item" onclick="switchTab('historial')"><i class="fas fa-history"></i> Historial</div>
-            <div class="nav-item" onclick="switchTab('notificaciones')"><i class="fas fa-bell"></i> Notificaciones</div>
+            <div class="nav-item" id="nav-dashboard" onclick="switchTab('dashboard')"><i class="fas fa-th-large"></i> Dashboard</div>
+            <div class="nav-item active" id="nav-misObjetivos" onclick="switchTab('misObjetivos')"><i class="fas fa-bullseye"></i> Mis objetivos</div>
+            <div class="nav-item" id="nav-historial" onclick="switchTab('historial')"><i class="fas fa-history"></i> Historial</div>
+            <div class="nav-item" id="nav-notificaciones" onclick="switchTab('notificaciones')"><i class="fas fa-bell"></i> Notificaciones</div>
         </nav>
         <div class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> SALIR</div>
     </aside>
@@ -95,8 +95,14 @@
         
         <div id="misObjetivosSection">
             <div id="formSection">
-                <h2 style="font-size: 1.1rem; margin-bottom: 20px;">Registro de Objetivos (Máximo 5)</h2>
-                
+                <div class="header-content">
+                    <h2 style="font-size: 1.1rem; margin-bottom: 5px;">Registro de Objetivos (Máximo 5)</h2>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 15px;">
+                        <p style="font-size:0.7rem; color:#888;">Objetivos: <span id="countObj">1</span>/5</p>
+                        <button onclick="agregarObjetivo()" id="btnAdd" style="background:var(--uix-green); border:none; padding:8px 15px; border-radius:5px; font-weight:bold; cursor:pointer; color: black;">+ Agregar Objetivo</button>
+                    </div>
+                </div>
+
                 <div class="weight-tracker">
                     <div class="weight-text"><span>Sumatoria de Peso:</span> <span id="pesoTotalTxt">0% / 100%</span></div>
                     <div class="progress-bg"><div class="progress-fill" id="pesoBar"></div></div>
@@ -128,21 +134,21 @@
 
                 <div class="footer-btns">
                     <button onclick="enviarDatos()" class="btn-primary" id="btnEnviar"><i class="fas fa-paper-plane"></i> ENVIAR OBJETIVOS AL FORMADOR</button>
-                    <button onclick="agregarObjetivo()" id="btnAdd" class="btn-secondary">Agregar otro +</button>
+                    <button class="btn-secondary">Guardar Borrador</button>
                 </div>
             </div>
 
             <div id="successScreen" class="hidden">
                 <i class="fas fa-rocket success-icon"></i>
                 <h2 style="color:var(--uix-green); font-size:1.8rem;">¡Felicidades, <span id="successName"></span>!</h2>
-                <p style="color:#a094b7; margin: 20px 0;">Has cargado tus objetivos con éxito. Hemos enviado un correo a tu formador para que los evalúe.</p>
-                <button onclick="location.reload()" class="btn-primary" style="max-width:200px;">Regresar</button>
+                <p style="color:#a094b7; margin: 20px 0;">Has cargado tus objetivos con éxito. Hemos enviado un correo a tu formador para que los evalúe y podamos continuar con el proceso.</p>
+                <button onclick="location.reload()" class="btn-primary" style="max-width:200px;">ENTENDIDO</button>
             </div>
         </div>
 
-        <div id="dashboardSection" class="hidden"><h2>Dashboard</h2><p style="color:#888;">Próximamente: Estadísticas de desempeño.</p></div>
-        <div id="historialSection" class="hidden"><h2>Historial</h2><p style="color:#888;">Próximamente: Registro de ciclos anteriores.</p></div>
-        <div id="notificacionesSection" class="hidden"><h2>Notificaciones</h2><p style="color:#888;">Próximamente: Avisos de feedback y fechas límite.</p></div>
+        <div id="dashboardSection" class="hidden"><h2>Dashboard</h2><p style="color:#888;">Contenido del Dashboard.</p></div>
+        <div id="historialSection" class="hidden"><h2>Historial</h2><p style="color:#888;">Contenido del Historial.</p></div>
+        <div id="notificacionesSection" class="hidden"><h2>Notificaciones</h2><p style="color:#888;">Contenido de Notificaciones.</p></div>
 
     </main>
 
@@ -151,7 +157,6 @@
         let total = 1;
         let userData = {};
 
-        // Función para cambiar entre pestañas del Sidebar
         function switchTab(tabId) {
             // Ocultar todas las secciones
             document.getElementById('dashboardSection').classList.add('hidden');
@@ -159,12 +164,12 @@
             document.getElementById('historialSection').classList.add('hidden');
             document.getElementById('notificacionesSection').classList.add('hidden');
             
-            // Quitar clase active de todos los items
+            // Quitar clase active de todos
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
 
-            // Mostrar sección seleccionada y activar item
+            // Mostrar la correcta
             document.getElementById(tabId + 'Section').classList.remove('hidden');
-            event.currentTarget.classList.add('active');
+            document.getElementById('nav-' + tabId).classList.add('active');
         }
 
         async function validaAcceso() {
@@ -174,7 +179,7 @@
             const btn = document.getElementById('btnLogin');
             const msg = document.getElementById('loginMsg');
 
-            if(!email || !pass || !role) { msg.innerText = "Completa todos los campos."; return; }
+            if(!email || !pass || !role) { msg.innerText = "Completa los campos."; return; }
             btn.innerText = "VALIDANDO..."; btn.disabled = true;
 
             try {
@@ -194,7 +199,7 @@
                     msg.innerText = res.mensaje; btn.innerText = "INGRESAR"; btn.disabled = false;
                 }
             } catch (e) {
-                msg.innerText = "Error de conexión."; btn.innerText = "INGRESAR"; btn.disabled = false;
+                msg.innerText = "Error."; btn.innerText = "INGRESAR"; btn.disabled = false;
             }
         }
 
@@ -228,13 +233,13 @@
                     fin: card.querySelector('.obj-fin').value
                 });
             }
-            btn.innerText = "PROCESANDO..."; btn.disabled = true;
+            btn.innerText = "ENVIANDO..."; btn.disabled = true;
             try {
                 await fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ action: 'saveGoals', userEmail: userData.email, userName: userData.nombre, userRole: userData.role, goals: objetivos }) });
                 document.getElementById('formSection').classList.add('hidden');
                 document.getElementById('successScreen').classList.remove('hidden');
             } catch (e) {
-                alert("Error al enviar."); btn.disabled = false; btn.innerText = "ENVIAR OBJETIVOS AL FORMADOR";
+                alert("Error."); btn.disabled = false; btn.innerText = "ENVIAR OBJETIVOS AL FORMADOR";
             }
         }
 
@@ -258,12 +263,14 @@
                     <div><label>FIN *</label><input type="date" class="obj-fin"></div>
                 </div>`;
             document.getElementById('regContainer').appendChild(card);
+            document.getElementById('countObj').innerText = total;
             calcularPesos();
         }
 
         function eliminarObj(id) {
             document.getElementById(id).remove();
             total--;
+            document.getElementById('countObj').innerText = total;
             calcularPesos();
         }
 
