@@ -36,11 +36,12 @@
         /* CARDS */
         .obj-card { background: var(--card-bg); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 5px solid var(--uix-red-main); position: relative; }
         label { font-size: 0.65rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
+        .req-star { color: #ff4d4d; margin-left: 2px; }
         input, select { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 12px; border-radius: 6px; width: 100%; margin-bottom: 15px; font-family: 'Sora'; }
         
         select option { color: white; background-color: var(--uix-purple-dark); }
 
-        /* BOTÓN ELIMINAR (Nuevo estilo superior derecho) */
+        /* BOTÓN ELIMINAR */
         .btn-delete-obj {
             position: absolute;
             top: 15px;
@@ -85,8 +86,8 @@
                 <option value="Colaborador">Colaborador</option>
                 <option value="Líder">Líder</option>
             </select>
-            <input type="email" id="emailInput" placeholder="Correo electrónico">
-            <input type="password" id="passInput" placeholder="Contraseña">
+            <input type="email" id="emailInput" placeholder="Correo electrónico" required>
+            <input type="password" id="passInput" placeholder="Contraseña" required>
             <button onclick="validaAcceso()" id="btnLogin" style="background:var(--uix-green); color:black; width:100%; padding:15px; border-radius:30px; border:none; font-weight:800; cursor:pointer; margin-top:10px;">INGRESAR</button>
             <p id="loginMsg" style="color:#ff4d4d; font-size:0.75rem; margin-top:15px;"></p>
         </div>
@@ -130,16 +131,16 @@
 
                 <div id="regContainer">
                     <div class="obj-card" id="obj1">
-                        <label>OBJETIVO 1 *</label>
-                        <input type="text" class="obj-nombre" placeholder="Nombre de la meta">
+                        <label>OBJETIVO 1 <span class="req-star">*</span></label>
+                        <input type="text" class="obj-nombre" placeholder="Nombre de la meta" required>
                         <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
-                            <div><label>META ANUAL</label><input type="number" class="obj-meta" value="0"></div>
-                            <div><label>TENDENCIA</label><select class="obj-tendencia"><option>Incremental</option><option>Decremental</option></select></div>
-                            <div><label>PESO (%)</label><input type="number" class="obj-peso" value="0" oninput="recalc()"></div>
+                            <div><label>META ANUAL <span class="req-star">*</span></label><input type="number" class="obj-meta" placeholder="0" required></div>
+                            <div><label>TENDENCIA <span class="req-star">*</span></label><select class="obj-tendencia" required><option value="">Seleccionar...</option><option>Incremental</option><option>Decremental</option></select></div>
+                            <div><label>PESO (%) <span class="req-star">*</span></label><input type="number" class="obj-peso" placeholder="0" oninput="recalc()" required></div>
                         </div>
                         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-                            <div><label>FECHA INICIO</label><input type="date" class="obj-inicio"></div>
-                            <div><label>FECHA FIN</label><input type="date" class="obj-fin"></div>
+                            <div><label>FECHA INICIO <span class="req-star">*</span></label><input type="date" class="obj-inicio" required></div>
+                            <div><label>FECHA FIN <span class="req-star">*</span></label><input type="date" class="obj-fin" required></div>
                         </div>
                     </div>
                 </div>
@@ -238,16 +239,16 @@
                 <button class="btn-delete-obj" onclick="this.parentElement.remove(); recalc();">
                     <i class="fas fa-trash"></i> Eliminar
                 </button>
-                <label>OBJETIVO ${totalObj} *</label>
-                <input type="text" class="obj-nombre" placeholder="Nombre de la meta">
+                <label>OBJETIVO ${totalObj} <span class="req-star">*</span></label>
+                <input type="text" class="obj-nombre" placeholder="Nombre de la meta" required>
                 <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px;">
-                    <div><label>META</label><input type="number" class="obj-meta" value="0"></div>
-                    <div><label>TENDENCIA</label><select class="obj-tendencia"><option>Incremental</option><option>Decremental</option></select></div>
-                    <div><label>PESO (%)</label><input type="number" class="obj-peso" value="0" oninput="recalc()"></div>
+                    <div><label>META <span class="req-star">*</span></label><input type="number" class="obj-meta" placeholder="0" required></div>
+                    <div><label>TENDENCIA <span class="req-star">*</span></label><select class="obj-tendencia" required><option value="">Seleccionar...</option><option>Incremental</option><option>Decremental</option></select></div>
+                    <div><label>PESO (%) <span class="req-star">*</span></label><input type="number" class="obj-peso" placeholder="0" oninput="recalc()" required></div>
                 </div>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-                    <div><label>FECHA INICIO</label><input type="date" class="obj-inicio"></div>
-                    <div><label>FECHA FIN</label><input type="date" class="obj-fin"></div>
+                    <div><label>FECHA INICIO <span class="req-star">*</span></label><input type="date" class="obj-inicio" required></div>
+                    <div><label>FECHA FIN <span class="req-star">*</span></label><input type="date" class="obj-fin" required></div>
                 </div>`;
             document.getElementById('regContainer').appendChild(div);
             recalc();
@@ -265,6 +266,26 @@
 
         async function enviarObjetivos() {
             const btn = document.getElementById('btnEnviar');
+            
+            // VALIDACIÓN DE CAMPOS VACÍOS
+            let incompleto = false;
+            document.querySelectorAll('.obj-card').forEach((card, index) => {
+                const inputs = card.querySelectorAll('input[required], select[required]');
+                inputs.forEach(input => {
+                    if (!input.value || input.value === "") {
+                        incompleto = true;
+                        input.style.borderColor = "#ff4d4d";
+                    } else {
+                        input.style.borderColor = "rgba(255,255,255,0.1)";
+                    }
+                });
+            });
+
+            if(incompleto) {
+                alert("Por favor, completa todos los campos obligatorios marcados con * antes de enviar.");
+                return;
+            }
+
             btn.innerText = "ENVIANDO..."; btn.disabled = true;
 
             const goals = [];
@@ -274,8 +295,8 @@
                     meta: card.querySelector('.obj-meta').value,
                     tendencia: card.querySelector('.obj-tendencia').value,
                     peso: card.querySelector('.obj-peso').value,
-                    inicio: card.querySelector('.obj-inicio') ? card.querySelector('.obj-inicio').value : '',
-                    fin: card.querySelector('.obj-fin') ? card.querySelector('.obj-fin').value : ''
+                    inicio: card.querySelector('.obj-inicio').value,
+                    fin: card.querySelector('.obj-fin').value
                 });
             });
 
