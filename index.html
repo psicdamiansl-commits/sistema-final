@@ -9,169 +9,218 @@
     <style>
         :root {
             --uix-purple-dark: #0a0118;
-            --uix-red-main: #8b0000;
+            --uix-purple-card: #140529;
             --uix-green: #7CFF01;
-            --card-bg: #150a2e;
+            --uix-green-btn: #21a366;
+            --white: #FFFFFF;
+            --text-muted: #a094b7;
+            --alert-bg: #fff3cd;
+            --active-red: #8b0000;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: white; height: 100vh; display: flex; overflow: hidden; }
+        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: var(--white); height: 100vh; display: flex; overflow: hidden; }
 
-        /* SIDEBAR */
+        /* LOGIN */
+        #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
+        .login-card { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 25px; width: 400px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
+        .login-card h1 { color: var(--uix-green); font-size: 2.8rem; margin-bottom: 5px; }
+
+        /* SIDEBAR MVP STYLE */
         .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); }
-        .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: #a094b7; font-size: 0.85rem; }
-        .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
+        .user-info { padding: 0 20px 30px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
+        .nav-menu { flex: 1; }
+        .nav-item { padding: 15px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: var(--text-muted); font-size: 0.9rem; transition: 0.3s; }
+        .nav-item:hover { background: rgba(255,255,255,0.03); color: white; }
+        .nav-item.active { background: var(--active-red); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
 
         /* MAIN CONTENT */
-        .main-container { flex: 1; overflow-y: auto; background: var(--uix-purple-dark); padding: 40px; }
-        .header-content { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .main-container { flex: 1; overflow-y: auto; padding: 0; background: #0a0118; }
+        .top-nav-tabs { display: flex; gap: 30px; padding: 20px 40px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .tab-link { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); cursor: pointer; padding-bottom: 10px; border-bottom: 2px solid transparent; }
+        .tab-link.active { color: var(--uix-green); border-bottom-color: var(--uix-green); }
+
+        .content-body { padding: 40px; }
         
+        /* ALERTS & HEADERS */
+        .alert-banner { background: var(--alert-bg); color: #856404; padding: 15px; border-radius: 8px; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; font-size: 0.8rem; border: 1px solid #ffeeba; }
+        .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .btn-add { background: var(--uix-green-btn); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.8rem; }
+
         /* CARDS */
-        .obj-card { 
-            background: var(--card-bg); 
-            padding: 25px; 
-            border-radius: 12px; 
-            margin-bottom: 20px; 
-            border-left: 4px solid var(--uix-green); 
-            position: relative; 
-        }
-
-        /* BOTÓN ELIMINAR OBJETIVO */
-        .btn-remove {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 0, 0, 0.1);
-            color: #ff4d4d;
-            border: 1px solid rgba(255, 0, 0, 0.2);
-            width: 35px;
-            height: 35px;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.3s;
-        }
-        .btn-remove:hover { background: var(--uix-red-main); color: white; }
-
-        .btn-add { background: var(--uix-green); color: black; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+        .obj-card { background: var(--uix-purple-card); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--active-red); }
+        .obj-title { color: var(--uix-green); font-size: 0.9rem; font-weight: 700; margin-bottom: 20px; }
+        label { font-size: 0.7rem; color: var(--text-muted); display: block; margin-bottom: 8px; text-transform: uppercase; }
+        label span { color: #ff4d4d; }
         
-        label { font-size: 0.65rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
-        input, select { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 12px; border-radius: 8px; width: 100%; margin-bottom: 15px; }
+        input, select { width: 100%; background: #0a0118; border: 1px solid #3d2b56; padding: 12px; border-radius: 8px; color: white; margin-bottom: 20px; font-family: 'Sora'; }
 
-        .comp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
-        .comp-card { background: #3c327b; padding: 15px; border-radius: 8px; font-size: 0.7rem; border-bottom: 4px solid transparent; }
-        
-        .btn-send { background: var(--uix-red-main); color: white; width: 100%; padding: 15px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; margin-top: 30px; }
+        /* COMPETENCIAS */
+        .comp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 20px; }
+        .comp-item { padding: 15px; border-radius: 10px; font-size: 0.65rem; min-height: 110px; }
+        .c1 { background: #5a4ca5; } .c2 { background: #5c78d6; } .c3 { background: #5e48ad; } .c4 { background: #4a54b3; } .c5 { background: #7162ad; }
+
+        .btn-send { background: var(--active-red); color: white; flex: 1; padding: 16px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; text-transform: uppercase; }
+        .btn-draft { background: #6c757d; color: white; padding: 16px 25px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; }
+
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
-    <aside class="sidebar">
-        <div style="padding:0 25px 30px; border-bottom:1px solid rgba(255,255,255,0.05); margin-bottom:20px;">
-            <p style="color:var(--uix-green); font-size:0.6rem; font-weight:700;">COLABORADOR EXTERNO</p>
-            <h5>Damian Sanchez Linares</h5>
+    <div id="loginScreen">
+        <div class="login-card">
+            <h1>uix<span>.</span></h1>
+            <p>Acceso Colaboradores 2026</p>
+            <select id="roleInput">
+                <option value="" disabled selected>Selecciona tu Rol</option>
+                <option value="Colaborador Externo">Colaborador Externo</option>
+                <option value="Formador/Lider">Formador/Lider</option>
+            </select>
+            <input type="email" id="emailInput" placeholder="Correo Corporativo">
+            <input type="password" id="passInput" placeholder="Contraseña">
+            <button onclick="handleLogin()" style="background:var(--uix-green); color:black; width:100%; padding:14px; border-radius:30px; border:none; font-weight:800; cursor:pointer;">INGRESAR</button>
         </div>
-        <nav>
+    </div>
+
+    <aside class="sidebar">
+        <div class="user-info">
+            <div style="width:50px; height:50px; background:#1a0830; border-radius:50%; margin-bottom:10px; display:flex; align-items:center; justify-content:center; border:1px solid var(--uix-green);"><i class="fas fa-user"></i></div>
+            <h5 id="uName">Nombre Usuario</h5>
+            <p id="uRole" style="font-size:0.65rem; color:var(--uix-green);">Rol del Usuario</p>
+        </div>
+        <nav class="nav-menu">
             <div class="nav-item"><i class="fas fa-home"></i> Dashboard</div>
             <div class="nav-item active"><i class="fas fa-bullseye"></i> Mis Objetivos</div>
             <div class="nav-item"><i class="fas fa-history"></i> Historial</div>
             <div class="nav-item"><i class="fas fa-bell"></i> Notificaciones</div>
         </nav>
+        <div class="nav-item" style="color:#ff4d4d; border-top: 1px solid rgba(255,255,255,0.05);" onclick="location.reload()"><i class="fas fa-sign-out-alt"></i> Salir</div>
     </aside>
 
     <main class="main-container">
-        <div class="header-content">
-            <div>
-                <h2>Mis Objetivos</h2>
-                <p style="font-size:0.8rem; color:#888;">Objetivos actuales: <span id="countObj">1</span>/5</p>
-            </div>
-            <button onclick="agregarObjetivo()" class="btn-add" id="btnAdd">+ Agregar Objetivo</button>
+        <div class="top-nav-tabs">
+            <div class="tab-link active">Objetivos y Competencias</div>
+            <div class="tab-link">Autoevaluación Mes 6</div>
+            <div class="tab-link">Evaluación Final Mes 12</div>
         </div>
 
-        <div id="regContainer">
-            <div class="obj-card" id="obj1">
-                <label id="lblObj1">Objetivo 1 *</label>
-                <input type="text" placeholder="Nombre del objetivo">
-                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
-                    <div><label>Meta Anual</label><input type="number" placeholder="0"></div>
-                    <div><label>Tendencia</label>
-                        <select>
-                            <option>Incremental</option>
-                            <option>Sostenible</option>
-                            <option>Decremental</option>
-                        </select>
-                    </div>
-                    <div><label>Peso (%)</label><input type="number" placeholder="0"></div>
+        <div class="content-body">
+            <h2 style="font-size:1.3rem; margin-bottom:10px;">Registro de Objetivos (Máximo 5)</h2>
+            
+            <div class="alert-banner">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div>
+                    <strong>Total de pesos: <span id="totalPesoText">0%</span></strong><br>
+                    La suma de todos los pesos debe ser exactamente 100%
                 </div>
             </div>
-        </div>
 
-        <h3 style="color:var(--uix-green); margin-top:40px; font-size:1rem;">★ Competencias Organizacionales</h3>
-        <div class="comp-grid">
-            <div class="comp-card" style="border-color:#5a4ad1;"><strong>Confianza y Respeto</strong><br>Relaciones basadas en honestidad.</div>
-            <div class="comp-card" style="border-color:#4a7bd1;"><strong>Ejecución Impecable</strong><br>Cumplir compromisos con calidad.</div>
-            <div class="comp-card" style="border-color:#814ad1;"><strong>Mejora Continua</strong><br>Optimizar procesos y resultados.</div>
-            <div class="comp-card" style="border-color:#4a5ad1;"><strong>Pasión por el Cliente</strong><br>Superar expectativas del cliente.</div>
-            <div class="comp-card" style="border-color:#5c4ad1;"><strong>Trabajo en Equipo</strong><br>Colaborar para metas comunes.</div>
-        </div>
+            <div class="header-row">
+                <span style="font-size:0.8rem; color:var(--text-muted);">Objetivos: <span id="countText">1</span>/5</span>
+                <button class="btn-add" onclick="add()">+ Agregar Objetivo</button>
+            </div>
 
-        <button class="btn-send">Enviar Objetivos al Formador</button>
+            <div id="objsContainer">
+                <div class="obj-card">
+                    <div class="obj-title">Objetivo 1 <span>*</span></div>
+                    <label>OBJETIVO <span>*</span></label>
+                    <input type="text" class="in-n" placeholder="Nombre del objetivo">
+                    
+                    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px;">
+                        <div><label>META ANUAL <span>*</span></label><input type="text" class="in-m" placeholder="0"></div>
+                        <div><label>TENDENCIA <span>*</span></label>
+                            <select class="in-t">
+                                <option value="" disabled selected>Seleccionar...</option>
+                                <option value="Incremental">Incremental</option>
+                                <option value="Sostenible">Sostenible</option>
+                                <option value="Decremental">Decremental</option>
+                            </select>
+                        </div>
+                        <div><label>PESO (%) <span>*</span></label><input type="number" class="in-p" oninput="calc()" placeholder="0"></div>
+                    </div>
+                    
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+                        <div><label>FECHA INICIO <span>*</span></label><input type="date" class="in-i"></div>
+                        <div><label>FECHA FIN <span>*</span></label><input type="date" class="in-f"></div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="color:var(--active-red); font-size:1rem; margin-top:40px;"><i class="fas fa-star"></i> Competencias Organizacionales</h3>
+            <div class="comp-grid">
+                <div class="comp-item c1"><i class="fas fa-handshake"></i> <strong>Confianza y Respeto</strong></div>
+                <div class="comp-item c2"><i class="fas fa-check-circle"></i> <strong>Ejecución Impecable</strong></div>
+                <div class="comp-item c3"><i class="fas fa-sync-alt"></i> <strong>Mejora Continua</strong></div>
+                <div class="comp-item c4"><i class="fas fa-heart"></i> <strong>Pasión por el Cliente</strong></div>
+                <div class="comp-item c5"><i class="fas fa-users"></i> <strong>Trabajo en Equipo</strong></div>
+            </div>
+
+            <div style="display:flex; gap:15px; margin-top:30px;">
+                <button class="btn-send" onclick="send()" id="btnSend"><i class="fas fa-paper-plane"></i> Enviar Objetivos al Formador</button>
+                <button class="btn-draft" onclick="alert('Borrador guardado')">Guardar Borrador</button>
+            </div>
+        </div>
     </main>
 
     <script>
-        let totalObjetivos = 1;
+        const API = "https://script.google.com/macros/s/AKfycbxd1vCbXl3byT1ooOovYzlLJaoKhOyEBgft420IFHyLQo3SAOuZmGHPF6y_5MdJ-lE/exec";
+        let user = null;
 
-        function agregarObjetivo() {
-            if (totalObjetivos >= 5) return;
-            totalObjetivos++;
-            
-            const container = document.getElementById('regContainer');
-            const card = document.createElement('div');
-            card.className = 'obj-card';
-            card.id = `obj${totalObjetivos}`;
-            
-            card.innerHTML = `
-                <button class="btn-remove" onclick="eliminarObjetivo('${card.id}')">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
-                <label>Objetivo ${totalObjetivos} *</label>
-                <input type="text" placeholder="Nombre del objetivo">
-                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
-                    <div><label>Meta Anual</label><input type="number" placeholder="0"></div>
-                    <div><label>Tendencia</label>
-                        <select>
-                            <option>Incremental</option>
-                            <option>Sostenible</option>
-                            <option>Decremental</option>
-                        </select>
-                    </div>
-                    <div><label>Peso (%)</label><input type="number" placeholder="0"></div>
-                </div>
-            `;
-            container.appendChild(card);
-            actualizarInterfaz();
+        async function handleLogin() {
+            const role = document.getElementById('roleInput').value;
+            const email = document.getElementById('emailInput').value;
+            const pass = document.getElementById('passInput').value;
+            if(!role || !email || !pass) return alert("Completa los campos.");
+
+            try {
+                const res = await fetch(API, { method: "POST", body: JSON.stringify({ action: "login", email, password: pass }) });
+                const data = await res.json();
+                if(data.status === "success") {
+                    user = data;
+                    document.getElementById('uName').innerText = data.nombre;
+                    document.getElementById('uRole').innerText = role;
+                    document.getElementById('loginScreen').classList.add('hidden');
+                } else { alert("Error de acceso"); }
+            } catch(e) { alert("Error de conexión"); }
         }
 
-        function eliminarObjetivo(id) {
-            document.getElementById(id).remove();
-            totalObjetivos--;
-            reordenar();
-            actualizarInterfaz();
+        function calc() {
+            let t = 0;
+            document.querySelectorAll('.in-p').forEach(i => t += Number(i.value || 0));
+            document.getElementById('totalPesoText').innerText = t + "%";
+            return t;
         }
 
-        function reordenar() {
-            const cards = document.querySelectorAll('.obj-card');
-            cards.forEach((card, index) => {
-                const n = index + 1;
-                card.id = `obj${n}`;
-                card.querySelector('label').innerText = `Objetivo ${n} *`;
+        function add() {
+            const container = document.getElementById('objsContainer');
+            const count = container.querySelectorAll('.obj-card').length;
+            if(count >= 5) return;
+            const clone = container.querySelector('.obj-card').cloneNode(true);
+            clone.querySelector('.obj-title').innerHTML = `Objetivo ${count + 1} <span>*</span>`;
+            clone.querySelectorAll('input').forEach(i => i.value = "");
+            container.appendChild(clone);
+            document.getElementById('countText').innerText = count + 1;
+        }
+
+        async function send() {
+            if(calc() !== 100) return alert("El peso total debe ser 100%");
+            const btn = document.getElementById('btnSend');
+            btn.disabled = true; btn.innerText = "ENVIANDO...";
+            
+            const objetivos = [];
+            document.querySelectorAll('.obj-card').forEach(c => {
+                objetivos.push({
+                    nombre: c.querySelector('.in-n').value, meta: c.querySelector('.in-m').value,
+                    tendencia: c.querySelector('.in-t').value, peso: c.querySelector('.in-p').value,
+                    fechaInicio: c.querySelector('.in-i').value, fechaFin: c.querySelector('.in-f').value
+                });
             });
-        }
 
-        function actualizarInterfaz() {
-            document.getElementById('countObj').innerText = totalObjetivos;
-            document.getElementById('btnAdd').style.display = (totalObjetivos >= 5) ? 'none' : 'block';
+            try {
+                const res = await fetch(API, { method: "POST", body: JSON.stringify({ action: "saveObjetivos", email: user.email, objetivos }) });
+                const data = await res.json();
+                if(data.status === "success") { alert("¡Enviado!"); location.reload(); }
+            } catch(e) { alert("Error"); btn.disabled = false; btn.innerText = "ENVIAR"; }
         }
     </script>
 </body>
