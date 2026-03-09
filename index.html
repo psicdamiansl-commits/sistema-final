@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uix. Sistema de Desempeño - V6 Final</title>
+    <title>uix. Sistema de Desempeño - V6 Corregido</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -12,6 +12,7 @@
             --uix-red-main: #8b0000;
             --uix-green: #7CFF01;
             --card-bg: #150a2e;
+            --text-muted: #a094b7;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: white; height: 100vh; display: flex; overflow: hidden; }
@@ -22,11 +23,16 @@
         .login-card h1 { color: var(--uix-green); font-size: 2.5rem; margin-bottom: 10px; }
         .login-card select, .login-card input { width: 100%; background: #eef2f7; border: none; padding: 15px; border-radius: 10px; margin-bottom: 15px; color: #333; font-family: 'Sora'; }
         .btn-login { background: var(--uix-green); color: black; width: 100%; padding: 15px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; }
+        .login-error { color: #ff4d4d; font-size:0.75rem; margin-top:15px; min-height: 20px; }
 
         /* SIDEBAR */
         .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); }
         .user-profile { padding: 0 25px 30px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
-        .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; color: #a094b7; font-size: 0.85rem; }
+        .user-avatar { width: 50px; height: 50px; background: #1a0830; border-radius: 50%; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--uix-green); }
+        .user-role { color: var(--uix-green); font-size:0.6rem; font-weight:700; margin-bottom: 5px; }
+        .user-name { color: white; font-size: 1rem; font-weight: 600; }
+        .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; color: var(--text-muted); font-size: 0.85rem; cursor: pointer; transition: 0.3s; }
+        .nav-item:hover { background: rgba(255,255,255,0.03); color: white; }
         .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
         .btn-logout { margin-top: auto; padding: 25px; color: #ff4d4d; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 10px; border-top: 1px solid rgba(255,255,255,0.05); }
 
@@ -39,34 +45,55 @@
         /* CARDS */
         .obj-card { background: var(--card-bg); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--uix-red-main); position: relative; }
         .btn-remove { position: absolute; top: 15px; right: 15px; background: #d93025; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; }
+        .btn-remove:hover { background: #b91c1c; }
         
         label { font-size: 0.6rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
         input, select { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 10px; border-radius: 6px; width: 100%; margin-bottom: 12px; font-family: 'Sora'; }
+        input:focus, select:focus { outline: none; border-color: var(--uix-green); }
+
+        .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .btn-add { background: var(--uix-green); border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; color: black; }
+        .btn-add:hover { opacity: 0.9; }
+        .btn-add:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .btn-send { background: var(--uix-red-main); color: white; flex: 4; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .btn-send:hover { background: #a00000; }
+        .btn-send:disabled { opacity: 0.5; cursor: not-allowed; }
 
         .hidden { display: none !important; }
+        
+        /* Alertas */
+        .alert { background: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.8rem; border: 1px solid #ffeeba; }
+        .alert-danger { background: #f8d7da; color: #721c24; border-color: #f5c6cb; }
     </style>
 </head>
 <body>
 
+    <!-- PANTALLA DE LOGIN -->
     <div id="loginScreen">
         <div class="login-card">
             <h1>uix<span>.</span></h1>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">Acceso Colaboradores 2026</p>
             <select id="roleInput">
                 <option value="" disabled selected>Selecciona tu Rol</option>
-                <option value="Colaborador">Colaborador Externo</option>
-                <option value="Lider">Formador/Lider</option>
+                <option value="Colaborador Externo">Colaborador Externo</option>
+                <option value="Formador/Lider">Formador/Lider</option>
             </select>
-            <input type="email" id="emailInput" placeholder="Correo electrónico">
+            <input type="email" id="emailInput" placeholder="Correo electrónico" autocomplete="off">
             <input type="password" id="passInput" placeholder="Contraseña">
-            <button onclick="validaAcceso()" id="btnLogin" class="btn-login">INGRESAR</button>
-            <p id="loginMsg" style="color:#ff4d4d; font-size:0.75rem; margin-top:15px;"></p>
+            <button onclick="handleLogin()" id="btnLogin" class="btn-login">INGRESAR</button>
+            <div id="loginMsg" class="login-error"></div>
         </div>
     </div>
 
+    <!-- SIDEBAR (oculta inicialmente) -->
     <aside class="sidebar hidden" id="sidebar">
         <div class="user-profile">
-            <p id="uRole" style="color:var(--uix-green); font-size:0.6rem; font-weight:700;">ROL</p>
-            <h5 id="uName" style="color:white;">Cargando...</h5>
+            <div class="user-avatar">
+                <i class="fas fa-user" style="color: var(--uix-green);"></i>
+            </div>
+            <div class="user-role" id="uRole">ROL</div>
+            <div class="user-name" id="uName">Cargando...</div>
         </div>
         <nav>
             <div class="nav-item active"><i class="fas fa-bullseye"></i> Mis Objetivos</div>
@@ -75,6 +102,7 @@
         <div class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> SALIR</div>
     </aside>
 
+    <!-- ÁREA PRINCIPAL (oculta inicialmente) -->
     <main class="main-container hidden" id="mainArea">
         <div class="tab-menu">
             <div class="tab-item active">Objetivos y Competencias</div>
@@ -83,110 +111,377 @@
         </div>
 
         <h2 style="font-size: 1.1rem; margin-bottom: 5px;">Registro de Objetivos (Máximo 5)</h2>
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+        
+        <!-- Alerta de pesos (se muestra cuando la suma no es 100%) -->
+        <div id="pesoAlert" class="alert hidden">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>La suma de los pesos debe ser exactamente 100% (actual: <span id="totalPeso">0</span>%)</span>
+        </div>
+
+        <div class="header-row">
             <p style="font-size:0.7rem; color:#888;">Objetivos: <span id="countObj">1</span>/5</p>
-            <button onclick="agregarObjetivo()" id="btnAdd" style="background:var(--uix-green); border:none; padding:8px 15px; border-radius:5px; font-weight:bold; cursor:pointer;">+ Agregar Objetivo</button>
+            <button onclick="agregarObjetivo()" id="btnAdd" class="btn-add">+ Agregar Objetivo</button>
         </div>
 
         <div id="regContainer">
+            <!-- Objetivo inicial -->
             <div class="obj-card" id="obj1">
+                <button class="btn-remove hidden" onclick="eliminarObj('obj1')">Eliminar</button>
                 <label style="color:var(--uix-green); font-size:0.8rem; margin-bottom:15px;">Objetivo 1 *</label>
                 <label>OBJETIVO *</label>
-                <input type="text" placeholder="Nombre del objetivo">
+                <input type="text" class="obj-nombre" placeholder="Nombre del objetivo" onchange="calcularPesos()">
                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
-                    <div><label>META ANUAL *</label><input type="number"></div>
-                    <div><label>TENDENCIA *</label><select><option>Incremental</option></select></div>
-                    <div><label>PESO (%) *</label><input type="number"></div>
+                    <div>
+                        <label>META ANUAL *</label>
+                        <input type="number" class="obj-meta" onchange="calcularPesos()">
+                    </div>
+                    <div>
+                        <label>TENDENCIA *</label>
+                        <select class="obj-tendencia" onchange="calcularPesos()">
+                            <option value="Incremental">Incremental</option>
+                            <option value="Sostenible">Sostenible</option>
+                            <option value="Decremental">Decremental</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>PESO (%) *</label>
+                        <input type="number" class="obj-peso" min="1" max="100" onchange="calcularPesos()" onkeyup="calcularPesos()">
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="footer-btns" style="display:flex; gap:15px; margin-top:30px;">
-            <button style="background:var(--uix-red-main); color:white; flex:4; padding:15px; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">ENVIAR OBJETIVOS</button>
+        <div style="display:flex; gap:15px; margin-top:30px;">
+            <button onclick="enviarObjetivos()" id="btnSend" class="btn-send">ENVIAR OBJETIVOS</button>
         </div>
     </main>
 
     <script>
-        let total = 1;
+        // ============================================
+        // CONFIGURACIÓN - CAMBIA ESTA URL POR LA TUYA
+        // ============================================
+        const API_URL = "https://script.google.com/macros/s/AKfycbxd1vCbXl3byT1ooOovYzlLJaoKhOyEBgft420IFHyLQo3SAOuZmGHPF6y_5MdJ-lE/exec";
+        
+        // Variables globales
+        let totalObjetivos = 1;
+        let usuarioActual = null;
 
-        function validaAcceso() {
-            const email = document.getElementById('emailInput').value;
-            const pass = document.getElementById('passInput').value;
+        // ============================================
+        // FUNCIONES DE LOGIN
+        // ============================================
+        async function handleLogin() {
+            const email = document.getElementById('emailInput').value.trim();
+            const password = document.getElementById('passInput').value;
             const role = document.getElementById('roleInput').value;
             const btn = document.getElementById('btnLogin');
             const msg = document.getElementById('loginMsg');
 
-            if(!email || !pass || !role) {
+            // Validación básica
+            if(!email || !password || !role) {
                 msg.innerText = "Completa todos los campos.";
                 return;
             }
 
+            if(!email.includes('@')) {
+                msg.innerText = "Ingresa un correo válido.";
+                return;
+            }
+
+            // Mostrar estado de carga
             btn.innerText = "VALIDANDO...";
             btn.disabled = true;
+            msg.innerText = "";
 
-            // LLAMADA AL SERVIDOR
             try {
-                google.script.run
-                    .withSuccessHandler(res => {
-                        if(res && res.autorizado) {
-                            document.getElementById('uName').innerText = res.nombre;
-                            document.getElementById('uRole').innerText = role;
-                            document.getElementById('loginScreen').classList.add('hidden');
-                            document.getElementById('sidebar').classList.remove('hidden');
-                            document.getElementById('mainArea').classList.remove('hidden');
-                        } else {
-                            msg.innerText = res.mensaje || "Error de credenciales.";
-                            btn.innerText = "INGRESAR";
-                            btn.disabled = false;
-                        }
+                console.log("Intentando login para:", email);
+                
+                // Llamada a la API con fetch
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    // Importante: para Google Apps Script necesitamos estos headers
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    // Google Apps Script espera datos en formato formulario
+                    body: new URLSearchParams({
+                        action: "login",
+                        email: email,
+                        password: password
                     })
-                    .withFailureHandler(err => {
-                        msg.innerText = "Error de conexión: Verifica que Código.gs esté guardado.";
-                        btn.innerText = "INGRESAR";
-                        btn.disabled = false;
-                    })
-                    .verificarUsuario(email, pass);
-            } catch (e) {
-                msg.innerText = "Error local: No se encontró el script de Google.";
+                });
+
+                // Intentar parsear la respuesta
+                let data;
+                try {
+                    data = await response.json();
+                } catch (e) {
+                    console.log("Respuesta no es JSON, intentando texto:", e);
+                    const text = await response.text();
+                    console.log("Respuesta texto:", text);
+                    
+                    // Si la respuesta es un mensaje HTML de éxito de Google Apps Script
+                    if(text.includes("HtmlOutput") || text.includes("success")) {
+                        data = { status: "success", autorizado: true, nombre: email.split('@')[0] };
+                    } else {
+                        throw new Error("Respuesta inválida del servidor");
+                    }
+                }
+
+                console.log("Respuesta del servidor:", data);
+
+                // Procesar respuesta
+                if(data && (data.status === "success" || data.autorizado === true)) {
+                    // Login exitoso
+                    usuarioActual = {
+                        email: email,
+                        nombre: data.nombre || email.split('@')[0],
+                        role: role
+                    };
+                    
+                    // Actualizar UI
+                    document.getElementById('uName').innerText = usuarioActual.nombre;
+                    document.getElementById('uRole').innerText = role;
+                    
+                    // Ocultar login, mostrar app
+                    document.getElementById('loginScreen').classList.add('hidden');
+                    document.getElementById('sidebar').classList.remove('hidden');
+                    document.getElementById('mainArea').classList.remove('hidden');
+                    
+                    msg.innerText = "";
+                } else {
+                    // Login falló
+                    msg.innerText = data.mensaje || "Credenciales incorrectas";
+                    btn.innerText = "INGRESAR";
+                    btn.disabled = false;
+                }
+
+            } catch (error) {
+                console.error("Error completo:", error);
+                msg.innerText = "Error de conexión. Verifica tu conexión e intenta nuevamente.";
                 btn.innerText = "INGRESAR";
                 btn.disabled = false;
             }
         }
 
         function logout() {
+            // Limpiar todo y volver al login
             document.getElementById('loginScreen').classList.remove('hidden');
             document.getElementById('sidebar').classList.add('hidden');
             document.getElementById('mainArea').classList.add('hidden');
+            
+            // Limpiar campos
             document.getElementById('passInput').value = "";
+            document.getElementById('emailInput').value = "";
+            document.getElementById('roleInput').value = "";
+            document.getElementById('loginMsg').innerText = "";
+            
+            // Resetear botón
             document.getElementById('btnLogin').innerText = "INGRESAR";
             document.getElementById('btnLogin').disabled = false;
+            
+            // Limpiar objetivos (resetear a 1)
+            resetearObjetivos();
+            
+            usuarioActual = null;
         }
 
+        // ============================================
+        // FUNCIONES DE OBJETIVOS
+        // ============================================
         function agregarObjetivo() {
-            if(total >= 5) return;
-            total++;
+            if(totalObjetivos >= 5) {
+                alert("Máximo 5 objetivos permitidos");
+                return;
+            }
+            
+            totalObjetivos++;
             const container = document.getElementById('regContainer');
             const card = document.createElement('div');
             card.className = 'obj-card';
-            card.id = `obj${total}`;
+            card.id = `obj${totalObjetivos}`;
             card.innerHTML = `
-                <button class="btn-remove" onclick="eliminarObj('${card.id}')">Eliminar</button>
-                <label style="color:var(--uix-green); font-size:0.8rem; margin-bottom:15px;">Objetivo ${total} *</label>
-                <input type="text" placeholder="Nombre del objetivo">
+                <button class="btn-remove" onclick="eliminarObj('obj${totalObjetivos}')">Eliminar</button>
+                <label style="color:var(--uix-green); font-size:0.8rem; margin-bottom:15px;">Objetivo ${totalObjetivos} *</label>
+                <label>OBJETIVO *</label>
+                <input type="text" class="obj-nombre" placeholder="Nombre del objetivo" onchange="calcularPesos()">
                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
-                    <div><label>META *</label><input type="number"></div>
-                    <div><label>TENDENCIA *</label><select><option>Incremental</option></select></div>
-                    <div><label>PESO *</label><input type="number"></div>
-                </div>`;
+                    <div>
+                        <label>META ANUAL *</label>
+                        <input type="number" class="obj-meta" onchange="calcularPesos()">
+                    </div>
+                    <div>
+                        <label>TENDENCIA *</label>
+                        <select class="obj-tendencia" onchange="calcularPesos()">
+                            <option value="Incremental">Incremental</option>
+                            <option value="Sostenible">Sostenible</option>
+                            <option value="Decremental">Decremental</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>PESO (%) *</label>
+                        <input type="number" class="obj-peso" min="1" max="100" onchange="calcularPesos()" onkeyup="calcularPesos()">
+                    </div>
+                </div>
+            `;
             container.appendChild(card);
-            document.getElementById('countObj').innerText = total;
+            
+            // Mostrar botón eliminar en el primer objetivo si hay más de 1
+            if(totalObjetivos > 1) {
+                document.querySelector('#obj1 .btn-remove').classList.remove('hidden');
+            }
+            
+            document.getElementById('countObj').innerText = totalObjetivos;
+            calcularPesos();
         }
 
         function eliminarObj(id) {
-            document.getElementById(id).remove();
-            total--;
-            document.getElementById('countObj').innerText = total;
+            if(totalObjetivos <= 1) {
+                alert("Debes tener al menos 1 objetivo");
+                return;
+            }
+            
+            if(confirm("¿Eliminar este objetivo?")) {
+                document.getElementById(id).remove();
+                totalObjetivos--;
+                
+                // Ocultar botón eliminar del primer objetivo si solo queda 1
+                if(totalObjetivos === 1) {
+                    document.querySelector('#obj1 .btn-remove').classList.add('hidden');
+                }
+                
+                document.getElementById('countObj').innerText = totalObjetivos;
+                calcularPesos();
+            }
         }
+
+        function resetearObjetivos() {
+            // Eliminar todos los objetivos excepto el primero
+            const container = document.getElementById('regContainer');
+            const objetivos = container.querySelectorAll('.obj-card');
+            for(let i = 1; i < objetivos.length; i++) {
+                objetivos[i].remove();
+            }
+            
+            // Limpiar el primer objetivo
+            const primerObj = document.getElementById('obj1');
+            primerObj.querySelector('.obj-nombre').value = "";
+            primerObj.querySelector('.obj-meta').value = "";
+            primerObj.querySelector('.obj-tendencia').value = "Incremental";
+            primerObj.querySelector('.obj-peso').value = "";
+            
+            // Ocultar botón eliminar del primer objetivo
+            primerObj.querySelector('.btn-remove').classList.add('hidden');
+            
+            totalObjetivos = 1;
+            document.getElementById('countObj').innerText = "1";
+            calcularPesos();
+        }
+
+        function calcularPesos() {
+            let suma = 0;
+            document.querySelectorAll('.obj-peso').forEach(input => {
+                suma += Number(input.value) || 0;
+            });
+            
+            document.getElementById('totalPeso').innerText = suma;
+            
+            const alerta = document.getElementById('pesoAlert');
+            if(suma !== 100) {
+                alerta.classList.remove('hidden');
+                document.getElementById('btnSend').disabled = true;
+            } else {
+                alerta.classList.add('hidden');
+                document.getElementById('btnSend').disabled = false;
+            }
+            
+            return suma;
+        }
+
+        // ============================================
+        // FUNCIÓN PARA ENVIAR OBJETIVOS
+        // ============================================
+        async function enviarObjetivos() {
+            if(!usuarioActual) {
+                alert("Debes iniciar sesión primero");
+                return;
+            }
+
+            if(calcularPesos() !== 100) {
+                alert("La suma de los pesos debe ser exactamente 100%");
+                return;
+            }
+
+            // Recolectar datos de todos los objetivos
+            const objetivos = [];
+            document.querySelectorAll('.obj-card').forEach((card, index) => {
+                objetivos.push({
+                    id: index + 1,
+                    nombre: card.querySelector('.obj-nombre')?.value || "",
+                    meta: card.querySelector('.obj-meta')?.value || "",
+                    tendencia: card.querySelector('.obj-tendencia')?.value || "",
+                    peso: card.querySelector('.obj-peso')?.value || "0"
+                });
+            });
+
+            // Validar que ningún campo obligatorio esté vacío
+            for(let obj of objetivos) {
+                if(!obj.nombre || !obj.meta || !obj.tendencia || !obj.peso) {
+                    alert(`El objetivo ${obj.id} tiene campos obligatorios vacíos`);
+                    return;
+                }
+            }
+
+            const btn = document.getElementById('btnSend');
+            btn.innerText = "ENVIANDO...";
+            btn.disabled = true;
+
+            try {
+                console.log("Enviando objetivos:", objetivos);
+                
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: new URLSearchParams({
+                        action: "guardarObjetivos",
+                        email: usuarioActual.email,
+                        objetivos: JSON.stringify(objetivos)
+                    })
+                });
+
+                let data;
+                try {
+                    data = await response.json();
+                } catch (e) {
+                    const text = await response.text();
+                    console.log("Respuesta texto:", text);
+                    data = { status: "success" };
+                }
+
+                if(data.status === "success") {
+                    alert("¡Objetivos enviados correctamente!");
+                    resetearObjetivos();
+                } else {
+                    alert("Error al enviar: " + (data.mensaje || "Intenta nuevamente"));
+                }
+
+            } catch (error) {
+                console.error("Error al enviar:", error);
+                alert("Error de conexión. Verifica e intenta nuevamente.");
+            } finally {
+                btn.innerText = "ENVIAR OBJETIVOS";
+                btn.disabled = false;
+            }
+        }
+
+        // ============================================
+        // INICIALIZACIÓN
+        // ============================================
+        window.onload = function() {
+            console.log("Aplicación lista. API URL:", API_URL);
+            calcularPesos();
+        };
     </script>
 </body>
 </html>
