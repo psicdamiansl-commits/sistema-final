@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uix. Sistema de Desempeño - 20260903_V7.4</title>
+    <title>uix. Sistema de Desempeño</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -12,7 +12,7 @@
             --uix-red-main: #8b0000;
             --uix-green: #7CFF01;
             --card-bg: #150a2e;
-            --grad-blue: linear-gradient(135deg, #6a5af9 0%, #4d3df2 100%);
+            --grad-comp: linear-gradient(135deg, #6a5af9 0%, #4d3df2 100%);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: white; height: 100vh; display: flex; overflow: hidden; }
@@ -21,65 +21,66 @@
         .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); }
         .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: #a094b7; font-size: 0.85rem; transition: 0.3s; }
         .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
-        .btn-logout { margin-top: auto; padding: 25px; color: #ff4d4d; font-weight: 700; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; gap: 10px; border-top: 1px solid rgba(255,255,255,0.05); }
 
         /* MAIN */
-        .main-container { flex: 1; overflow-y: auto; background: var(--uix-purple-dark); padding: 20px 40px; }
-        
-        /* TABS CICLO */
+        .main-container { flex: 1; overflow-y: auto; padding: 20px 40px; }
         .tab-menu { display: flex; gap: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
-        .tab-item { padding-bottom: 10px; font-size: 0.75rem; color: #888; cursor: pointer; font-weight: 600; }
+        .tab-item { padding-bottom: 10px; font-size: 0.75rem; color: #888; cursor: pointer; }
         .tab-item.active { color: var(--uix-green); border-bottom: 2px solid var(--uix-green); }
 
-        /* HEADER & WEIGHT */
-        .weight-tracker { background: rgba(255, 255, 255, 0.03); padding: 18px; border-radius: 12px; margin-bottom: 25px; border: 1px solid rgba(124, 255, 1, 0.2); }
-        .weight-text { font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; display: flex; justify-content: space-between; }
-        .progress-bg { width: 100%; height: 10px; background: #222; border-radius: 5px; overflow: hidden; }
-        .progress-fill { height: 100%; width: 0%; background: var(--uix-green); transition: width 0.4s ease; box-shadow: 0 0 10px var(--uix-green); }
+        /* ALERT PESO */
+        .weight-alert { background: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; margin-bottom: 25px; font-size: 0.8rem; display: flex; align-items: center; gap: 10px; border: 1px solid #ffeeba; }
 
         /* OBJETIVOS */
-        .obj-card { background: var(--card-bg); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 5px solid var(--uix-red-main); position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .btn-remove { position: absolute; top: 15px; right: 15px; background: #d93025; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; font-weight: bold; }
-        label { font-size: 0.65rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 6px; display: block; letter-spacing: 0.5px; }
-        input, select { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 12px; border-radius: 8px; width: 100%; margin-bottom: 15px; font-family: 'Sora'; font-size: 0.85rem; }
+        .obj-card { background: var(--card-bg); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 5px solid var(--uix-red-main); position: relative; }
+        label { font-size: 0.65rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
+        input, select { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 12px; border-radius: 6px; width: 100%; margin-bottom: 15px; font-family: 'Sora'; }
 
-        /* COMPETENCIAS - NUEVO DISEÑO BASADO EN IMAGEN */
-        .comp-title { color: #ff4d4d; font-size: 0.9rem; font-weight: 700; margin-top: 40px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-        .comp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-bottom: 50px; }
-        .comp-card { background: var(--grad-blue); padding: 15px; border-radius: 12px; transition: transform 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .comp-card:hover { transform: translateY(-5px); }
-        .comp-card i { font-size: 1.1rem; margin-bottom: 10px; display: block; }
-        .comp-card h4 { font-size: 0.75rem; font-weight: 700; margin-bottom: 8px; line-height: 1.2; }
-        .comp-card p { font-size: 0.6rem; line-height: 1.4; opacity: 0.9; font-weight: 300; }
+        /* COMPETENCIAS ESTILO IMAGEN */
+        .comp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 20px; }
+        .comp-card { background: var(--grad-comp); padding: 15px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .comp-card h4 { font-size: 0.75rem; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .comp-card p { font-size: 0.6rem; opacity: 0.9; line-height: 1.4; }
 
-        .footer-btns { display: flex; gap: 15px; padding-bottom: 50px; }
-        .btn-primary { background: var(--uix-red-main); color: white; flex: 4; padding: 18px; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
-        .btn-secondary { background: #2a2a2a; color: white; flex: 1; padding: 18px; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; }
-
-        /* Animación Login & Success */
+        .btn-send { background: var(--uix-red-main); color: white; border: none; padding: 15px; border-radius: 8px; width: 75%; font-weight: bold; cursor: pointer; }
+        .btn-draft { background: #333; color: white; border: none; padding: 15px; border-radius: 8px; width: 23%; font-weight: bold; cursor: pointer; }
+        
         #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
-        .login-card { background: rgba(255,255,255,0.03); padding: 45px; border-radius: 25px; width: 400px; text-align: center; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); }
+        .login-card { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 20px; width: 380px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
         .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
+    <div id="loginScreen">
+        <div class="login-card">
+            <h1 style="color:var(--uix-green); font-size:2.5rem;">uix<span>.</span></h1>
+            <p style="color:white; font-size:0.7rem; margin-bottom:25px; opacity:0.6;">ACCESO 2026</p>
+            <select id="roleInput">
+                <option value="Colaborador">Colaborador</option>
+                <option value="Líder">Líder</option>
+            </select>
+            <input type="email" id="emailInput" placeholder="Correo">
+            <input type="password" id="passInput" placeholder="Password">
+            <button onclick="validaAcceso()" style="background:var(--uix-green); color:black; width:100%; padding:15px; border-radius:30px; border:none; font-weight:800; cursor:pointer;">INGRESAR</button>
+        </div>
+    </div>
+
     <aside class="sidebar hidden" id="sidebar">
-        <div style="padding:0 25px 30px; border-bottom:1px solid rgba(255,255,255,0.05); margin-bottom:20px;">
+        <div style="padding:0 25px 30px; margin-bottom:20px;">
             <p id="uRole" style="color:var(--uix-green); font-size:0.6rem; font-weight:700;">ROL</p>
-            <h5 id="uName" style="color:white; font-size: 1.1rem;">Usuario</h5>
+            <h5 id="uName" style="color:white;">Usuario</h5>
         </div>
         <nav>
-            <div class="nav-item" id="nav-dashboard" onclick="switchTab('dashboard')"><i class="fas fa-th-large"></i> Dashboard</div>
-            <div class="nav-item active" id="nav-misObjetivos" onclick="switchTab('misObjetivos')"><i class="fas fa-bullseye"></i> Mis objetivos</div>
-            <div class="nav-item" id="nav-historial" onclick="switchTab('historial')"><i class="fas fa-history"></i> Historial</div>
-            <div class="nav-item" id="nav-notificaciones" onclick="switchTab('notificaciones')"><i class="fas fa-bell"></i> Notificaciones</div>
+            <div class="nav-item" onclick="switchTab('dashboard')"><i class="fas fa-th-large"></i> Dashboard</div>
+            <div class="nav-item active" onclick="switchTab('misObjetivos')"><i class="fas fa-bullseye"></i> Mis objetivos</div>
+            <div class="nav-item" onclick="switchTab('historial')"><i class="fas fa-history"></i> Historial</div>
+            <div class="nav-item" onclick="switchTab('notificaciones')"><i class="fas fa-bell"></i> Notificaciones</div>
         </nav>
-        <div class="btn-logout" onclick="location.reload()"><i class="fas fa-sign-out-alt"></i> SALIR</div>
+        <div style="margin-top:auto; padding:25px; color:#ff4d4d; font-weight:700; cursor:pointer;" onclick="location.reload()"><i class="fas fa-sign-out-alt"></i> SALIR</div>
     </aside>
 
     <main class="main-container hidden" id="mainArea">
-        
         <div id="misObjetivosSection">
             <div class="tab-menu">
                 <div class="tab-item active">Objetivos y Competencias</div>
@@ -87,128 +88,67 @@
                 <div class="tab-item">Evaluación Final Mes 12</div>
             </div>
 
-            <div class="header-content">
-                <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 20px;">
-                    <div>
-                        <h2 style="font-size: 1.4rem;">Registro de Objetivos</h2>
-                        <p style="font-size:0.75rem; color:#888; margin-top:5px;">Define tus metas estratégicas para el ciclo 2026. (Máximo 5)</p>
-                    </div>
-                    <button onclick="agregarObjetivo()" id="btnAdd" style="background:var(--uix-green); border:none; padding:10px 20px; border-radius:8px; font-weight:800; cursor:pointer; color: #000; font-size:0.75rem;">+ AGREGAR OBJETIVO</button>
-                </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h2>Registro de Objetivos (Máximo 5)</h2>
+                <button onclick="agregarObjetivo()" style="background:var(--uix-green); color:black; border:none; padding:8px 15px; border-radius:5px; font-weight:bold; cursor:pointer;">+ Agregar Objetivo</button>
             </div>
 
-            <div class="weight-tracker">
-                <div class="weight-text">
-                    <span>Sumatoria de Peso: <span id="pesoTotalTxt" style="color:var(--uix-green); margin-left:10px;">0% / 100%</span></span>
-                    <span style="font-size: 0.65rem; opacity:0.6;"><i class="fas fa-info-circle"></i> Debe ser exactamente 100%</span>
-                </div>
-                <div class="progress-bg"><div class="progress-fill" id="pesoBar"></div></div>
+            <div class="weight-alert">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div><strong>Total de pesos: <span id="pesoTotalTxt">0%</span></strong><br>La suma de todos los pesos debe ser exactamente 100%</div>
             </div>
 
             <div id="regContainer">
                 <div class="obj-card" id="obj1">
-                    <label style="color:var(--uix-green); font-size:0.85rem; margin-bottom:20px; border-bottom:1px solid rgba(124,255,1,0.1); padding-bottom:5px;">OBJETIVO 1 *</label>
-                    <label>NOMBRE DEL OBJETIVO *</label>
-                    <input type="text" class="obj-nombre" placeholder="Ej: Incrementar ventas en región norte">
-                    
-                    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px;">
-                        <div><label>META ANUAL *</label><input type="number" class="obj-meta" placeholder="0"></div>
-                        <div><label>TENDENCIA *</label>
-                            <select class="obj-tendencia">
-                                <option value="" disabled selected>Seleccionar...</option>
-                                <option value="Incremental">Incremental</option>
-                                <option value="Decremental">Decremental</option>
-                            </select>
-                        </div>
-                        <div><label>PESO (%) *</label><input type="number" class="obj-peso" placeholder="0" oninput="calcularPesos()"></div>
+                    <label style="font-size:0.8rem; margin-bottom:15px;">OBJETIVO 1 *</label>
+                    <label>OBJETIVO *</label>
+                    <input type="text" placeholder="Nombre del objetivo">
+                    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
+                        <div><label>META ANUAL *</label><input type="number" value="0"></div>
+                        <div><label>TENDENCIA *</label><select><option>Seleccionar...</option><option>Incremental</option><option>Decremental</option></select></div>
+                        <div><label>PESO (%) *</label><input type="number" class="obj-peso" value="0" oninput="recalc()"></div>
                     </div>
-                    
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
-                        <div><label>FECHA INICIO *</label><input type="date" class="obj-inicio"></div>
-                        <div><label>FECHA FIN *</label><input type="date" class="obj-fin"></div>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                        <div><label>FECHA INICIO *</label><input type="date"></div>
+                        <div><label>FECHA FIN *</label><input type="date"></div>
                     </div>
                 </div>
             </div>
 
-            <div class="comp-title"><i class="fas fa-star"></i> COMPETENCIAS ORGANIZACIONALES</div>
+            <h3 style="color:#ff4d4d; font-size:0.8rem; margin:30px 0 15px;"><i class="fas fa-star"></i> Competencias Organizacionales</h3>
             <div class="comp-grid">
-                <div class="comp-card">
-                    <i class="fas fa-handshake"></i>
-                    <h4>Confianza y Respeto Mutuo</h4>
-                    <p>Establece relaciones basadas en la honestidad, transparencia y respeto hacia todos los colaboradores.</p>
-                </div>
-                <div class="comp-card">
-                    <i class="fas fa-check-double"></i>
-                    <h4>Ejecución Impecable</h4>
-                    <p>Cumple con los compromisos adquiridos con la máxima calidad y en los tiempos establecidos.</p>
-                </div>
-                <div class="comp-card">
-                    <i class="fas fa-chart-line"></i>
-                    <h4>Mejora Continua</h4>
-                    <p>Busca constantemente formas de optimizar procesos, herramientas y resultados.</p>
-                </div>
-                <div class="comp-card">
-                    <i class="fas fa-heart"></i>
-                    <h4>Pasión por el Cliente</h4>
-                    <p>Pone al cliente en el centro de todas sus decisiones y acciones, superando expectativas.</p>
-                </div>
-                <div class="comp-card">
-                    <i class="fas fa-users"></i>
-                    <h4>Trabajo en Equipo</h4>
-                    <p>Colabora activamente con otros para alcanzar objetivos comunes, valorando la diversidad.</p>
-                </div>
+                <div class="comp-card"><i class="fas fa-handshake"></i><h4>Confianza y Respeto Mutuo</h4><p>Establece relaciones basadas en la honestidad, transparencia y respeto.</p></div>
+                <div class="comp-card"><i class="fas fa-check-double"></i><h4>Ejecución Impecable</h4><p>Cumple con los compromisos adquiridos con la máxima calidad y tiempos.</p></div>
+                <div class="comp-card"><i class="fas fa-chart-line"></i><h4>Mejora Continua</h4><p>Busca constantemente formas de optimizar procesos, herramientas y resultados.</p></div>
+                <div class="comp-card"><i class="fas fa-heart"></i><h4>Pasión por el Cliente</h4><p>Pone al cliente en el centro de todas sus decisiones, superando expectativas.</p></div>
+                <div class="comp-card"><i class="fas fa-users"></i><h4>Trabajo en Equipo</h4><p>Colabora activamente con otros para alcanzar objetivos comunes.</p></div>
             </div>
 
-            <div class="footer-btns">
-                <button onclick="enviarDatos()" class="btn-primary" id="btnEnviar"><i class="fas fa-paper-plane"></i> ENVIAR OBJETIVOS AL FORMADOR</button>
-                <button class="btn-secondary">BORRADOR</button>
+            <div style="margin-top:30px; display:flex; justify-content:space-between;">
+                <button class="btn-send"><i class="fas fa-paper-plane"></i> ENVIAR OBJETIVOS AL FORMADOR</button>
+                <button class="btn-draft">GUARDAR BORRADOR</button>
             </div>
         </div>
-        
+
         <div id="dashboardSection" class="hidden"><h2>Dashboard</h2></div>
         <div id="historialSection" class="hidden"><h2>Historial</h2></div>
         <div id="notificacionesSection" class="hidden"><h2>Notificaciones</h2></div>
-
     </main>
 
     <script>
-        // ... (Lógica de JS idéntica a la V7.3 pero validando los nuevos estilos)
-        let total = 1;
-        function calcularPesos() {
-            const inputs = document.querySelectorAll('.obj-peso');
-            let suma = 0;
-            inputs.forEach(i => suma += Number(i.value) || 0);
-            document.getElementById('pesoTotalTxt').innerText = `${suma}% / 100%`;
-            const bar = document.getElementById('pesoBar');
-            bar.style.width = `${Math.min(suma, 100)}%`;
-            bar.style.background = (suma === 100) ? "#7CFF01" : "#ff4d4d";
-            return suma;
+        function validaAcceso() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('sidebar').classList.remove('hidden');
+            document.getElementById('mainArea').classList.remove('hidden');
         }
-
-        function agregarObjetivo() {
-            if(total >= 5) return;
-            total++;
-            const card = document.createElement('div');
-            card.className = 'obj-card';
-            card.id = `obj${total}`;
-            card.innerHTML = `
-                <button class="btn-remove" onclick="document.getElementById('${card.id}').remove(); total--; calcularPesos();"><i class="fas fa-trash"></i></button>
-                <label style="color:var(--uix-green); font-size:0.85rem; margin-bottom:20px; border-bottom:1px solid rgba(124,255,1,0.1); padding-bottom:5px;">OBJETIVO ${total} *</label>
-                <label>NOMBRE DEL OBJETIVO *</label>
-                <input type="text" class="obj-nombre" placeholder="Nombre de la meta">
-                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px;">
-                    <div><label>META *</label><input type="number" class="obj-meta"></div>
-                    <div><label>TENDENCIA *</label><select class="obj-tendencia"><option value="Incremental">Incremental</option><option value="Decremental">Decremental</option></select></div>
-                    <div><label>PESO (%) *</label><input type="number" class="obj-peso" oninput="calcularPesos()"></div>
-                </div>`;
-            document.getElementById('regContainer').appendChild(card);
+        function recalc() {
+            let s = 0; document.querySelectorAll('.obj-peso').forEach(i => s += Number(i.value));
+            document.getElementById('pesoTotalTxt').innerText = s + '%';
         }
-
-        function switchTab(tabId) {
-            document.querySelectorAll('.main-container > div').forEach(d => d.classList.add('hidden'));
-            document.getElementById(tabId + 'Section').classList.remove('hidden');
+        function switchTab(t) {
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById('nav-' + tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+            // Aquí ocultarías/mostrarías secciones si lo necesitas
         }
     </script>
 </body>
