@@ -3,106 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uix. Sistema de Desempeño - V6 Corregido</title>
+    <title>uix. Sistema de Desempeño</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --uix-purple-dark: #0a0118;
-            --uix-red-main: #8b0000;
+            --uix-bg: #0a0118;
+            --uix-sidebar: #070111;
+            --uix-card: #150a2e;
+            --uix-red: #8b0000;
             --uix-green: #7CFF01;
-            --card-bg: #150a2e;
-            --text-muted: #a094b7;
+            --uix-text-muted: #a094b7;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: white; height: 100vh; display: flex; overflow: hidden; }
+        body { font-family: 'Sora', sans-serif; background: var(--uix-bg); color: white; height: 100vh; display: flex; overflow: hidden; }
 
-        /* PANTALLA LOGIN */
-        #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
-        .login-card { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 20px; width: 380px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
-        .login-card h1 { color: var(--uix-green); font-size: 2.5rem; margin-bottom: 10px; }
-        .login-card select, .login-card input { width: 100%; background: #eef2f7; border: none; padding: 15px; border-radius: 10px; margin-bottom: 15px; color: #333; font-family: 'Sora'; }
-        .btn-login { background: var(--uix-green); color: black; width: 100%; padding: 15px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; }
-        .login-error { color: #ff4d4d; font-size:0.75rem; margin-top:15px; min-height: 20px; }
+        /* LOGIN SCREEN (image_f49e51.png) */
+        #loginScreen { position: fixed; inset: 0; background: var(--uix-bg); z-index: 10000; display: flex; align-items: center; justify-content: center; }
+        .login-card { background: rgba(255,255,255,0.02); padding: 40px; border-radius: 20px; width: 380px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
+        .login-card h1 { color: var(--uix-green); font-size: 2.5rem; margin-bottom: 5px; }
+        .login-card h1 span { color: white; }
+        .login-card select, .login-card input { width: 100%; background: #eef2f7; border: none; padding: 15px; border-radius: 10px; margin-bottom: 15px; font-family: 'Sora'; color: #333; font-size: 0.9rem; }
+        .btn-login { background: var(--uix-green); color: black; width: 100%; padding: 15px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
 
-        /* SIDEBAR */
-        .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); }
+        /* SIDEBAR (image_f5209b.png) */
+        .sidebar { width: 260px; background: var(--uix-sidebar); padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); }
         .user-profile { padding: 0 25px 30px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
-        .user-avatar { width: 50px; height: 50px; background: #1a0830; border-radius: 50%; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--uix-green); }
-        .user-role { color: var(--uix-green); font-size:0.6rem; font-weight:700; margin-bottom: 5px; }
-        .user-name { color: white; font-size: 1rem; font-weight: 600; }
-        .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; color: var(--text-muted); font-size: 0.85rem; cursor: pointer; transition: 0.3s; }
-        .nav-item:hover { background: rgba(255,255,255,0.03); color: white; }
-        .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
+        .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: var(--uix-text-muted); font-size: 0.85rem; }
+        .nav-item.active { background: var(--uix-red); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
         .btn-logout { margin-top: auto; padding: 25px; color: #ff4d4d; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 10px; border-top: 1px solid rgba(255,255,255,0.05); }
 
-        /* MAIN AREA */
+        /* MAIN CONTENT (image_f4bfc0.png) */
         .main-container { flex: 1; overflow-y: auto; padding: 20px 40px; }
         .tab-menu { display: flex; gap: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
         .tab-item { padding-bottom: 10px; font-size: 0.75rem; color: #888; cursor: pointer; font-weight: 600; }
         .tab-item.active { color: var(--uix-green); border-bottom: 2px solid var(--uix-green); }
 
-        /* CARDS */
-        .obj-card { background: var(--card-bg); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--uix-red-main); position: relative; }
+        /* ALERT (image_f4bfc0.png) */
+        .alert-pesos { background: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.8rem; border-left: 5px solid #ffeeba; }
+
+        /* CARDS (image_f5209b.png, image_f4bb62.png) */
+        .obj-card { background: var(--uix-card); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--uix-red); position: relative; }
         .btn-remove { position: absolute; top: 15px; right: 15px; background: #d93025; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; }
-        .btn-remove:hover { background: #b91c1c; }
         
         label { font-size: 0.6rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
         input, select { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 10px; border-radius: 6px; width: 100%; margin-bottom: 12px; font-family: 'Sora'; }
-        input:focus, select:focus { outline: none; border-color: var(--uix-green); }
 
-        .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .btn-add { background: var(--uix-green); border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; color: black; }
-        .btn-add:hover { opacity: 0.9; }
-        .btn-add:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        .btn-send { background: var(--uix-red-main); color: white; flex: 4; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        .btn-send:hover { background: #a00000; }
-        .btn-send:disabled { opacity: 0.5; cursor: not-allowed; }
+        /* COMPETENCIAS (image_f51214.png) */
+        .comp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 15px; }
+        .comp-card { background: rgba(85, 74, 209, 0.2); padding: 12px; border-radius: 8px; font-size: 0.6rem; border-bottom: 3px solid var(--uix-red); }
 
         .hidden { display: none !important; }
-        
-        /* Alertas */
-        .alert { background: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.8rem; border: 1px solid #ffeeba; }
-        .alert-danger { background: #f8d7da; color: #721c24; border-color: #f5c6cb; }
     </style>
 </head>
 <body>
 
-    <!-- PANTALLA DE LOGIN -->
     <div id="loginScreen">
         <div class="login-card">
             <h1>uix<span>.</span></h1>
-            <p style="color: var(--text-muted); margin-bottom: 20px;">Acceso Colaboradores 2026</p>
+            <p style="color:white; font-size:0.7rem; margin-bottom:25px; opacity:0.6;">Acceso Colaboradores 2026</p>
             <select id="roleInput">
-                <option value="" disabled selected>Selecciona tu Rol</option>
                 <option value="Colaborador Externo">Colaborador Externo</option>
-                <option value="Formador/Lider">Formador/Lider</option>
+                <option value="Lider">Formador/Lider</option>
             </select>
-            <input type="email" id="emailInput" placeholder="Correo electrónico" autocomplete="off">
-            <input type="password" id="passInput" placeholder="Contraseña">
-            <button onclick="handleLogin()" id="btnLogin" class="btn-login">INGRESAR</button>
-            <div id="loginMsg" class="login-error"></div>
+            <input type="email" id="emailInput" placeholder="psic.damian.sl@gmail.com">
+            <input type="password" id="passInput" placeholder="••••">
+            <button onclick="validaAcceso()" id="btnLogin" class="btn-login">INGRESAR</button>
+            <p id="loginMsg" style="color:#ff4d4d; font-size:0.75rem; margin-top:15px; font-weight:600;"></p>
         </div>
     </div>
 
-    <!-- SIDEBAR (oculta inicialmente) -->
     <aside class="sidebar hidden" id="sidebar">
         <div class="user-profile">
-            <div class="user-avatar">
-                <i class="fas fa-user" style="color: var(--uix-green);"></i>
-            </div>
-            <div class="user-role" id="uRole">ROL</div>
-            <div class="user-name" id="uName">Cargando...</div>
+            <p id="uRole" style="color:var(--uix-green); font-size:0.6rem; font-weight:700;">ROL</p>
+            <h5 id="uName" style="color:white; font-size: 0.9rem;">Usuario</h5>
         </div>
         <nav>
+            <div class="nav-item"><i class="fas fa-home"></i> Dashboard</div>
             <div class="nav-item active"><i class="fas fa-bullseye"></i> Mis Objetivos</div>
             <div class="nav-item"><i class="fas fa-history"></i> Historial</div>
+            <div class="nav-item"><i class="fas fa-bell"></i> Notificaciones</div>
         </nav>
         <div class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> SALIR</div>
     </aside>
 
-    <!-- ÁREA PRINCIPAL (oculta inicialmente) -->
     <main class="main-container hidden" id="mainArea">
         <div class="tab-menu">
             <div class="tab-item active">Objetivos y Competencias</div>
@@ -111,377 +95,122 @@
         </div>
 
         <h2 style="font-size: 1.1rem; margin-bottom: 5px;">Registro de Objetivos (Máximo 5)</h2>
-        
-        <!-- Alerta de pesos (se muestra cuando la suma no es 100%) -->
-        <div id="pesoAlert" class="alert hidden">
-            <i class="fas fa-exclamation-triangle"></i>
-            <span>La suma de los pesos debe ser exactamente 100% (actual: <span id="totalPeso">0</span>%)</span>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+            <p style="font-size:0.7rem; color:#888;">Objetivos: <span id="countObj">1</span>/5</p>
+            <button onclick="agregarObjetivo()" style="background:var(--uix-green); border:none; padding:8px 15px; border-radius:5px; font-weight:bold; cursor:pointer;">+ Agregar Objetivo</button>
         </div>
 
-        <div class="header-row">
-            <p style="font-size:0.7rem; color:#888;">Objetivos: <span id="countObj">1</span>/5</p>
-            <button onclick="agregarObjetivo()" id="btnAdd" class="btn-add">+ Agregar Objetivo</button>
+        <div class="alert-pesos">
+            <i class="fas fa-exclamation-triangle"></i> <strong>Total de pesos: 0%</strong><br>La suma de todos los pesos debe ser exactamente 100%
         </div>
 
         <div id="regContainer">
-            <!-- Objetivo inicial -->
             <div class="obj-card" id="obj1">
-                <button class="btn-remove hidden" onclick="eliminarObj('obj1')">Eliminar</button>
                 <label style="color:var(--uix-green); font-size:0.8rem; margin-bottom:15px;">Objetivo 1 *</label>
                 <label>OBJETIVO *</label>
-                <input type="text" class="obj-nombre" placeholder="Nombre del objetivo" onchange="calcularPesos()">
+                <input type="text" placeholder="Nombre del objetivo">
                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
-                    <div>
-                        <label>META ANUAL *</label>
-                        <input type="number" class="obj-meta" onchange="calcularPesos()">
-                    </div>
-                    <div>
-                        <label>TENDENCIA *</label>
-                        <select class="obj-tendencia" onchange="calcularPesos()">
-                            <option value="Incremental">Incremental</option>
-                            <option value="Sostenible">Sostenible</option>
-                            <option value="Decremental">Decremental</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label>PESO (%) *</label>
-                        <input type="number" class="obj-peso" min="1" max="100" onchange="calcularPesos()" onkeyup="calcularPesos()">
-                    </div>
+                    <div><label>META ANUAL *</label><input type="number" value="0"></div>
+                    <div><label>TENDENCIA *</label><select><option>Incremental</option></select></div>
+                    <div><label>PESO (%) *</label><input type="number" value="0"></div>
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                    <div><label>FECHA INICIO *</label><input type="date"></div>
+                    <div><label>FECHA FIN *</label><input type="date"></div>
                 </div>
             </div>
         </div>
 
+        <h3 style="color:var(--uix-red); font-size:0.8rem; margin-top:30px;"><i class="fas fa-star"></i> Competencias Organizacionales</h3>
+        <div class="comp-grid">
+            <div class="comp-card"><strong>Confianza y Respeto</strong><p style="font-size:0.5rem; opacity:0.7;">Relaciones basadas en honestidad.</p></div>
+            <div class="comp-card"><strong>Ejecución Impecable</strong><p style="font-size:0.5rem; opacity:0.7;">Cumplir compromisos con calidad.</p></div>
+            <div class="comp-card"><strong>Mejora Continua</strong><p style="font-size:0.5rem; opacity:0.7;">Optimizar procesos y resultados.</p></div>
+            <div class="comp-card"><strong>Pasión por el Cliente</strong><p style="font-size:0.5rem; opacity:0.7;">Superar expectativas del cliente.</p></div>
+            <div class="comp-card"><strong>Trabajo en Equipo</strong><p style="font-size:0.5rem; opacity:0.7;">Colaborar para metas comunes.</p></div>
+        </div>
+
         <div style="display:flex; gap:15px; margin-top:30px;">
-            <button onclick="enviarObjetivos()" id="btnSend" class="btn-send">ENVIAR OBJETIVOS</button>
+            <button style="background:var(--uix-red); color:white; flex:4; padding:15px; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">ENVIAR OBJETIVOS AL FORMADOR</button>
+            <button style="background:#333; color:white; flex:1; padding:15px; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Guardar Borrador</button>
         </div>
     </main>
 
     <script>
-        // ============================================
-        // CONFIGURACIÓN - CAMBIA ESTA URL POR LA TUYA
-        // ============================================
-        const API_URL = "https://script.google.com/macros/s/AKfycbxd1vCbXl3byT1ooOovYzlLJaoKhOyEBgft420IFHyLQo3SAOuZmGHPF6y_5MdJ-lE/exec";
-        
-        // Variables globales
-        let totalObjetivos = 1;
-        let usuarioActual = null;
+        let total = 1;
 
-        // ============================================
-        // FUNCIONES DE LOGIN
-        // ============================================
-        async function handleLogin() {
-            const email = document.getElementById('emailInput').value.trim();
-            const password = document.getElementById('passInput').value;
+        function validaAcceso() {
+            const email = document.getElementById('emailInput').value;
+            const pass = document.getElementById('passInput').value;
             const role = document.getElementById('roleInput').value;
             const btn = document.getElementById('btnLogin');
             const msg = document.getElementById('loginMsg');
 
-            // Validación básica
-            if(!email || !password || !role) {
-                msg.innerText = "Completa todos los campos.";
+            if(!email || !pass) {
+                msg.innerText = "Ingresa tus credenciales.";
                 return;
             }
 
-            if(!email.includes('@')) {
-                msg.innerText = "Ingresa un correo válido.";
-                return;
-            }
-
-            // Mostrar estado de carga
             btn.innerText = "VALIDANDO...";
             btn.disabled = true;
-            msg.innerText = "";
 
-            try {
-                console.log("Intentando login para:", email);
-                
-                // Llamada a la API con fetch
-                const response = await fetch(API_URL, {
-                    method: "POST",
-                    // Importante: para Google Apps Script necesitamos estos headers
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
-                    },
-                    // Google Apps Script espera datos en formato formulario
-                    body: new URLSearchParams({
-                        action: "login",
-                        email: email,
-                        password: password
-                    })
-                });
-
-                // Intentar parsear la respuesta
-                let data;
-                try {
-                    data = await response.json();
-                } catch (e) {
-                    console.log("Respuesta no es JSON, intentando texto:", e);
-                    const text = await response.text();
-                    console.log("Respuesta texto:", text);
-                    
-                    // Si la respuesta es un mensaje HTML de éxito de Google Apps Script
-                    if(text.includes("HtmlOutput") || text.includes("success")) {
-                        data = { status: "success", autorizado: true, nombre: email.split('@')[0] };
+            // LLAMADA A TU FUNCIÓN EN CÓDIGO.GS
+            google.script.run
+                .withSuccessHandler(res => {
+                    if(res && res.autorizado) {
+                        document.getElementById('uName').innerText = res.nombre;
+                        document.getElementById('uRole').innerText = role;
+                        document.getElementById('loginScreen').classList.add('hidden');
+                        document.getElementById('sidebar').classList.remove('hidden');
+                        document.getElementById('mainArea').classList.remove('hidden');
                     } else {
-                        throw new Error("Respuesta inválida del servidor");
+                        msg.innerText = res.mensaje;
+                        btn.innerText = "INGRESAR";
+                        btn.disabled = false;
                     }
-                }
-
-                console.log("Respuesta del servidor:", data);
-
-                // Procesar respuesta
-                if(data && (data.status === "success" || data.autorizado === true)) {
-                    // Login exitoso
-                    usuarioActual = {
-                        email: email,
-                        nombre: data.nombre || email.split('@')[0],
-                        role: role
-                    };
-                    
-                    // Actualizar UI
-                    document.getElementById('uName').innerText = usuarioActual.nombre;
-                    document.getElementById('uRole').innerText = role;
-                    
-                    // Ocultar login, mostrar app
-                    document.getElementById('loginScreen').classList.add('hidden');
-                    document.getElementById('sidebar').classList.remove('hidden');
-                    document.getElementById('mainArea').classList.remove('hidden');
-                    
-                    msg.innerText = "";
-                } else {
-                    // Login falló
-                    msg.innerText = data.mensaje || "Credenciales incorrectas";
+                })
+                .withFailureHandler(err => {
+                    msg.innerText = "Error de conexión.";
                     btn.innerText = "INGRESAR";
                     btn.disabled = false;
-                }
-
-            } catch (error) {
-                console.error("Error completo:", error);
-                msg.innerText = "Error de conexión. Verifica tu conexión e intenta nuevamente.";
-                btn.innerText = "INGRESAR";
-                btn.disabled = false;
-            }
+                })
+                .verificarUsuario(email, pass);
         }
 
         function logout() {
-            // Limpiar todo y volver al login
             document.getElementById('loginScreen').classList.remove('hidden');
             document.getElementById('sidebar').classList.add('hidden');
             document.getElementById('mainArea').classList.add('hidden');
-            
-            // Limpiar campos
             document.getElementById('passInput').value = "";
-            document.getElementById('emailInput').value = "";
-            document.getElementById('roleInput').value = "";
-            document.getElementById('loginMsg').innerText = "";
-            
-            // Resetear botón
             document.getElementById('btnLogin').innerText = "INGRESAR";
             document.getElementById('btnLogin').disabled = false;
-            
-            // Limpiar objetivos (resetear a 1)
-            resetearObjetivos();
-            
-            usuarioActual = null;
         }
 
-        // ============================================
-        // FUNCIONES DE OBJETIVOS
-        // ============================================
         function agregarObjetivo() {
-            if(totalObjetivos >= 5) {
-                alert("Máximo 5 objetivos permitidos");
-                return;
-            }
-            
-            totalObjetivos++;
-            const container = document.getElementById('regContainer');
+            if(total >= 5) return;
+            total++;
             const card = document.createElement('div');
             card.className = 'obj-card';
-            card.id = `obj${totalObjetivos}`;
+            card.id = `obj${total}`;
             card.innerHTML = `
-                <button class="btn-remove" onclick="eliminarObj('obj${totalObjetivos}')">Eliminar</button>
-                <label style="color:var(--uix-green); font-size:0.8rem; margin-bottom:15px;">Objetivo ${totalObjetivos} *</label>
+                <button class="btn-remove" onclick="eliminarObj('${card.id}')"><i class="fas fa-trash"></i> Eliminar</button>
+                <label style="color:var(--uix-green); font-size:0.8rem; margin-bottom:15px;">Objetivo ${total} *</label>
                 <label>OBJETIVO *</label>
-                <input type="text" class="obj-nombre" placeholder="Nombre del objetivo" onchange="calcularPesos()">
+                <input type="text" placeholder="Nombre del objetivo">
                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
-                    <div>
-                        <label>META ANUAL *</label>
-                        <input type="number" class="obj-meta" onchange="calcularPesos()">
-                    </div>
-                    <div>
-                        <label>TENDENCIA *</label>
-                        <select class="obj-tendencia" onchange="calcularPesos()">
-                            <option value="Incremental">Incremental</option>
-                            <option value="Sostenible">Sostenible</option>
-                            <option value="Decremental">Decremental</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label>PESO (%) *</label>
-                        <input type="number" class="obj-peso" min="1" max="100" onchange="calcularPesos()" onkeyup="calcularPesos()">
-                    </div>
-                </div>
-            `;
-            container.appendChild(card);
-            
-            // Mostrar botón eliminar en el primer objetivo si hay más de 1
-            if(totalObjetivos > 1) {
-                document.querySelector('#obj1 .btn-remove').classList.remove('hidden');
-            }
-            
-            document.getElementById('countObj').innerText = totalObjetivos;
-            calcularPesos();
+                    <div><label>META ANUAL *</label><input type="number" value="0"></div>
+                    <div><label>TENDENCIA *</label><select><option>Incremental</option></select></div>
+                    <div><label>PESO (%) *</label><input type="number" value="0"></div>
+                </div>`;
+            document.getElementById('regContainer').appendChild(card);
+            document.getElementById('countObj').innerText = total;
         }
 
         function eliminarObj(id) {
-            if(totalObjetivos <= 1) {
-                alert("Debes tener al menos 1 objetivo");
-                return;
-            }
-            
-            if(confirm("¿Eliminar este objetivo?")) {
-                document.getElementById(id).remove();
-                totalObjetivos--;
-                
-                // Ocultar botón eliminar del primer objetivo si solo queda 1
-                if(totalObjetivos === 1) {
-                    document.querySelector('#obj1 .btn-remove').classList.add('hidden');
-                }
-                
-                document.getElementById('countObj').innerText = totalObjetivos;
-                calcularPesos();
-            }
+            document.getElementById(id).remove();
+            total--;
+            document.getElementById('countObj').innerText = total;
         }
-
-        function resetearObjetivos() {
-            // Eliminar todos los objetivos excepto el primero
-            const container = document.getElementById('regContainer');
-            const objetivos = container.querySelectorAll('.obj-card');
-            for(let i = 1; i < objetivos.length; i++) {
-                objetivos[i].remove();
-            }
-            
-            // Limpiar el primer objetivo
-            const primerObj = document.getElementById('obj1');
-            primerObj.querySelector('.obj-nombre').value = "";
-            primerObj.querySelector('.obj-meta').value = "";
-            primerObj.querySelector('.obj-tendencia').value = "Incremental";
-            primerObj.querySelector('.obj-peso').value = "";
-            
-            // Ocultar botón eliminar del primer objetivo
-            primerObj.querySelector('.btn-remove').classList.add('hidden');
-            
-            totalObjetivos = 1;
-            document.getElementById('countObj').innerText = "1";
-            calcularPesos();
-        }
-
-        function calcularPesos() {
-            let suma = 0;
-            document.querySelectorAll('.obj-peso').forEach(input => {
-                suma += Number(input.value) || 0;
-            });
-            
-            document.getElementById('totalPeso').innerText = suma;
-            
-            const alerta = document.getElementById('pesoAlert');
-            if(suma !== 100) {
-                alerta.classList.remove('hidden');
-                document.getElementById('btnSend').disabled = true;
-            } else {
-                alerta.classList.add('hidden');
-                document.getElementById('btnSend').disabled = false;
-            }
-            
-            return suma;
-        }
-
-        // ============================================
-        // FUNCIÓN PARA ENVIAR OBJETIVOS
-        // ============================================
-        async function enviarObjetivos() {
-            if(!usuarioActual) {
-                alert("Debes iniciar sesión primero");
-                return;
-            }
-
-            if(calcularPesos() !== 100) {
-                alert("La suma de los pesos debe ser exactamente 100%");
-                return;
-            }
-
-            // Recolectar datos de todos los objetivos
-            const objetivos = [];
-            document.querySelectorAll('.obj-card').forEach((card, index) => {
-                objetivos.push({
-                    id: index + 1,
-                    nombre: card.querySelector('.obj-nombre')?.value || "",
-                    meta: card.querySelector('.obj-meta')?.value || "",
-                    tendencia: card.querySelector('.obj-tendencia')?.value || "",
-                    peso: card.querySelector('.obj-peso')?.value || "0"
-                });
-            });
-
-            // Validar que ningún campo obligatorio esté vacío
-            for(let obj of objetivos) {
-                if(!obj.nombre || !obj.meta || !obj.tendencia || !obj.peso) {
-                    alert(`El objetivo ${obj.id} tiene campos obligatorios vacíos`);
-                    return;
-                }
-            }
-
-            const btn = document.getElementById('btnSend');
-            btn.innerText = "ENVIANDO...";
-            btn.disabled = true;
-
-            try {
-                console.log("Enviando objetivos:", objetivos);
-                
-                const response = await fetch(API_URL, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
-                    },
-                    body: new URLSearchParams({
-                        action: "guardarObjetivos",
-                        email: usuarioActual.email,
-                        objetivos: JSON.stringify(objetivos)
-                    })
-                });
-
-                let data;
-                try {
-                    data = await response.json();
-                } catch (e) {
-                    const text = await response.text();
-                    console.log("Respuesta texto:", text);
-                    data = { status: "success" };
-                }
-
-                if(data.status === "success") {
-                    alert("¡Objetivos enviados correctamente!");
-                    resetearObjetivos();
-                } else {
-                    alert("Error al enviar: " + (data.mensaje || "Intenta nuevamente"));
-                }
-
-            } catch (error) {
-                console.error("Error al enviar:", error);
-                alert("Error de conexión. Verifica e intenta nuevamente.");
-            } finally {
-                btn.innerText = "ENVIAR OBJETIVOS";
-                btn.disabled = false;
-            }
-        }
-
-        // ============================================
-        // INICIALIZACIÓN
-        // ============================================
-        window.onload = function() {
-            console.log("Aplicación lista. API URL:", API_URL);
-            calcularPesos();
-        };
     </script>
 </body>
 </html>
