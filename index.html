@@ -3,44 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uix. Sistema de Desempeño - V6</title>
+    <title>uix. Sistema de Desempeño - V6 Final</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --uix-purple-dark: #0a0118; --uix-red-main: #8b0000; --uix-green: #7CFF01; --card-bg: #150a2e; }
+        :root {
+            --uix-purple-dark: #0a0118;
+            --uix-red-main: #8b0000;
+            --uix-green: #7CFF01;
+            --card-bg: #150a2e;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: white; height: 100vh; display: flex; overflow: hidden; }
 
-        /* LOGIN (image_2fc1b0.png) */
+        /* PANTALLA DE LOGIN */
         #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
         .login-card { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 20px; width: 380px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
-        .login-card select, .login-card input { width: 100%; background: #eef2f7; border: none; padding: 15px; border-radius: 10px; margin-bottom: 15px; color: #333; }
-        .btn-login { background: var(--uix-green); color: black; width: 100%; padding: 15px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; }
+        .login-card h1 { color: var(--uix-green); font-size: 2.5rem; margin-bottom: 10px; }
+        .login-card h1 span { color: white; }
+        .login-card select, .login-card input { width: 100%; background: #eef2f7; border: none; padding: 15px; border-radius: 10px; margin-bottom: 15px; font-family: 'Sora'; color: #333; font-size: 0.9rem; }
+        .btn-login { background: var(--uix-green); color: black; width: 100%; padding: 15px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .btn-login:hover { background: #66d401; transform: translateY(-2px); }
 
-        /* SIDEBAR (image_f5209b.png) */
-        .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); }
-        .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; color: #a094b7; font-size: 0.85rem; cursor: pointer; }
+        /* SIDEBAR */
+        .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
+        .user-profile { padding: 0 25px 30px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
+        .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: #a094b7; font-size: 0.85rem; }
         .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
-        .btn-logout { margin-top: auto; padding: 25px; color: #ff4d4d; font-weight: 700; font-size: 0.8rem; cursor: pointer; border-top: 1px solid rgba(255,255,255,0.05); }
+        .btn-logout { margin-top: auto; padding: 25px; color: #ff4d4d; font-weight: 700; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; gap: 10px; border-top: 1px solid rgba(255,255,255,0.05); }
 
-        /* MAIN */
-        .main-container { flex: 1; overflow-y: auto; padding: 20px 40px; }
+        /* CONTENIDO PRINCIPAL */
+        .main-container { flex: 1; overflow-y: auto; background: var(--uix-purple-dark); padding: 20px 40px; }
+        
+        /* PESTAÑAS */
         .tab-menu { display: flex; gap: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
         .tab-item { padding-bottom: 10px; font-size: 0.75rem; color: #888; cursor: pointer; font-weight: 600; }
         .tab-item.active { color: var(--uix-green); border-bottom: 2px solid var(--uix-green); }
 
-        /* OBJETIVOS (image_f4bfc0.png, image_f4bb62.png) */
-        .alert-pesos { background: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.8rem; border-left: 5px solid #ffeeba; }
+        /* TARJETAS OBJETIVOS */
         .obj-card { background: var(--card-bg); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--uix-red-main); position: relative; }
-        .btn-remove { position: absolute; top: 15px; right: 15px; background: #d93025; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; font-weight: bold; }
-        
-        label { font-size: 0.6rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
-        input, select { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 10px; border-radius: 6px; width: 100%; margin-bottom: 12px; }
+        .btn-remove { position: absolute; top: 15px; right: 15px; background: #d93025; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; font-weight: bold; display: flex; align-items: center; gap: 5px; }
 
-        .footer-btns { display: flex; gap: 15px; margin-top: 30px; padding-bottom: 40px; }
-        .btn-primary { background: var(--uix-red-main); color: white; flex: 4; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        .btn-secondary { background: #333; color: white; flex: 1; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        label { font-size: 0.6rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
+        input, select { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 10px; border-radius: 6px; width: 100%; margin-bottom: 12px; font-family: 'Sora'; }
+
+        /* COMPETENCIAS */
+        .comp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 15px; }
+        .comp-card { background: rgba(85, 74, 209, 0.2); padding: 12px; border-radius: 8px; font-size: 0.6rem; border-bottom: 3px solid var(--uix-red-main); }
         
+        .footer-btns { display: flex; gap: 15px; margin-top: 30px; padding-bottom: 40px; }
+        .btn-primary { background: var(--uix-red-main); color: white; flex: 4; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .btn-secondary { background: #333; color: white; flex: 1; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+
         .hidden { display: none !important; }
     </style>
 </head>
@@ -48,7 +62,7 @@
 
     <div id="loginScreen">
         <div class="login-card">
-            <h1 style="color:var(--uix-green); font-size:2.5rem; margin-bottom:10px;">uix<span>.</span></h1>
+            <h1>uix<span>.</span></h1>
             <p style="color:white; font-size:0.7rem; margin-bottom:25px; opacity:0.6;">Acceso Colaboradores 2026</p>
             <select id="roleInput">
                 <option value="" disabled selected>Selecciona tu Rol</option>
@@ -58,14 +72,14 @@
             <input type="email" id="emailInput" placeholder="Correo electrónico">
             <input type="password" id="passInput" placeholder="Contraseña">
             <button onclick="validaAcceso()" id="btnLogin" class="btn-login">INGRESAR</button>
-            <p id="loginMsg" style="color:#ff4d4d; font-size:0.75rem; margin-top:15px;"></p>
+            <p id="loginMsg" style="color:#ff4d4d; font-size:0.75rem; margin-top:15px; font-weight:600;"></p>
         </div>
     </div>
 
     <aside class="sidebar hidden" id="sidebar">
-        <div style="padding:0 25px 30px; border-bottom:1px solid rgba(255,255,255,0.05); margin-bottom:20px;">
-            <p id="uRole" style="color:var(--uix-green); font-size:0.6rem; font-weight:700;">ROL</p>
-            <h5 id="uName" style="color:white;">Usuario</h5>
+        <div class="user-profile">
+            <p id="uRole" style="color:var(--uix-green); font-size:0.6rem; font-weight:700; text-transform: uppercase;">ROL</p>
+            <h5 id="uName" style="color:white; font-size: 0.9rem;">Cargando...</h5>
         </div>
         <nav>
             <div class="nav-item"><i class="fas fa-home"></i> Dashboard</div>
@@ -73,7 +87,9 @@
             <div class="nav-item"><i class="fas fa-history"></i> Historial</div>
             <div class="nav-item"><i class="fas fa-bell"></i> Notificaciones</div>
         </nav>
-        <div class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> SALIR</div>
+        <div class="btn-logout" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> SALIR
+        </div>
     </aside>
 
     <main class="main-container hidden" id="mainArea">
@@ -83,24 +99,32 @@
             <div class="tab-item">Evaluación Final Mes 12</div>
         </div>
 
-        <h2 style="font-size: 1.1rem; margin-bottom: 5px;">Registro de Objetivos (Máximo 5)</h2>
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
-            <p style="font-size:0.7rem; color:#888;">Objetivos: <span id="countObj">1</span>/5</p>
-            <button onclick="agregarObjetivo()" id="btnAdd" style="background:var(--uix-green); border:none; padding:8px 15px; border-radius:5px; font-weight:bold; cursor:pointer;">+ Agregar Objetivo</button>
+        <div class="header-content">
+            <h2 style="font-size: 1.1rem; margin-bottom: 5px;">Registro de Objetivos (Máximo 5)</h2>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+                <p style="font-size:0.7rem; color:#888;">Objetivos registrados: <span id="countObj">1</span>/5</p>
+                <button onclick="agregarObjetivo()" id="btnAdd" style="background:var(--uix-green); border:none; padding:8px 15px; border-radius:5px; font-weight:bold; cursor:pointer; color: black;">+ Agregar Objetivo</button>
+            </div>
         </div>
 
-        <div class="alert-pesos">
+        <div class="alert-pesos" style="background: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.8rem; border-left: 5px solid #ffeeba;">
+            <i class="fas fa-exclamation-triangle"></i>
             <strong>Total de pesos: 0%</strong><br>La suma de todos los pesos debe ser exactamente 100%
         </div>
 
         <div id="regContainer">
             <div class="obj-card" id="obj1">
                 <label style="color:var(--uix-green); font-size:0.8rem; margin-bottom:15px;">Objetivo 1 *</label>
-                <label>OBJETIVO *</label>
-                <input type="text" placeholder="Nombre del objetivo">
+                <label>NOMBRE DEL OBJETIVO *</label>
+                <input type="text" placeholder="Ej: Incrementar ventas retail">
                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
                     <div><label>META ANUAL *</label><input type="number" placeholder="0"></div>
-                    <div><label>TENDENCIA *</label><select><option>Seleccionar...</option><option>Incremental</option></select></div>
+                    <div><label>TENDENCIA *</label>
+                        <select>
+                            <option>Incremental</option>
+                            <option>Decremental</option>
+                        </select>
+                    </div>
                     <div><label>PESO (%) *</label><input type="number" placeholder="0"></div>
                 </div>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
@@ -110,8 +134,17 @@
             </div>
         </div>
 
+        <h3 style="color:var(--uix-red-main); font-size:0.8rem; margin-top:30px;"><i class="fas fa-star"></i> Competencias Organizacionales</h3>
+        <div class="comp-grid">
+            <div class="comp-card"><strong>Confianza y Respeto</strong></div>
+            <div class="comp-card"><strong>Ejecución Impecable</strong></div>
+            <div class="comp-card"><strong>Mejora Continua</strong></div>
+            <div class="comp-card"><strong>Pasión por el Cliente</strong></div>
+            <div class="comp-card"><strong>Trabajo en Equipo</strong></div>
+        </div>
+
         <div class="footer-btns">
-            <button class="btn-primary">ENVIAR OBJETIVOS AL FORMADOR</button>
+            <button class="btn-primary"><i class="fas fa-paper-plane"></i> ENVIAR OBJETIVOS AL FORMADOR</button>
             <button class="btn-secondary">Guardar Borrador</button>
         </div>
     </main>
@@ -119,6 +152,7 @@
     <script>
         let total = 1;
 
+        // FUNCIÓN DE VALIDACIÓN CONECTADA A TU CÓDIGO.GS
         function validaAcceso() {
             const email = document.getElementById('emailInput').value;
             const pass = document.getElementById('passInput').value;
@@ -127,14 +161,14 @@
             const msg = document.getElementById('loginMsg');
 
             if(!email || !pass || !role) {
-                msg.innerText = "Completa todos los campos.";
+                msg.innerText = "Por favor, completa todos los campos.";
                 return;
             }
 
             btn.innerText = "VALIDANDO...";
             btn.disabled = true;
 
-            // LLAMADA AL SERVIDOR (Asegúrate que en Código.gs se llame verificarUsuario)
+            // Llama a la función de tu archivo Código.gs
             google.script.run
                 .withSuccessHandler(res => {
                     if(res && res.autorizado) {
@@ -150,24 +184,29 @@
                     }
                 })
                 .withFailureHandler(err => {
-                    msg.innerText = "Error de conexión.";
+                    msg.innerText = "Error crítico de conexión con el servidor.";
                     btn.innerText = "INGRESAR";
                     btn.disabled = false;
                 })
-                .verificarUsuario(email, pass); // <-- Esta es la función clave en tu Código.gs
+                .verificarUsuario(email, pass);
         }
 
         function logout() {
             document.getElementById('loginScreen').classList.remove('hidden');
             document.getElementById('sidebar').classList.add('hidden');
             document.getElementById('mainArea').classList.add('hidden');
+            document.getElementById('emailInput').value = "";
             document.getElementById('passInput').value = "";
+            document.getElementById('loginMsg').innerText = "";
             document.getElementById('btnLogin').innerText = "INGRESAR";
             document.getElementById('btnLogin').disabled = false;
         }
 
         function agregarObjetivo() {
-            if(total >= 5) return;
+            if(total >= 5) {
+                alert("Máximo 5 objetivos permitidos");
+                return;
+            }
             total++;
             const container = document.getElementById('regContainer');
             const card = document.createElement('div');
@@ -176,17 +215,18 @@
             card.innerHTML = `
                 <button class="btn-remove" onclick="eliminarObj('${card.id}')"><i class="fas fa-trash"></i> Eliminar</button>
                 <label style="color:var(--uix-green); font-size:0.8rem; margin-bottom:15px;">Objetivo ${total} *</label>
-                <label>OBJETIVO *</label>
+                <label>NOMBRE DEL OBJETIVO *</label>
                 <input type="text" placeholder="Nombre del objetivo">
                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
                     <div><label>META ANUAL *</label><input type="number" placeholder="0"></div>
-                    <div><label>TENDENCIA *</label><select><option>Seleccionar...</option></select></div>
+                    <div><label>TENDENCIA *</label><select><option>Incremental</option><option>Decremental</option></select></div>
                     <div><label>PESO (%) *</label><input type="number" placeholder="0"></div>
                 </div>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
                     <div><label>FECHA INICIO *</label><input type="date"></div>
                     <div><label>FECHA FIN *</label><input type="date"></div>
-                </div>`;
+                </div>
+            `;
             container.appendChild(card);
             document.getElementById('countObj').innerText = total;
         }
@@ -195,9 +235,12 @@
             document.getElementById(id).remove();
             total--;
             document.getElementById('countObj').innerText = total;
-            document.querySelectorAll('.obj-card').forEach((c, i) => {
+            // Reordenar etiquetas numéricas
+            const cards = document.querySelectorAll('.obj-card');
+            cards.forEach((c, i) => {
                 c.id = `obj${i+1}`;
-                c.querySelector('label').innerText = `Objetivo ${i+1} *`;
+                const labelPrincipal = c.querySelector('label');
+                if(labelPrincipal) labelPrincipal.innerText = `Objetivo ${i+1} *`;
             });
         }
     </script>
