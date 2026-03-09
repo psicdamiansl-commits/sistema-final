@@ -12,7 +12,6 @@
             --uix-red-main: #8b0000;
             --uix-green: #7CFF01;
             --card-bg: #150a2e;
-            /* Degradado morado fiel a la captura de competencias */
             --grad-comp: linear-gradient(135deg, #6a5af9 0%, #4d3df2 100%);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -38,6 +37,14 @@
         .obj-card { background: var(--card-bg); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 5px solid var(--uix-red-main); position: relative; }
         label { font-size: 0.65rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
         input, select { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 12px; border-radius: 6px; width: 100%; margin-bottom: 15px; font-family: 'Sora'; }
+
+        /* --- MEJORA DE CONTRASTE --- */
+        /* Forzamos que el color del texto en los desplegables sea blanco para que resalte contra el fondo oscuro */
+        select option {
+            color: white; 
+            background-color: var(--uix-purple-dark); /* Aseguramos que el fondo de la lista siga siendo oscuro */
+        }
+        /* --- FIN DE MEJORA --- */
 
         /* COMPETENCIAS GRID */
         .comp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 20px; }
@@ -170,7 +177,6 @@
     </main>
 
     <script>
-        // NUEVA URL INTEGRADA
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxj3FoyZjxYBYNK7XgLrGzCOp02hHBBQKsJZjXufqBvT2Tm0W3Ktu66E-z3neiTtP4/exec";
         
         let userData = {};
@@ -187,7 +193,6 @@
             btn.innerText = "VERIFICANDO..."; btn.disabled = true;
 
             try {
-                // LLAMADA GET AL SCRIPT
                 const url = `${WEB_APP_URL}?action=login&email=${encodeURIComponent(email)}&pass=${encodeURIComponent(pass)}&role=${encodeURIComponent(role)}`;
                 const response = await fetch(url);
                 const res = await response.json();
