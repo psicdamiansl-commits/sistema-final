@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>uix. Sistema de Desempeño - V6 Final</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>uix. Sistema de Desempeño - V6</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -25,73 +25,42 @@
         .login-card { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 25px; width: 400px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
         .login-card h1 { color: var(--uix-green); font-size: 2.8rem; margin-bottom: 5px; }
 
-        /* SIDEBAR DESKTOP */
-        .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
+        /* SIDEBAR */
+        .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); }
         .user-info { padding: 0 20px 30px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
-        .nav-menu { flex: 1; }
-        .nav-item { padding: 15px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: var(--text-muted); font-size: 0.9rem; transition: 0.3s; }
+        .nav-item { padding: 15px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: var(--text-muted); font-size: 0.9rem; }
         .nav-item.active { background: var(--active-red); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
 
         /* MAIN CONTENT */
-        .main-container { flex: 1; overflow-y: auto; background: #0a0118; display: flex; flex-direction: column; }
-        .top-nav-tabs { display: flex; gap: 30px; padding: 20px 40px; border-bottom: 1px solid rgba(255,255,255,0.05); overflow-x: auto; flex-shrink: 0; }
-        .tab-link { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); cursor: pointer; padding-bottom: 10px; border-bottom: 2px solid transparent; white-space: nowrap; }
-        .tab-link.active { color: var(--uix-green); border-bottom-color: var(--uix-green); }
+        .main-container { flex: 1; overflow-y: auto; padding: 0; background: #0a0118; }
+        .top-nav-tabs { display: flex; gap: 30px; padding: 20px 40px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .tab-link { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); cursor: pointer; padding-bottom: 10px; }
+        .tab-link.active { color: var(--uix-green); border-bottom: 2px solid var(--uix-green); }
 
         .content-body { padding: 40px; }
         .alert-banner { background: var(--alert-bg); color: #856404; padding: 15px; border-radius: 8px; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; font-size: 0.8rem; border: 1px solid #ffeeba; }
+        
         .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .btn-add { background: var(--uix-green-btn); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.8rem; }
+        .btn-add { background: var(--uix-green-btn); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; }
 
         .obj-card { background: var(--uix-purple-card); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--active-red); }
         .obj-title { color: var(--uix-green); font-size: 0.9rem; font-weight: 700; margin-bottom: 20px; }
-        label { font-size: 0.7rem; color: var(--text-muted); display: block; margin-bottom: 8px; text-transform: uppercase; }
-        label span { color: #ff4d4d; }
-        input, select { width: 100%; background: #0a0118; border: 1px solid #3d2b56; padding: 12px; border-radius: 8px; color: white; margin-bottom: 20px; font-family: 'Sora'; font-size: 0.9rem; }
+        
+        label { font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 8px; }
+        input, select { width: 100%; background: #0a0118; border: 1px solid #3d2b56; padding: 12px; border-radius: 8px; color: white; margin-bottom: 20px; font-family: 'Sora'; }
 
-        /* COMPETENCIAS */
-        .comp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 20px; }
-        .comp-item { padding: 15px; border-radius: 10px; font-size: 0.65rem; min-height: 110px; border: 1px solid rgba(255,255,255,0.05); }
+        /* COMPETENCIAS GRID - CON DESCRIPCIONES EXACTAS */
+        .comp-header { color: #ff4d4d; font-size: 1rem; margin-top: 40px; display: flex; align-items: center; gap: 10px; font-weight: 700; }
+        .comp-info-text { background: #e7f3ff; color: #31708f; padding: 10px 15px; border-radius: 5px; font-size: 0.75rem; margin: 15px 0; border: 1px solid #bce8f1; }
+        .comp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+        .comp-item { padding: 15px; border-radius: 10px; color: white; min-height: 160px; }
+        .comp-item strong { display: block; font-size: 0.8rem; margin-bottom: 8px; }
+        .comp-item p { font-size: 0.65rem; line-height: 1.3; opacity: 0.9; }
         .c1 { background: #5a4ca5; } .c2 { background: #5c78d6; } .c3 { background: #5e48ad; } .c4 { background: #4a54b3; } .c5 { background: #7162ad; }
 
-        .footer-actions { display: flex; gap: 15px; margin-top: 30px; }
+        .footer-actions { display: flex; gap: 15px; margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
         .btn-send { background: var(--active-red); color: white; flex: 1; padding: 16px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; text-transform: uppercase; }
-        .btn-draft { background: #6c757d; color: white; padding: 16px 25px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; }
-
-        /* ==========================================
-           MODO CELULAR (RESPONSIVE) - CORRECCIÓN 8:28
-           ========================================== */
-        @media (max-width: 768px) {
-            body { flex-direction: column; overflow-y: auto; height: auto; }
-            
-            /* Sidebar se convierte en Header */
-            .sidebar { width: 100%; height: auto; padding: 10px 0; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
-            .user-info { padding: 10px 20px; margin-bottom: 0; border-bottom: none; display: flex; align-items: center; gap: 10px; }
-            .user-info div:first-child { width: 35px !important; height: 35px !important; margin-bottom: 0 !important; }
-            .nav-menu { display: flex; overflow-x: auto; padding: 5px 15px; -webkit-overflow-scrolling: touch; }
-            .nav-item { padding: 8px 15px; white-space: nowrap; font-size: 0.75rem; gap: 8px; }
-            .nav-item.active { border-radius: 20px; margin-right: 10px; }
-            
-            .content-body { padding: 20px; }
-            .top-nav-tabs { padding: 10px 20px; }
-            
-            /* Apilado vertical de inputs para evitar corte lateral */
-            .obj-card div[style*="grid-template-columns"] {
-                display: flex !important;
-                flex-direction: column !important;
-                gap: 0 !important;
-            }
-            .header-row { flex-direction: column; align-items: flex-start; gap: 15px; }
-            .btn-add { width: 100%; text-align: center; }
-
-            .comp-grid { grid-template-columns: 1fr 1fr; }
-            .footer-actions { flex-direction: column; }
-            .btn-draft { width: 100%; order: 2; }
-            .btn-send { order: 1; }
-            
-            .login-card { width: 92%; padding: 30px 20px; }
-            input, select { font-size: 16px; } /* Evita zoom en iOS */
-        }
+        .btn-draft { background: #4b5563; color: white; padding: 16px 25px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; }
 
         .hidden { display: none !important; }
     </style>
@@ -102,35 +71,30 @@
         <div class="login-card">
             <h1>uix<span>.</span></h1>
             <p>Acceso Colaboradores 2026</p>
-            <label>SELECCIONA TU ROL</label>
             <select id="roleInput">
-                <option value="" disabled selected>Seleccionar...</option>
+                <option value="" disabled selected>Selecciona tu Rol</option>
                 <option value="Colaborador Externo">Colaborador Externo</option>
                 <option value="Formador/Lider">Formador/Lider</option>
             </select>
-            <label>CORREO CORPORATIVO</label>
-            <input type="email" id="emailInput" placeholder="usuario@empresa.com">
-            <label>CONTRASEÑA</label>
-            <input type="password" id="passInput" placeholder="••••••••">
-            <button onclick="handleLogin()" style="background:var(--uix-green); color:black; width:100%; padding:15px; border-radius:30px; border:none; font-weight:800; cursor:pointer; margin-top:10px;">INGRESAR</button>
+            <input type="email" id="emailInput" placeholder="Correo Corporativo">
+            <input type="password" id="passInput" placeholder="Contraseña">
+            <button onclick="handleLogin()" style="background:var(--uix-green); color:black; width:100%; padding:14px; border-radius:30px; border:none; font-weight:800; cursor:pointer;">INGRESAR</button>
         </div>
     </div>
 
     <aside class="sidebar">
         <div class="user-info">
-            <div style="width:50px; height:50px; background:#1a0830; border-radius:50%; display:flex; align-items:center; justify-content:center; border:1px solid var(--uix-green); flex-shrink: 0;"><i class="fas fa-user"></i></div>
-            <div>
-                <h5 id="uName" style="font-size:0.85rem;">Nombre Usuario</h5>
-                <p id="uRole" style="font-size:0.65rem; color:var(--uix-green);">Rol Asignado</p>
-            </div>
+            <div style="width:50px; height:50px; background:#1a0830; border-radius:50%; margin-bottom:10px; display:flex; align-items:center; justify-content:center; border:1px solid var(--uix-green);"><i class="fas fa-user"></i></div>
+            <h5 id="uName">Nombre Usuario</h5>
+            <p id="uRole" style="font-size:0.65rem; color:var(--uix-green);">Rol del Usuario</p>
         </div>
-        <nav class="nav-menu">
+        <nav>
             <div class="nav-item"><i class="fas fa-home"></i> Dashboard</div>
             <div class="nav-item active"><i class="fas fa-bullseye"></i> Mis Objetivos</div>
             <div class="nav-item"><i class="fas fa-history"></i> Historial</div>
-            <div class="nav-item"><i class="fas fa-bell"></i> Avisos</div>
+            <div class="nav-item"><i class="fas fa-bell"></i> Notificaciones</div>
         </nav>
-        <div class="nav-item" style="color:#ff4d4d; margin-top: auto;" onclick="location.reload()"><i class="fas fa-sign-out-alt"></i> Salir</div>
+        <div class="nav-item" style="margin-top:auto; color:#ff4d4d;" onclick="location.reload()"><i class="fas fa-sign-out-alt"></i> Salir</div>
     </aside>
 
     <main class="main-container">
@@ -141,58 +105,57 @@
         </div>
 
         <div class="content-body">
-            <h2 style="font-size:1.3rem; margin-bottom:10px;">Registro de Objetivos</h2>
+            <h2 style="font-size:1.3rem; margin-bottom:10px;">Registro de Objetivos (Máximo 5)</h2>
             
             <div class="alert-banner">
                 <i class="fas fa-exclamation-triangle"></i>
                 <div>
                     <strong>Total de pesos: <span id="totalPesoText">0%</span></strong><br>
-                    La suma debe ser exactamente 100%
+                    La suma de todos los pesos debe ser exactamente 100%
                 </div>
             </div>
 
             <div class="header-row">
-                <span style="font-size:0.85rem; color:var(--text-muted);">Objetivos: <span id="countText">1</span>/5</span>
+                <span style="font-size:0.8rem; color:var(--text-muted);">Objetivos: <span id="countText">1</span>/5</span>
                 <button class="btn-add" onclick="add()">+ Agregar Objetivo</button>
             </div>
 
             <div id="objsContainer">
                 <div class="obj-card">
-                    <div class="obj-title">Objetivo 1 <span>*</span></div>
-                    <label>NOMBRE DEL OBJETIVO <span>*</span></label>
-                    <input type="text" class="in-n" placeholder="Escribe el objetivo...">
+                    <div class="obj-title">Objetivo 1 *</div>
+                    <label>Objetivo</label>
+                    <input type="text" class="in-n" placeholder="Nombre del objetivo">
                     
                     <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px;">
-                        <div><label>META ANUAL <span>*</span></label><input type="text" class="in-m" placeholder="0"></div>
-                        <div><label>TENDENCIA <span>*</span></label>
+                        <div><label>Meta Anual</label><input type="text" class="in-m" placeholder="0"></div>
+                        <div><label>Tendencia</label>
                             <select class="in-t">
+                                <option value="" disabled selected>Seleccionar...</option>
                                 <option value="Incremental">Incremental</option>
-                                <option value="Sostenible">Sostenible</option>
                                 <option value="Decremental">Decremental</option>
                             </select>
                         </div>
-                        <div><label>PESO (%) <span>*</span></label><input type="number" class="in-p" oninput="calc()" placeholder="0"></div>
+                        <div><label>Peso (%)</label><input type="number" class="in-p" oninput="calc()" placeholder="0"></div>
                     </div>
                     
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
-                        <div><label>FECHA INICIO <span>*</span></label><input type="date" class="in-i"></div>
-                        <div><label>FECHA FIN <span>*</span></label><input type="date" class="in-f"></div>
-                    </div>
+                    <div><label>Fecha Inicio</label><input type="date" class="in-i"></div>
                 </div>
             </div>
 
-            <h3 style="color:var(--active-red); font-size:1rem; margin-top:40px; margin-bottom:15px;"><i class="fas fa-star"></i> Competencias Organizacionales</h3>
+            <div class="comp-header"><i class="fas fa-star"></i> Competencias Organizacionales</div>
+            <div class="comp-info-text">Estas competencias serán evaluadas en tu autoevaluación del 6º mes. Por ahora solo se registran como parte de tu perfil.</div>
+
             <div class="comp-grid">
-                <div class="comp-item c1"><strong>Confianza y Respeto</strong></div>
-                <div class="comp-item c2"><strong>Ejecución Impecable</strong></div>
-                <div class="comp-item c3"><strong>Mejora Continua</strong></div>
-                <div class="comp-item c4"><strong>Pasión Cliente</strong></div>
-                <div class="comp-item c5"><strong>Trabajo Equipo</strong></div>
+                <div class="comp-item c1"><i class="fas fa-handshake"></i> <strong>Confianza y Respeto Mutuo</strong><p>Establece relaciones basadas en la honestidad, transparencia y respeto hacia todos los colaboradores.</p></div>
+                <div class="comp-item c2"><i class="fas fa-check-circle"></i> <strong>Ejecución Impecable</strong><p>Cumple con los compromisos adquiridos con la máxima calidad y en los tiempos establecidos.</p></div>
+                <div class="comp-item c3"><i class="fas fa-sync-alt"></i> <strong>Mejora Continua</strong><p>Busca constantemente formas de optimizar procesos, herramientas y resultados.</p></div>
+                <div class="comp-item c4"><i class="fas fa-heart"></i> <strong>Pasión por el Cliente</strong><p>Pone al cliente en el centro de todas sus decisiones y acciones, superando expectativas.</p></div>
+                <div class="comp-item c5"><i class="fas fa-users"></i> <strong>Trabajo en Equipo</strong><p>Colabora activamente con otros para alcanzar objetivos comunes, valorando la diversidad.</p></div>
             </div>
 
             <div class="footer-actions">
-                <button class="btn-send" onclick="send()" id="btnSend">Enviar al Formador</button>
-                <button class="btn-draft" onclick="alert('Borrador guardado localmente')">Guardar Borrador</button>
+                <button class="btn-send" onclick="send()" id="btnSend"><i class="fas fa-paper-plane"></i> Enviar Objetivos al Formador</button>
+                <button class="btn-draft" onclick="alert('Borrador guardado')"><i class="fas fa-save"></i> Guardar</button>
             </div>
         </div>
     </main>
@@ -205,8 +168,7 @@
             const role = document.getElementById('roleInput').value;
             const email = document.getElementById('emailInput').value;
             const pass = document.getElementById('passInput').value;
-            if(!role || !email || !pass) return alert("Por favor completa todos los campos.");
-
+            if(!role || !email || !pass) return alert("Completa los campos.");
             try {
                 const res = await fetch(API, { method: "POST", body: JSON.stringify({ action: "login", email, password: pass }) });
                 const data = await res.json();
@@ -215,8 +177,8 @@
                     document.getElementById('uName').innerText = data.nombre;
                     document.getElementById('uRole').innerText = role;
                     document.getElementById('loginScreen').classList.add('hidden');
-                } else { alert("Datos de acceso incorrectos."); }
-            } catch(e) { alert("Error al conectar con el servidor."); }
+                } else { alert("Error de acceso"); }
+            } catch(e) { alert("Error de conexión"); }
         }
 
         function calc() {
@@ -229,33 +191,31 @@
         function add() {
             const container = document.getElementById('objsContainer');
             const count = container.querySelectorAll('.obj-card').length;
-            if(count >= 5) return alert("Máximo 5 objetivos permitidos.");
+            if(count >= 5) return;
             const clone = container.querySelector('.obj-card').cloneNode(true);
-            clone.querySelector('.obj-title').innerHTML = `Objetivo ${count + 1} <span>*</span>`;
+            clone.querySelector('.obj-title').innerText = `Objetivo ${count + 1} *`;
             clone.querySelectorAll('input').forEach(i => i.value = "");
             container.appendChild(clone);
             document.getElementById('countText').innerText = count + 1;
         }
 
         async function send() {
-            if(calc() !== 100) return alert("El peso total debe sumar exactamente 100%");
+            if(calc() !== 100) return alert("El peso total debe ser 100%");
             const btn = document.getElementById('btnSend');
             btn.disabled = true; btn.innerText = "ENVIANDO...";
-            
             const objetivos = [];
             document.querySelectorAll('.obj-card').forEach(c => {
                 objetivos.push({
                     nombre: c.querySelector('.in-n').value, meta: c.querySelector('.in-m').value,
                     tendencia: c.querySelector('.in-t').value, peso: c.querySelector('.in-p').value,
-                    fechaInicio: c.querySelector('.in-i').value, fechaFin: c.querySelector('.in-f').value
+                    fechaInicio: c.querySelector('.in-i').value
                 });
             });
-
             try {
                 const res = await fetch(API, { method: "POST", body: JSON.stringify({ action: "saveObjetivos", email: user.email, objetivos }) });
                 const data = await res.json();
-                if(data.status === "success") { alert("✅ ¡Objetivos guardados correctamente!"); location.reload(); }
-            } catch(e) { alert("Error al guardar objetivos."); btn.disabled = false; btn.innerText = "REINTENTAR"; }
+                if(data.status === "success") { alert("¡Enviado!"); location.reload(); }
+            } catch(e) { alert("Error"); btn.disabled = false; btn.innerText = "ENVIAR"; }
         }
     </script>
 </body>
