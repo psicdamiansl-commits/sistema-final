@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uix. Sistema de Desempeño - V7.1_FIX</title>
+    <title>uix. Sistema de Desempeño - V7.2</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -21,8 +21,8 @@
         .login-card { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 20px; width: 380px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
         .login-card select, .login-card input { width: 100%; background: #eef2f7; border: none; padding: 15px; border-radius: 10px; margin-bottom: 15px; font-family: 'Sora'; font-size: 0.9rem; }
         .btn-login { background: var(--uix-green); color: black; width: 100%; padding: 15px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; }
-        
-        /* SIDEBAR */
+
+        /* SIDEBAR - Referencia image_30a9d4.png */
         .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); color: white; }
         .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: #a094b7; font-size: 0.85rem; }
         .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
@@ -39,7 +39,7 @@
         label { font-size: 0.65rem; color: #777; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
         input, select { width: 100%; border: 1px solid #dce1e7; padding: 10px; border-radius: 6px; margin-bottom: 15px; font-family: 'Sora'; }
 
-        /* FOOTER BUTTONS - Referencia image_3040fd.png */
+        /* FOOTER - Referencia image_309e77.png */
         .action-footer { display: flex; gap: 15px; margin-top: 30px; padding-bottom: 50px; }
         .btn-send { background: var(--uix-red-main); color: white; flex: 1; padding: 15px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 0.8rem; }
         .btn-draft { background: #95a5a6; color: white; width: 180px; padding: 15px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.8rem; }
@@ -52,15 +52,12 @@
     <div id="loginScreen">
         <div class="login-card">
             <h1 style="color:var(--uix-green); font-size:2.5rem; margin-bottom:20px;">uix<span>.</span></h1>
-            
             <select id="roleInput">
                 <option value="Colaborador Externo">Colaborador Externo</option>
                 <option value="Formador/Lider">Formador/Lider</option>
             </select>
-            
             <input type="email" id="emailInput" placeholder="psic.damian.sl@gmail.com">
             <input type="password" id="passInput" placeholder="••••">
-            
             <button onclick="validaAcceso()" id="btnLogin" class="btn-login">INGRESAR</button>
             <p id="loginMsg" style="font-size:0.7rem; margin-top:15px; color:#ff4d4d;"></p>
         </div>
@@ -89,13 +86,11 @@
                 <div class="tab-link">Evaluación Final Mes 12</div>
             </div>
         </div>
-
         <div class="content-body">
             <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
                 <h3 style="font-size:1rem;">Registro de Objetivos (Máximo 5)</h3>
-                <button style="background:#21a366; color:white; border:none; padding:8px 15px; border-radius:4px; cursor:pointer; font-weight:600;">+ Agregar Objetivo</button>
+                <button style="background:#21a366; color:white; border:none; padding:8px 15px; border-radius:4px; cursor:pointer;">+ Agregar Objetivo</button>
             </div>
-
             <div id="regContainer">
                 <div class="obj-card">
                     <label>Objetivo 1 *</label>
@@ -104,7 +99,6 @@
                         <div><label>Meta Anual *</label><input type="number" value="0"></div>
                         <div><label>Tendencia *</label>
                             <select>
-                                <option value="" disabled selected>Seleccionar...</option>
                                 <option value="Incremental">Incremental</option>
                                 <option value="Decremental">Decremental</option>
                             </select>
@@ -113,7 +107,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="action-footer">
                 <button class="btn-send"><i class="fas fa-paper-plane"></i> Enviar Objetivos al Formador</button>
                 <button class="btn-draft"><i class="fas fa-lock"></i> Guardar Borrador</button>
@@ -129,38 +122,33 @@
             const btn = document.getElementById('btnLogin');
             const msg = document.getElementById('loginMsg');
 
-            if(!email || !pass) { 
-                msg.innerText = "Por favor ingresa todos tus datos."; 
-                return; 
-            }
+            if(!email || !pass) { msg.innerText = "Campos obligatorios"; return; }
             
             btn.innerText = "VALIDANDO...";
             btn.disabled = true;
-            msg.innerText = "";
 
-            // Intento de comunicación con Apps Script
-            try {
+            // LLAMADA AL BACKEND (Archivo .gs)
+            if (typeof google !== 'undefined' && google.script) {
                 google.script.run
-                    .withSuccessHandler(function(res) {
+                    .withSuccessHandler(res => {
                         if(res && res.autorizado) {
                             document.getElementById('uName').innerText = res.nombre;
                             document.getElementById('uRole').innerText = role;
                             document.getElementById('loginScreen').classList.add('hidden');
                         } else {
-                            msg.innerText = "Acceso denegado: Usuario o contraseña incorrectos.";
+                            msg.innerText = "Credenciales incorrectas.";
                             btn.innerText = "INGRESAR";
                             btn.disabled = false;
                         }
                     })
-                    .withFailureHandler(function(error) {
-                        msg.innerText = "Error de conexión con el servidor.";
+                    .withFailureHandler(err => {
+                        msg.innerText = "Error de comunicación: Verifica que la función exista en el .gs";
                         btn.innerText = "INGRESAR";
                         btn.disabled = false;
-                        console.error(error);
                     })
-                    .verificarUsuario(email, pass); // <-- Asegúrate que esta función exista en tu .gs
-            } catch (e) {
-                msg.innerText = "Error crítico de ejecución.";
+                    .verificarUsuario(email, pass);
+            } else {
+                msg.innerText = "Error: El entorno de Google Script no se cargó.";
                 btn.innerText = "INGRESAR";
                 btn.disabled = false;
             }
