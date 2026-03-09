@@ -43,7 +43,6 @@
         input, select { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 10px; border-radius: 6px; width: 100%; margin-bottom: 12px; font-family: 'Sora'; }
         select option { background-color: #150a2e; color: white; }
 
-        /* COMPETENCIAS */
         .comp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 15px; }
         .comp-card { background: rgba(85, 74, 209, 0.2); padding: 12px; border-radius: 8px; font-size: 0.6rem; border-bottom: 3px solid var(--uix-red-main); }
         .comp-card strong { display: block; margin-bottom: 4px; }
@@ -64,8 +63,8 @@
             <p style="color:white; font-size:0.7rem; margin-bottom:25px; opacity:0.6;">Acceso Colaboradores 2026</p>
             <select id="roleInput">
                 <option value="" disabled selected>Selecciona tu Rol</option>
-                <option value="Colaborador">Colaborador Externo</option>
-                <option value="Lider">Formador/Lider</option>
+                <option value="Colaborador">Colaborador</option>
+                <option value="Lider">Líder</option>
             </select>
             <input type="email" id="emailInput" placeholder="Correo electrónico">
             <input type="password" id="passInput" placeholder="Contraseña">
@@ -80,14 +79,10 @@
             <h5 id="uName" style="color:white;">Usuario</h5>
         </div>
         <nav>
-            <div class="nav-item"><i class="fas fa-home"></i> Dashboard</div>
             <div class="nav-item active"><i class="fas fa-bullseye"></i> Mis Objetivos</div>
             <div class="nav-item"><i class="fas fa-history"></i> Historial</div>
-            <div class="nav-item"><i class="fas fa-bell"></i> Notificaciones</div>
         </nav>
-        <div class="btn-logout" onclick="logout()">
-            <i class="fas fa-sign-out-alt"></i> SALIR
-        </div>
+        <div class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> SALIR</div>
     </aside>
 
     <main class="main-container hidden" id="mainArea">
@@ -105,31 +100,26 @@
             </div>
         </div>
 
-        <div class="alert-pesos">
-            <i class="fas fa-exclamation-triangle"></i>
-            <div><strong>Total de pesos: 0%</strong><br>La suma de todos los pesos debe ser exactamente 100%</div>
-        </div>
-
         <div id="regContainer">
             <div class="obj-card" id="obj1">
                 <label style="color:var(--uix-green); font-size:0.8rem; margin-bottom:15px;">Objetivo 1 *</label>
                 <label>OBJETIVO *</label>
-                <input type="text" placeholder="Nombre del objetivo">
+                <input type="text" class="obj-nombre" placeholder="Nombre del objetivo">
                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
-                    <div><label>META ANUAL *</label><input type="number" placeholder="0"></div>
+                    <div><label>META ANUAL *</label><input type="number" class="obj-meta" placeholder="0"></div>
                     <div>
                         <label>TENDENCIA *</label>
-                        <select>
+                        <select class="obj-tendencia">
                             <option value="" disabled selected>Seleccionar...</option>
                             <option value="Incremental">Incremental</option>
                             <option value="Decremental">Decremental</option>
                         </select>
                     </div>
-                    <div><label>PESO (%) *</label><input type="number" placeholder="0"></div>
+                    <div><label>PESO (%) *</label><input type="number" class="obj-peso" placeholder="0"></div>
                 </div>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-                    <div><label>FECHA INICIO *</label><input type="date"></div>
-                    <div><label>FECHA FIN *</label><input type="date"></div>
+                    <div><label>FECHA INICIO *</label><input type="date" class="obj-inicio"></div>
+                    <div><label>FECHA FIN *</label><input type="date" class="obj-fin"></div>
                 </div>
             </div>
         </div>
@@ -144,14 +134,17 @@
         </div>
 
         <div class="footer-btns">
-            <button class="btn-primary"><i class="fas fa-paper-plane"></i> ENVIAR OBJETIVOS AL FORMADOR</button>
+            <button onclick="enviarDatos()" class="btn-primary" id="btnEnviar"><i class="fas fa-paper-plane"></i> ENVIAR OBJETIVOS AL FORMADOR</button>
             <button class="btn-secondary">Guardar Borrador</button>
         </div>
     </main>
 
     <script>
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxsT-gMrSIk9XdMkXhjd9fDfs1JF4yQKQ0WZTBrWLGMrmWU33TCSRIdvzRdsZnlWm0/exec";
+        // NUEVA URL INTEGRADA
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxoX961b0uHWRVslHAtHr59mQspchrTS5O5p4SrfSCW3i-Xr3nPkCh1TYum-gkPpxA/exec";
+        
         let total = 1;
+        let userData = {};
 
         async function validaAcceso() {
             const email = document.getElementById('emailInput').value;
@@ -169,29 +162,77 @@
             btn.disabled = true;
 
             try {
-                const fetchUrl = `${WEB_APP_URL}?email=${encodeURIComponent(email)}&password=${encodeURIComponent(pass)}`;
+                // Se envía la acción 'login' para que el AppScript sepa qué hacer
+                const fetchUrl = `${WEB_APP_URL}?action=login&email=${encodeURIComponent(email)}&password=${encodeURIComponent(pass)}&role=${encodeURIComponent(role)}`;
                 const response = await fetch(fetchUrl);
                 const res = await response.json();
 
                 if(res && res.autorizado) {
+                    userData = { email: email, nombre: res.nombre, role: role };
                     document.getElementById('uName').innerText = res.nombre;
                     document.getElementById('uRole').innerText = role;
                     document.getElementById('loginScreen').classList.add('hidden');
                     document.getElementById('sidebar').classList.remove('hidden');
                     document.getElementById('mainArea').classList.remove('hidden');
                 } else {
-                    msg.innerText = res.mensaje || "Contraseña o usuario incorrectos.";
+                    msg.innerText = res.mensaje || "Credenciales o Rol inválidos.";
                     btn.innerText = "INGRESAR";
                     btn.disabled = false;
                 }
             } catch (error) {
-                msg.innerText = "Error crítico de conexión.";
+                msg.innerText = "Error de conexión con el servidor.";
                 btn.innerText = "INGRESAR";
                 btn.disabled = false;
             }
         }
 
-        function logout() { location.reload(); }
+        async function enviarDatos() {
+            const btn = document.getElementById('btnEnviar');
+            const cards = document.querySelectorAll('.obj-card');
+            let objetivos = [];
+
+            cards.forEach(card => {
+                objetivos.push({
+                    nombre: card.querySelector('.obj-nombre').value,
+                    meta: card.querySelector('.obj-meta').value,
+                    tendencia: card.querySelector('.obj-tendencia').value,
+                    peso: card.querySelector('.obj-peso').value,
+                    inicio: card.querySelector('.obj-inicio').value,
+                    fin: card.querySelector('.obj-fin').value
+                });
+            });
+
+            // Validación simple antes de enviar
+            if (objetivos.some(o => !o.nombre || !o.meta || o.tendencia === "")) {
+                alert("Por favor completa todos los campos de los objetivos.");
+                return;
+            }
+
+            btn.innerText = "PROCESANDO...";
+            btn.disabled = true;
+
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    cache: 'no-cache',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'saveGoals',
+                        userEmail: userData.email,
+                        userName: userData.nombre,
+                        userRole: userData.role,
+                        goals: objetivos
+                    })
+                });
+                alert("¡Éxito! Tus objetivos han sido enviados correctamente.");
+                btn.innerText = "ENVIADO CON ÉXITO";
+            } catch (e) {
+                alert("Hubo un error al enviar los datos.");
+                btn.disabled = false;
+                btn.innerText = "ENVIAR OBJETIVOS AL FORMADOR";
+            }
+        }
 
         function agregarObjetivo() {
             if(total >= 5) return;
@@ -204,22 +245,22 @@
                 <button class="btn-remove" onclick="eliminarObj('${card.id}')"><i class="fas fa-trash"></i> Eliminar</button>
                 <label style="color:var(--uix-green); font-size:0.8rem; margin-bottom:15px;">Objetivo ${total} *</label>
                 <label>OBJETIVO *</label>
-                <input type="text" placeholder="Nombre del objetivo">
+                <input type="text" class="obj-nombre" placeholder="Nombre del objetivo">
                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
-                    <div><label>META ANUAL *</label><input type="number" placeholder="0"></div>
+                    <div><label>META ANUAL *</label><input type="number" class="obj-meta" placeholder="0"></div>
                     <div>
                         <label>TENDENCIA *</label>
-                        <select>
+                        <select class="obj-tendencia">
                             <option value="" disabled selected>Seleccionar...</option>
                             <option value="Incremental">Incremental</option>
                             <option value="Decremental">Decremental</option>
                         </select>
                     </div>
-                    <div><label>PESO (%) *</label><input type="number" placeholder="0"></div>
+                    <div><label>PESO (%) *</label><input type="number" class="obj-peso" placeholder="0"></div>
                 </div>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-                    <div><label>FECHA INICIO *</label><input type="date"></div>
-                    <div><label>FECHA FIN *</label><input type="date"></div>
+                    <div><label>FECHA INICIO *</label><input type="date" class="obj-inicio"></div>
+                    <div><label>FECHA FIN *</label><input type="date" class="obj-fin"></div>
                 </div>`;
             container.appendChild(card);
             document.getElementById('countObj').innerText = total;
@@ -229,12 +270,9 @@
             document.getElementById(id).remove();
             total--;
             document.getElementById('countObj').innerText = total;
-            const cards = document.querySelectorAll('.obj-card');
-            cards.forEach((c, i) => {
-                c.id = `obj${i+1}`;
-                c.querySelector('label').innerText = `Objetivo ${i+1} *`;
-            });
         }
+
+        function logout() { location.reload(); }
     </script>
 </body>
 </html>
