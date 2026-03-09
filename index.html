@@ -20,35 +20,34 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: var(--white); height: 100vh; display: flex; overflow: hidden; }
 
-        /* LOGIN SCREEN ORIGINAL */
+        /* LOGIN */
         #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
         .login-card { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 25px; width: 400px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
-        .login-card h1 { color: var(--uix-green); font-size: 2.8rem; margin-bottom: 5px; }
 
-        /* SIDEBAR ORIGINAL */
+        /* SIDEBAR */
         .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); }
         .user-info { padding: 0 20px 30px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
         .nav-item { padding: 15px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: var(--text-muted); font-size: 0.9rem; }
         .nav-item.active { background: var(--active-red); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
 
         /* MAIN CONTENT */
-        .main-container { flex: 1; overflow-y: auto; padding: 0; background: #0a0118; }
+        .main-container { flex: 1; overflow-y: auto; background: var(--uix-purple-dark); }
         .top-nav-tabs { display: flex; gap: 30px; padding: 20px 40px; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .tab-link { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); cursor: pointer; padding-bottom: 10px; }
         .tab-link.active { color: var(--uix-green); border-bottom: 2px solid var(--uix-green); }
 
-        .content-body { padding: 40px; }
-        .alert-banner { background: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; font-size: 0.8rem; }
-        .info-banner-cyan { background: #e1f5fe; color: #01579b; padding: 15px; border-radius: 8px; margin-bottom: 25px; font-size: 0.8rem; display: flex; align-items: center; gap: 10px; }
+        .content-body { padding: 30px 40px; }
+        .section-header { margin-bottom: 25px; }
+        .section-header h2 { font-size: 1.5rem; margin-bottom: 5px; }
+        .section-header p { font-size: 0.85rem; color: var(--text-muted); }
+
+        .alert-banner { background: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; margin-bottom: 25px; font-size: 0.8rem; display: flex; align-items: center; gap: 10px; }
 
         /* CARDS */
-        .obj-card { background: var(--uix-purple-card); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--active-red); position: relative; }
-        .obj-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        
-        label { font-size: 0.7rem; color: var(--text-muted); display: block; margin-bottom: 8px; text-transform: uppercase; }
+        .obj-card { background: var(--uix-purple-card); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--active-red); }
+        label { font-size: 0.7rem; color: var(--text-muted); display: block; margin-bottom: 8px; text-transform: uppercase; font-weight: 600; }
         input, select, textarea { width: 100%; background: #0a0118; border: 1px solid #3d2b56; padding: 12px; border-radius: 8px; color: white; margin-bottom: 15px; font-family: 'Sora'; }
-        .auto-calc { background: #1a0830; color: var(--uix-green); font-weight: bold; }
-
+        
         /* STARS */
         .star-rating { display: flex; gap: 8px; margin: 10px 0 20px; }
         .star-rating i { color: #3d2b56; cursor: pointer; font-size: 1.3rem; }
@@ -56,20 +55,20 @@
 
         /* COMPETENCIAS */
         .comp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 20px; }
-        .comp-item { padding: 15px; border-radius: 10px; color: white; min-height: 140px; }
-        .comp-item strong { display: block; font-size: 0.75rem; margin-bottom: 5px; }
-        .comp-item p { font-size: 0.6rem; opacity: 0.8; line-height: 1.2; }
+        .comp-item { padding: 15px; border-radius: 10px; color: white; min-height: 150px; }
+        .comp-item strong { display: block; font-size: 0.75rem; margin-bottom: 8px; }
+        .comp-item p { font-size: 0.65rem; opacity: 0.8; line-height: 1.3; }
         .c1 { background: #5a4ca5; } .c2 { background: #5c78d6; } .c3 { background: #5e48ad; } .c4 { background: #4a54b3; } .c5 { background: #7162ad; }
 
         .hidden { display: none !important; }
-        .btn-send { background: var(--active-red); color: white; width: 100%; padding: 16px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
+        .btn-add { background: var(--uix-green-btn); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <div id="loginScreen">
         <div class="login-card">
-            <h1>uix<span>.</span></h1>
+            <h1 style="color:var(--uix-green); font-size:2.8rem;">uix<span>.</span></h1>
             <p style="color:var(--text-muted); margin-bottom:20px;">Acceso Colaboradores 2026</p>
             <select id="roleInput">
                 <option value="" disabled selected>Selecciona tu Rol</option>
@@ -85,7 +84,7 @@
     <aside class="sidebar">
         <div class="user-info">
             <div style="width:45px; height:45px; background:#1a0830; border-radius:50%; margin-bottom:10px; display:flex; align-items:center; justify-content:center; border:1px solid var(--uix-green);"><i class="fas fa-user"></i></div>
-            <h5 id="uName">Cargando...</h5>
+            <h5 id="uName">Usuario</h5>
             <p id="uRole" style="font-size:0.6rem; color:var(--uix-green);">Rol</p>
         </div>
         <nav>
@@ -105,46 +104,56 @@
         </div>
 
         <div id="tab1-content" class="content-body">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                <h2>Registro de Objetivos (Máximo 5)</h2>
-                <button onclick="addObj()" style="background:var(--uix-green-btn); color:white; border:none; padding:10px 18px; border-radius:6px; cursor:pointer;">+ Agregar Objetivo</button>
+            <div class="section-header">
+                <h2>Mis Objetivos</h2>
+                <p>Gestiona tus objetivos y competencias organizacionales</p>
             </div>
-            
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h3 style="font-size:1rem;">Registro de Objetivos (Máximo 5)</h3>
+                <button class="btn-add" onclick="addObj()">+ Agregar Objetivo</button>
+            </div>
+
             <div class="alert-banner">
                 <i class="fas fa-exclamation-triangle"></i>
-                <div><strong>Total de pesos: <span id="pesoTotal">0%</span></strong> (Debe ser 100%)</div>
+                <div>Total de pesos: <strong id="pesoTotal">0%</strong>. La suma de todos los pesos debe ser exactamente 100%</div>
             </div>
 
             <div id="regContainer"></div>
 
-            <h3 style="margin:40px 0 15px; color:var(--delete-red);"><i class="fas fa-star"></i> Competencias Organizacionales</h3>
+            <h3 style="margin:40px 0 15px; color:var(--delete-red); font-size:1rem;"><i class="fas fa-star"></i> Competencias Organizacionales</h3>
+            <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:20px; background: rgba(124, 255, 1, 0.05); padding: 10px; border-radius: 5px; border-left: 3px solid var(--uix-green);">Estas competencias serán evaluadas en tu autoevaluación del 6° mes. Por ahora solo se registran como parte de tu perfil.</p>
             <div class="comp-grid" id="compRegGrid"></div>
         </div>
 
         <div id="tab2-content" class="content-body hidden">
-            <div class="info-banner-cyan">
-                <i class="fas fa-info-circle"></i>
-                Evalúa tu desempeño en cada objetivo y en las 5 competencias organizacionales.
+            <div class="section-header">
+                <h2>Autoevaluación Semestral - Mes 6</h2>
+            </div>
+            <div style="background: #e1f5fe; color: #01579b; padding: 15px; border-radius: 8px; margin-bottom: 25px; font-size: 0.8rem;">
+                <i class="fas fa-info-circle"></i> Evalúa tu desempeño en cada objetivo y en las competencias organizacionales.
             </div>
 
-            <h3 style="color:var(--delete-red); margin-bottom:20px;">Sección A: Autoevaluación de Objetivos</h3>
+            <h3 style="color:var(--delete-red); margin-bottom:20px; font-size:1rem;">Sección A: Autoevaluación de Objetivos</h3>
             <div id="evalContainer"></div>
 
-            <h3 style="color:var(--delete-red); margin:40px 0 20px;">Sección B: Autoevaluación de Competencias</h3>
+            <h3 style="color:var(--delete-red); margin:40px 0 20px; font-size:1rem;">Sección B: Autoevaluación de Competencias</h3>
             <div id="compEvalContainer"></div>
 
-            <button class="btn-send" onclick="alert('Enviando a Formador...')">ENVIAR AUTOEVALUACIÓN AL FORMADOR</button>
+            <button style="background:var(--active-red); color:white; width:100%; padding:20px; border:none; border-radius:8px; font-weight:bold; cursor:pointer; margin-top:20px;">
+                <i class="fas fa-paper-plane"></i> ENVIAR AUTOEVALUACIÓN AL FORMADOR
+            </button>
         </div>
     </main>
 
     <script>
-        let objs = [{ id: 1, nombre: '', meta: 0, tendencia: '', peso: 0 }];
+        let objs = [{ id: 1, nombre: '', meta: 0, tendencia: '', peso: 0, inicio: '', fin: '' }];
         const compInfo = [
-            { t: "Confianza y Respeto Mutuo", d: "Establece relaciones basadas en la honestidad, transparencia y respeto hacia todos." },
-            { t: "Ejecución Impecable", d: "Cumple compromisos con la máxima calidad y en los tiempos establecidos." },
-            { t: "Mejora Continua", d: "Busca optimizar procesos, herramientas y resultados constantemente." },
-            { t: "Pasión por el Cliente", d: "Pone al cliente en el centro de todas sus decisiones y acciones." },
-            { t: "Trabajo en Equipo", d: "Colabora activamente para alcanzar objetivos comunes valorando la diversidad." }
+            { t: "Confianza y Respeto Mutuo", d: "Establece relaciones basadas en la honestidad, transparencia y respeto hacia todos los colaboradores." },
+            { t: "Ejecución Impecable", d: "Cumple con los compromisos adquiridos con la máxima calidad y en los tiempos establecidos." },
+            { t: "Mejora Continua", d: "Busca constantemente formas de optimizar procesos, herramientas y resultados." },
+            { t: "Pasión por el Cliente", d: "Pone al cliente en el centro de todas sus decisiones y acciones, superando expectativas." },
+            { t: "Trabajo en Equipo", d: "Colabora activamente con otros para alcanzar objetivos comunes, valorando la diversidad." }
         ];
 
         function handleLogin() {
@@ -159,7 +168,7 @@
 
         function addObj() {
             if(objs.length < 5) {
-                objs.push({ id: Date.now(), nombre: '', meta: 0, tendencia: '', peso: 0 });
+                objs.push({ id: Date.now(), nombre: '', meta: 0, tendencia: '', peso: 0, inicio: '', fin: '' });
                 renderReg();
             }
         }
@@ -173,22 +182,27 @@
             const container = document.getElementById('regContainer');
             container.innerHTML = objs.map((o, i) => `
                 <div class="obj-card">
-                    <div class="obj-header">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
                         <strong style="color:var(--uix-green)">Objetivo ${i+1} *</strong>
-                        ${i > 0 ? `<button onclick="removeObj(${i})" style="color:var(--delete-red); border:none; background:none; cursor:pointer; font-size:0.7rem;">ELIMINAR</button>` : ''}
+                        ${i > 0 ? `<button onclick="removeObj(${i})" style="color:var(--delete-red); border:none; background:none; cursor:pointer; font-size:0.7rem; font-weight:bold;">ELIMINAR</button>` : ''}
                     </div>
-                    <label>Nombre del Objetivo</label>
-                    <input type="text" value="${o.nombre}" onchange="updateObj(${i}, 'nombre', this.value)">
+                    <label>Objetivo *</label>
+                    <input type="text" value="${o.nombre}" onchange="objs[${i}].nombre = this.value" placeholder="Nombre del objetivo">
                     <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
-                        <div><label>Meta Anual</label><input type="number" value="${o.meta}" onchange="updateObj(${i}, 'meta', this.value)"></div>
-                        <div><label>Tendencia</label>
-                            <select onchange="updateObj(${i}, 'tendencia', this.value)">
+                        <div><label>Meta Anual *</label><input type="number" value="${o.meta}" onchange="objs[${i}].meta = this.value"></div>
+                        <div><label>Tendencia *</label>
+                            <select onchange="objs[${i}].tendencia = this.value">
                                 <option value="" disabled ${!o.tendencia ? 'selected':''}>Seleccionar...</option>
                                 <option value="Incremental" ${o.tendencia==='Incremental'?'selected':''}>Incremental</option>
+                                <option value="Sostenible" ${o.tendencia==='Sostenible'?'selected':''}>Sostenible</option>
                                 <option value="Decremental" ${o.tendencia==='Decremental'?'selected':''}>Decremental</option>
                             </select>
                         </div>
-                        <div><label>Peso (%)</label><input type="number" class="p-input" value="${o.peso}" onchange="updateObj(${i}, 'peso', this.value); calcPeso();"></div>
+                        <div><label>Peso (%) *</label><input type="number" class="p-input" value="${o.peso}" onchange="objs[${i}].peso = this.value; calcPeso();"></div>
+                    </div>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                        <div><label>Fecha Inicio *</label><input type="date" value="${o.inicio}" onchange="objs[${i}].inicio = this.value"></div>
+                        <div><label>Fecha Fin *</label><input type="date" value="${o.fin}" onchange="objs[${i}].fin = this.value"></div>
                     </div>
                 </div>
             `).join('');
@@ -198,8 +212,6 @@
             `).join('');
             calcPeso();
         }
-
-        function updateObj(i, key, val) { objs[i][key] = val; }
 
         function calcPeso() {
             let total = 0;
@@ -221,15 +233,17 @@
                 <div class="obj-card">
                     <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
                         <strong>Objetivo ${i+1}: ${o.nombre || '(Sin nombre)'}</strong>
-                        <span style="font-size:0.7rem; color:var(--text-muted)">Meta: ${o.meta} | Peso: ${o.peso}%</span>
+                        <div style="font-size:0.7rem; color:var(--text-muted); text-align:right;">
+                            META ANUAL: ${o.meta} | TENDENCIA: ${o.tendencia} | PESO: ${o.peso}%
+                        </div>
                     </div>
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
                         <div><label>Avance / Resultado Alcanzado</label><input type="number" oninput="calcComp(${i}, this.value, ${o.meta})"></div>
-                        <div><label>% Cumplimiento (Auto-calculado)</label><input type="text" id="comp-${i}" class="auto-calc" value="0%" readonly></div>
+                        <div><label>% Cumplimiento (Auto-calculado)</label><input type="text" id="comp-${i}" style="background:#1a0830; color:var(--uix-green); font-weight:bold;" value="0%" readonly></div>
                     </div>
                     <label>Calificación Propia (1-5)</label>
                     <div class="star-rating">${[1,2,3,4,5].map(n => `<i class="fas fa-star" onclick="setStar(this, ${n})"></i>`).join('')}</div>
-                    <textarea placeholder="Comentarios sobre tu desempeño..."></textarea>
+                    <textarea placeholder="Describe los logros, obstáculos y aprendizajes..."></textarea>
                 </div>
             `).join('');
 
