@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uix. Sistema de Desempeño - V6 Final</title>
+    <title>uix. Sistema de Desempeño - V6</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -16,13 +16,13 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: white; height: 100vh; display: flex; overflow: hidden; }
 
-        /* LOGIN SCREEN (image_2fc1b0.png) */
+        /* PANTALLA LOGIN (image_2fc1b0.png) */
         #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
         .login-card { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 20px; width: 380px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
         .login-card select, .login-card input { width: 100%; background: #eef2f7; border: none; padding: 15px; border-radius: 10px; margin-bottom: 15px; font-family: 'Sora'; color: #333; }
         .btn-login { background: var(--uix-green); color: black; width: 100%; padding: 15px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; }
 
-        /* SIDEBAR (image_f51214.png) */
+        /* SIDEBAR (image_f5209b.png) */
         .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); }
         .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: #a094b7; font-size: 0.85rem; }
         .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
@@ -34,8 +34,10 @@
         .tab-item { padding-bottom: 10px; font-size: 0.75rem; color: #888; cursor: pointer; font-weight: 600; }
         .tab-item.active { color: var(--uix-green); border-bottom: 2px solid var(--uix-green); }
 
-        /* CARDS & ALERTS */
+        /* TITULO Y ALERTA (image_f4bfc0.png) */
         .alert-pesos { background: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.8rem; border-left: 5px solid #ffeeba; display: flex; align-items: center; gap: 10px; }
+
+        /* OBJETIVOS (image_f4bb62.png) */
         .obj-card { background: var(--card-bg); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--uix-red-main); position: relative; }
         .btn-remove { position: absolute; top: 15px; right: 15px; background: #d93025; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; font-weight: bold; }
 
@@ -141,7 +143,6 @@
     <script>
         let total = 1;
 
-        // 1. FUNCIÓN DE ACCESO CORREGIDA (VALIDACIÓN REAL)
         function validaAcceso() {
             const email = document.getElementById('emailInput').value;
             const pass = document.getElementById('passInput').value;
@@ -157,7 +158,7 @@
             btn.innerText = "VALIDANDO...";
             btn.disabled = true;
 
-            // ESTA LLAMADA CONECTA CON TU APPS SCRIPT (Código.gs)
+            // IMPORTANTE: Verifica que en Código.gs tengas la función 'verificarUsuario'
             google.script.run
                 .withSuccessHandler(res => {
                     if(res && res.autorizado) {
@@ -168,66 +169,4 @@
                         document.getElementById('mainArea').classList.remove('hidden');
                     } else {
                         msg.innerText = res.mensaje || "Contraseña o usuario incorrectos.";
-                        btn.innerText = "INGRESAR";
-                        btn.disabled = false;
-                    }
-                })
-                .withFailureHandler(err => {
-                    msg.innerText = "Error crítico de conexión.";
-                    btn.innerText = "INGRESAR";
-                    btn.disabled = false;
-                })
-                .verificarUsuario(email, pass);
-        }
-
-        // 2. FUNCIÓN DE SALIR RESTAURADA
-        function logout() {
-            document.getElementById('loginScreen').classList.remove('hidden');
-            document.getElementById('sidebar').classList.add('hidden');
-            document.getElementById('mainArea').classList.add('hidden');
-            document.getElementById('emailInput').value = "";
-            document.getElementById('passInput').value = "";
-            document.getElementById('loginMsg').innerText = "";
-            document.getElementById('btnLogin').innerText = "INGRESAR";
-            document.getElementById('btnLogin').disabled = false;
-        }
-
-        function agregarObjetivo() {
-            if(total >= 5) return;
-            total++;
-            const container = document.getElementById('regContainer');
-            const card = document.createElement('div');
-            card.className = 'obj-card';
-            card.id = `obj${total}`;
-            card.innerHTML = `
-                <button class="btn-remove" onclick="eliminarObj('${card.id}')"><i class="fas fa-trash"></i> Eliminar</button>
-                <label style="color:var(--uix-green); font-size:0.8rem; margin-bottom:15px;">Objetivo ${total} *</label>
-                <label>OBJETIVO *</label>
-                <input type="text" placeholder="Nombre del objetivo">
-                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
-                    <div><label>META ANUAL *</label><input type="number" placeholder="0"></div>
-                    <div><label>TENDENCIA *</label><select><option>Seleccionar...</option><option>Incremental</option></select></div>
-                    <div><label>PESO (%) *</label><input type="number" placeholder="0"></div>
-                </div>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-                    <div><label>FECHA INICIO *</label><input type="date"></div>
-                    <div><label>FECHA FIN *</label><input type="date"></div>
-                </div>
-            `;
-            container.appendChild(card);
-            document.getElementById('countObj').innerText = total;
-        }
-
-        function eliminarObj(id) {
-            document.getElementById(id).remove();
-            total--;
-            document.getElementById('countObj').innerText = total;
-            const cards = document.querySelectorAll('.obj-card');
-            cards.forEach((c, i) => {
-                c.id = `obj${i+1}`;
-                c.querySelector('label').innerText = `Objetivo ${i+1} *`;
-            });
-        }
-    </script>
-</body>
-</html>
+                        btn.innerText =
