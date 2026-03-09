@@ -16,7 +16,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: white; height: 100vh; display: flex; overflow: hidden; }
 
-        /* PANTALLA DE LOGIN (Restaurada image_2fc1b0.png) */
+        /* LOGIN SCREEN (image_2fc1b0.png) */
         #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
         .login-card { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 20px; width: 380px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
         .login-card select, .login-card input { width: 100%; background: #eef2f7; border: none; padding: 15px; border-radius: 10px; margin-bottom: 15px; font-family: 'Sora'; color: #333; }
@@ -26,22 +26,19 @@
         .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); }
         .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: #a094b7; font-size: 0.85rem; }
         .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
+        .btn-logout { margin-top: auto; padding: 25px; color: #ff4d4d; font-weight: 700; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; gap: 10px; border-top: 1px solid rgba(255,255,255,0.05); }
 
         /* MAIN CONTENT */
         .main-container { flex: 1; overflow-y: auto; background: var(--uix-purple-dark); padding: 20px 40px; }
-        
-        /* SUBPESTAÑAS (Restauradas image_f4bfc0.png) */
         .tab-menu { display: flex; gap: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
         .tab-item { padding-bottom: 10px; font-size: 0.75rem; color: #888; cursor: pointer; font-weight: 600; }
         .tab-item.active { color: var(--uix-green); border-bottom: 2px solid var(--uix-green); }
 
-        /* ALERTA Y TITULO */
+        /* CARDS & ALERTS */
         .alert-pesos { background: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.8rem; border-left: 5px solid #ffeeba; display: flex; align-items: center; gap: 10px; }
-
-        /* BOTÓN ELIMINAR (Estilo image_f4bb62.png) */
+        .obj-card { background: var(--card-bg); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--uix-red-main); position: relative; }
         .btn-remove { position: absolute; top: 15px; right: 15px; background: #d93025; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; font-weight: bold; }
 
-        .obj-card { background: var(--card-bg); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--uix-red-main); position: relative; }
         label { font-size: 0.6rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
         input, select { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 10px; border-radius: 6px; width: 100%; margin-bottom: 12px; font-family: 'Sora'; }
 
@@ -69,14 +66,14 @@
             <input type="email" id="emailInput" placeholder="Correo electrónico">
             <input type="password" id="passInput" placeholder="Contraseña">
             <button onclick="validaAcceso()" id="btnLogin" class="btn-login">INGRESAR</button>
-            <p id="loginMsg" style="color:red; font-size:0.7rem; margin-top:10px;"></p>
+            <p id="loginMsg" style="color:#ff4d4d; font-size:0.75rem; margin-top:15px; font-weight:600;"></p>
         </div>
     </div>
 
     <aside class="sidebar hidden" id="sidebar">
         <div style="padding:0 25px 30px; border-bottom:1px solid rgba(255,255,255,0.05); margin-bottom:20px;">
             <p id="uRole" style="color:var(--uix-green); font-size:0.6rem; font-weight:700;">ROL</p>
-            <h5 id="uName">Usuario</h5>
+            <h5 id="uName" style="color:white;">Usuario</h5>
         </div>
         <nav>
             <div class="nav-item"><i class="fas fa-home"></i> Dashboard</div>
@@ -84,6 +81,9 @@
             <div class="nav-item"><i class="fas fa-history"></i> Historial</div>
             <div class="nav-item"><i class="fas fa-bell"></i> Notificaciones</div>
         </nav>
+        <div class="btn-logout" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> SALIR
+        </div>
     </aside>
 
     <main class="main-container hidden" id="mainArea">
@@ -141,17 +141,55 @@
     <script>
         let total = 1;
 
+        // 1. FUNCIÓN DE ACCESO CORREGIDA (VALIDACIÓN REAL)
         function validaAcceso() {
+            const email = document.getElementById('emailInput').value;
+            const pass = document.getElementById('passInput').value;
+            const role = document.getElementById('roleInput').value;
             const btn = document.getElementById('btnLogin');
+            const msg = document.getElementById('loginMsg');
+
+            if(!email || !pass || !role) {
+                msg.innerText = "Por favor, completa todos los campos.";
+                return;
+            }
+
             btn.innerText = "VALIDANDO...";
-            // Simulación de validación para mostrar UI restaurada
-            setTimeout(() => {
-                document.getElementById('uName').innerText = "Damian Sanchez Linares";
-                document.getElementById('uRole').innerText = document.getElementById('roleInput').value;
-                document.getElementById('loginScreen').classList.add('hidden');
-                document.getElementById('sidebar').classList.remove('hidden');
-                document.getElementById('mainArea').classList.remove('hidden');
-            }, 1000);
+            btn.disabled = true;
+
+            // ESTA LLAMADA CONECTA CON TU APPS SCRIPT (Código.gs)
+            google.script.run
+                .withSuccessHandler(res => {
+                    if(res && res.autorizado) {
+                        document.getElementById('uName').innerText = res.nombre;
+                        document.getElementById('uRole').innerText = role;
+                        document.getElementById('loginScreen').classList.add('hidden');
+                        document.getElementById('sidebar').classList.remove('hidden');
+                        document.getElementById('mainArea').classList.remove('hidden');
+                    } else {
+                        msg.innerText = res.mensaje || "Contraseña o usuario incorrectos.";
+                        btn.innerText = "INGRESAR";
+                        btn.disabled = false;
+                    }
+                })
+                .withFailureHandler(err => {
+                    msg.innerText = "Error crítico de conexión.";
+                    btn.innerText = "INGRESAR";
+                    btn.disabled = false;
+                })
+                .verificarUsuario(email, pass);
+        }
+
+        // 2. FUNCIÓN DE SALIR RESTAURADA
+        function logout() {
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('sidebar').classList.add('hidden');
+            document.getElementById('mainArea').classList.add('hidden');
+            document.getElementById('emailInput').value = "";
+            document.getElementById('passInput').value = "";
+            document.getElementById('loginMsg').innerText = "";
+            document.getElementById('btnLogin').innerText = "INGRESAR";
+            document.getElementById('btnLogin').disabled = false;
         }
 
         function agregarObjetivo() {
@@ -168,7 +206,7 @@
                 <input type="text" placeholder="Nombre del objetivo">
                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
                     <div><label>META ANUAL *</label><input type="number" placeholder="0"></div>
-                    <div><label>TENDENCIA *</label><select><option>Seleccionar...</option></select></div>
+                    <div><label>TENDENCIA *</label><select><option>Seleccionar...</option><option>Incremental</option></select></div>
                     <div><label>PESO (%) *</label><input type="number" placeholder="0"></div>
                 </div>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
@@ -184,7 +222,6 @@
             document.getElementById(id).remove();
             total--;
             document.getElementById('countObj').innerText = total;
-            // Reordenar etiquetas
             const cards = document.querySelectorAll('.obj-card');
             cards.forEach((c, i) => {
                 c.id = `obj${i+1}`;
