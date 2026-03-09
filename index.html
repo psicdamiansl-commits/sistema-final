@@ -24,17 +24,15 @@
 
         /* SIDEBAR */
         .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); }
-        .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: #a094b7; font-size: 0.85rem; }
+        .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: #a094b7; font-size: 0.85rem; transition: 0.3s; }
+        .nav-item:hover { color: white; background: rgba(255,255,255,0.05); }
         .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
         .btn-logout { margin-top: auto; padding: 25px; color: #ff4d4d; font-weight: 700; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; gap: 10px; border-top: 1px solid rgba(255,255,255,0.05); }
 
         /* MAIN CONTENT */
         .main-container { flex: 1; overflow-y: auto; background: var(--uix-purple-dark); padding: 20px 40px; position: relative; }
-        .tab-menu { display: flex; gap: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
-        .tab-item { padding-bottom: 10px; font-size: 0.75rem; color: #888; cursor: pointer; font-weight: 600; }
-        .tab-item.active { color: var(--uix-green); border-bottom: 2px solid var(--uix-green); }
-
-        /* PESO TRACKER */
+        
+        /* WEIGHT TRACKER */
         .weight-tracker { background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px dashed var(--uix-green); }
         .weight-text { font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; display: flex; justify-content: space-between; }
         .progress-bg { width: 100%; height: 8px; background: #333; border-radius: 4px; overflow: hidden; }
@@ -46,17 +44,14 @@
 
         label { font-size: 0.6rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
         input, select { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 10px; border-radius: 6px; width: 100%; margin-bottom: 12px; font-family: 'Sora'; }
-        select option { background-color: #150a2e; color: white; }
-
+        
         .footer-btns { display: flex; gap: 15px; margin-top: 30px; padding-bottom: 40px; }
         .btn-primary { background: var(--uix-red-main); color: white; flex: 4; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
         .btn-secondary { background: #333; color: white; flex: 1; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
 
-        /* PANTALLA DE ÉXITO */
+        /* SUCCESS SCREEN */
         #successScreen { text-align: center; padding: 60px 20px; animation: fadeIn 0.8s ease; }
         .success-icon { font-size: 5rem; color: var(--uix-green); margin-bottom: 20px; display: block; animation: bounce 2s infinite; }
-        .success-title { font-size: 1.8rem; margin-bottom: 15px; color: var(--uix-green); }
-        .success-msg { font-size: 1rem; color: #a094b7; max-width: 500px; margin: 0 auto 30px; line-height: 1.6; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
@@ -87,74 +82,67 @@
             <p id="uRole" style="color:var(--uix-green); font-size:0.6rem; font-weight:700;">ROL</p>
             <h5 id="uName" style="color:white;">Usuario</h5>
         </div>
-        <nav>
-            <div class="nav-item active"><i class="fas fa-bullseye"></i> Mis Objetivos</div>
-            <div class="nav-item"><i class="fas fa-history"></i> Historial</div>
+        <nav id="mainNav">
+            <div class="nav-item" onclick="switchTab('dashboard')"><i class="fas fa-th-large"></i> Dashboard</div>
+            <div class="nav-item active" onclick="switchTab('misObjetivos')"><i class="fas fa-bullseye"></i> Mis objetivos</div>
+            <div class="nav-item" onclick="switchTab('historial')"><i class="fas fa-history"></i> Historial</div>
+            <div class="nav-item" onclick="switchTab('notificaciones')"><i class="fas fa-bell"></i> Notificaciones</div>
         </nav>
         <div class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> SALIR</div>
     </aside>
 
     <main class="main-container hidden" id="mainArea">
         
-        <div id="formSection">
-            <div class="tab-menu">
-                <div class="tab-item active">Objetivos y Competencias</div>
-            </div>
-
-            <div class="header-content">
-                <h2 style="font-size: 1.1rem; margin-bottom: 5px;">Registro de Objetivos (Máximo 5)</h2>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
-                    <p style="font-size:0.7rem; color:#888;">Objetivos: <span id="countObj">1</span>/5</p>
-                    <button onclick="agregarObjetivo()" id="btnAdd" style="background:var(--uix-green); border:none; padding:8px 15px; border-radius:5px; font-weight:bold; cursor:pointer; color: black;">+ Agregar Objetivo</button>
+        <div id="misObjetivosSection">
+            <div id="formSection">
+                <h2 style="font-size: 1.1rem; margin-bottom: 20px;">Registro de Objetivos (Máximo 5)</h2>
+                
+                <div class="weight-tracker">
+                    <div class="weight-text"><span>Sumatoria de Peso:</span> <span id="pesoTotalTxt">0% / 100%</span></div>
+                    <div class="progress-bg"><div class="progress-fill" id="pesoBar"></div></div>
                 </div>
-            </div>
 
-            <div class="weight-tracker">
-                <div class="weight-text">
-                    <span>Sumatoria de Peso:</span>
-                    <span id="pesoTotalTxt">0% / 100%</span>
-                </div>
-                <div class="progress-bg"><div class="progress-fill" id="pesoBar"></div></div>
-            </div>
-
-            <div id="regContainer">
-                <div class="obj-card" id="obj1">
-                    <label style="color:var(--uix-green); font-size:0.8rem; margin-bottom:15px;">Objetivo 1 *</label>
-                    <label>OBJETIVO *</label>
-                    <input type="text" class="obj-nombre" placeholder="Nombre del objetivo">
-                    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
-                        <div><label>META ANUAL *</label><input type="number" class="obj-meta" placeholder="0"></div>
-                        <div>
-                            <label>TENDENCIA *</label>
-                            <select class="obj-tendencia">
-                                <option value="" disabled selected>Seleccionar...</option>
-                                <option value="Incremental">Incremental</option>
-                                <option value="Decremental">Decremental</option>
-                            </select>
+                <div id="regContainer">
+                    <div class="obj-card" id="obj1">
+                        <label style="color:var(--uix-green); font-size:0.8rem; margin-bottom:15px;">Objetivo 1 *</label>
+                        <label>OBJETIVO *</label>
+                        <input type="text" class="obj-nombre" placeholder="Nombre del objetivo">
+                        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
+                            <div><label>META ANUAL *</label><input type="number" class="obj-meta" placeholder="0"></div>
+                            <div>
+                                <label>TENDENCIA *</label>
+                                <select class="obj-tendencia">
+                                    <option value="" disabled selected>Seleccionar...</option>
+                                    <option value="Incremental">Incremental</option>
+                                    <option value="Decremental">Decremental</option>
+                                </select>
+                            </div>
+                            <div><label>PESO (%) *</label><input type="number" class="obj-peso" placeholder="0" oninput="calcularPesos()"></div>
                         </div>
-                        <div><label>PESO (%) *</label><input type="number" class="obj-peso" placeholder="0" oninput="calcularPesos()"></div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                            <div><label>FECHA INICIO *</label><input type="date" class="obj-inicio"></div>
+                            <div><label>FECHA FIN *</label><input type="date" class="obj-fin"></div>
+                        </div>
                     </div>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-                        <div><label>FECHA INICIO *</label><input type="date" class="obj-inicio"></div>
-                        <div><label>FECHA FIN *</label><input type="date" class="obj-fin"></div>
-                    </div>
+                </div>
+
+                <div class="footer-btns">
+                    <button onclick="enviarDatos()" class="btn-primary" id="btnEnviar"><i class="fas fa-paper-plane"></i> ENVIAR OBJETIVOS AL FORMADOR</button>
+                    <button onclick="agregarObjetivo()" id="btnAdd" class="btn-secondary">Agregar otro +</button>
                 </div>
             </div>
 
-            <div class="footer-btns">
-                <button onclick="enviarDatos()" class="btn-primary" id="btnEnviar"><i class="fas fa-paper-plane"></i> ENVIAR OBJETIVOS AL FORMADOR</button>
-                <button class="btn-secondary">Guardar Borrador</button>
+            <div id="successScreen" class="hidden">
+                <i class="fas fa-rocket success-icon"></i>
+                <h2 style="color:var(--uix-green); font-size:1.8rem;">¡Felicidades, <span id="successName"></span>!</h2>
+                <p style="color:#a094b7; margin: 20px 0;">Has cargado tus objetivos con éxito. Hemos enviado un correo a tu formador para que los evalúe.</p>
+                <button onclick="location.reload()" class="btn-primary" style="max-width:200px;">Regresar</button>
             </div>
         </div>
 
-        <div id="successScreen" class="hidden">
-            <i class="fas fa-rocket success-icon"></i>
-            <h2 class="success-title">¡Felicidades, <span id="successName"></span>!</h2>
-            <p class="success-msg">
-                Has cargado tus objetivos con éxito. Hemos enviado un correo a tu formador para que los evalúe y podamos continuar con el proceso.
-            </p>
-            <button onclick="logout()" class="btn-primary" style="max-width:250px;">Entendido</button>
-        </div>
+        <div id="dashboardSection" class="hidden"><h2>Dashboard</h2><p style="color:#888;">Próximamente: Estadísticas de desempeño.</p></div>
+        <div id="historialSection" class="hidden"><h2>Historial</h2><p style="color:#888;">Próximamente: Registro de ciclos anteriores.</p></div>
+        <div id="notificacionesSection" class="hidden"><h2>Notificaciones</h2><p style="color:#888;">Próximamente: Avisos de feedback y fechas límite.</p></div>
 
     </main>
 
@@ -162,6 +150,22 @@
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxoX961b0uHWRVslHAtHr59mQspchrTS5O5p4SrfSCW3i-Xr3nPkCh1TYum-gkPpxA/exec";
         let total = 1;
         let userData = {};
+
+        // Función para cambiar entre pestañas del Sidebar
+        function switchTab(tabId) {
+            // Ocultar todas las secciones
+            document.getElementById('dashboardSection').classList.add('hidden');
+            document.getElementById('misObjetivosSection').classList.add('hidden');
+            document.getElementById('historialSection').classList.add('hidden');
+            document.getElementById('notificacionesSection').classList.add('hidden');
+            
+            // Quitar clase active de todos los items
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+            // Mostrar sección seleccionada y activar item
+            document.getElementById(tabId + 'Section').classList.remove('hidden');
+            event.currentTarget.classList.add('active');
+        }
 
         async function validaAcceso() {
             const email = document.getElementById('emailInput').value;
@@ -187,12 +191,10 @@
                     document.getElementById('sidebar').classList.remove('hidden');
                     document.getElementById('mainArea').classList.remove('hidden');
                 } else {
-                    msg.innerText = res.mensaje;
-                    btn.innerText = "INGRESAR"; btn.disabled = false;
+                    msg.innerText = res.mensaje; btn.innerText = "INGRESAR"; btn.disabled = false;
                 }
             } catch (e) {
-                msg.innerText = "Error de conexión.";
-                btn.innerText = "INGRESAR"; btn.disabled = false;
+                msg.innerText = "Error de conexión."; btn.innerText = "INGRESAR"; btn.disabled = false;
             }
         }
 
@@ -210,53 +212,29 @@
 
         async function enviarDatos() {
             if(calcularPesos() !== 100) {
-                alert("No se pueden enviar objetivos porque el peso debe ser igual al 100%");
+                alert("No se pueden enviar objetivos porque el peso de los objetivos debe ser igual al 100%");
                 return;
             }
-
             const btn = document.getElementById('btnEnviar');
             const cards = document.querySelectorAll('.obj-card');
             let objetivos = [];
-
             for(let card of cards) {
-                const obj = {
+                objetivos.push({
                     nombre: card.querySelector('.obj-nombre').value,
                     meta: card.querySelector('.obj-meta').value,
                     tendencia: card.querySelector('.obj-tendencia').value,
                     peso: card.querySelector('.obj-peso').value,
                     inicio: card.querySelector('.obj-inicio').value,
                     fin: card.querySelector('.obj-fin').value
-                };
-                if(!obj.nombre || !obj.meta || !obj.tendencia) {
-                    alert("Completa todos los campos obligatorios.");
-                    return;
-                }
-                objetivos.push(obj);
-            }
-
-            btn.innerText = "PROCESANDO..."; btn.disabled = true;
-
-            try {
-                await fetch(WEB_APP_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: JSON.stringify({
-                        action: 'saveGoals',
-                        userEmail: userData.email,
-                        userName: userData.nombre,
-                        userRole: userData.role,
-                        goals: objetivos
-                    })
                 });
-                
-                // MOSTRAR PANTALLA DE ÉXITO
+            }
+            btn.innerText = "PROCESANDO..."; btn.disabled = true;
+            try {
+                await fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ action: 'saveGoals', userEmail: userData.email, userName: userData.nombre, userRole: userData.role, goals: objetivos }) });
                 document.getElementById('formSection').classList.add('hidden');
                 document.getElementById('successScreen').classList.remove('hidden');
-
             } catch (e) {
-                alert("Error al enviar.");
-                btn.disabled = false;
-                btn.innerText = "ENVIAR OBJETIVOS AL FORMADOR";
+                alert("Error al enviar."); btn.disabled = false; btn.innerText = "ENVIAR OBJETIVOS AL FORMADOR";
             }
         }
 
@@ -272,13 +250,7 @@
                 <input type="text" class="obj-nombre" placeholder="Nombre del objetivo">
                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
                     <div><label>META *</label><input type="number" class="obj-meta"></div>
-                    <div><label>TENDENCIA *</label>
-                        <select class="obj-tendencia">
-                            <option value="" disabled selected>...</option>
-                            <option value="Incremental">Incremental</option>
-                            <option value="Decremental">Decremental</option>
-                        </select>
-                    </div>
+                    <div><label>TENDENCIA *</label><select class="obj-tendencia"><option value="" disabled selected>...</option><option value="Incremental">Incremental</option><option value="Decremental">Decremental</option></select></div>
                     <div><label>PESO (%) *</label><input type="number" class="obj-peso" oninput="calcularPesos()"></div>
                 </div>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
@@ -286,14 +258,12 @@
                     <div><label>FIN *</label><input type="date" class="obj-fin"></div>
                 </div>`;
             document.getElementById('regContainer').appendChild(card);
-            document.getElementById('countObj').innerText = total;
             calcularPesos();
         }
 
         function eliminarObj(id) {
             document.getElementById(id).remove();
             total--;
-            document.getElementById('countObj').innerText = total;
             calcularPesos();
         }
 
