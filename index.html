@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uix. Sistema de Desempeño - V6 Mod</title>
+    <title>uix. Sistema de Desempeño - V6</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -11,63 +11,73 @@
             --uix-purple-dark: #0a0118;
             --uix-red-main: #8b0000;
             --uix-green: #7CFF01;
-            --bg-light: #f4f7f9;
+            --card-bg: #150a2e;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); height: 100vh; display: flex; overflow: hidden; }
+        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: white; height: 100vh; display: flex; overflow: hidden; }
 
-        /* SIDEBAR Y CONTENEDORES */
-        .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); color: white; }
-        .main-container { flex: 1; overflow-y: auto; background: var(--bg-light); color: #333; }
-        .header-content { padding: 25px 40px; background: white; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; }
-        .content-body { padding: 30px 40px; }
+        /* SIDEBAR */
+        .sidebar { width: 260px; background: #070111; padding: 30px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); }
+        .nav-item { padding: 12px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: #a094b7; font-size: 0.85rem; }
+        .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 30px 30px 0; margin-right: 20px; }
 
-        /* CARDS DE OBJETIVOS */
-        .obj-card { 
-            background: white; 
-            padding: 25px; 
-            border-radius: 8px; 
-            margin-bottom: 20px; 
-            border-left: 4px solid var(--uix-red-main); 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            position: relative; /* Para posicionar el botón eliminar */
-        }
+        /* MAIN CONTENT */
+        .main-container { flex: 1; overflow-y: auto; background: var(--uix-purple-dark); padding: 40px; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         
+        /* CARDS */
+        .obj-card { 
+            background: var(--card-bg); 
+            padding: 25px; 
+            border-radius: 12px; 
+            margin-bottom: 20px; 
+            border-left: 4px solid var(--uix-green); 
+            position: relative; 
+        }
+
         /* BOTÓN ELIMINAR OBJETIVO */
         .btn-remove {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #ffeded;
-            color: #d93025;
-            border: none;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 0, 0, 0.1);
+            color: #ff4d4d;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.2s;
+            transition: 0.3s;
         }
-        .btn-remove:hover { background: #d93025; color: white; }
+        .btn-remove:hover { background: var(--uix-red-main); color: white; }
 
-        .btn-add { background: var(--uix-green); color: black; border: none; padding: 10px 20px; border-radius: 20px; font-weight: 700; cursor: pointer; font-size: 0.8rem; }
-        label { font-size: 0.65rem; color: #777; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
-        input, select { width: 100%; border: 1px solid #dce1e7; padding: 10px; border-radius: 6px; margin-bottom: 15px; font-family: 'Sora'; }
+        .btn-add { background: var(--uix-green); color: black; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+        
+        label { font-size: 0.65rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
+        input, select { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 12px; border-radius: 8px; width: 100%; margin-bottom: 15px; }
 
-        .action-footer { margin-top: 30px; }
-        .btn-send { background: var(--uix-red-main); color: white; width: 100%; padding: 15px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
-        .hidden { display: none !important; }
+        .comp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
+        .comp-card { background: #3c327b; padding: 15px; border-radius: 8px; font-size: 0.7rem; border-bottom: 4px solid transparent; }
+        
+        .btn-send { background: var(--uix-red-main); color: white; width: 100%; padding: 15px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; margin-top: 30px; }
     </style>
 </head>
 <body>
 
     <aside class="sidebar">
         <div style="padding:0 25px 30px; border-bottom:1px solid rgba(255,255,255,0.05); margin-bottom:20px;">
-            <p style="color:var(--uix-green); font-size:0.6rem; font-weight:700;">BIENVENIDO</p>
-            <h5 id="uName">Damian Sanchez Linares</h5>
+            <p style="color:var(--uix-green); font-size:0.6rem; font-weight:700;">COLABORADOR EXTERNO</p>
+            <h5>Damian Sanchez Linares</h5>
         </div>
+        <nav>
+            <div class="nav-item"><i class="fas fa-home"></i> Dashboard</div>
+            <div class="nav-item active"><i class="fas fa-bullseye"></i> Mis Objetivos</div>
+            <div class="nav-item"><i class="fas fa-history"></i> Historial</div>
+            <div class="nav-item"><i class="fas fa-bell"></i> Notificaciones</div>
+        </nav>
     </aside>
 
     <main class="main-container">
@@ -79,43 +89,44 @@
             <button onclick="agregarObjetivo()" class="btn-add" id="btnAdd">+ Agregar Objetivo</button>
         </div>
 
-        <div class="content-body">
-            <div id="regContainer">
-                <div class="obj-card" id="obj1">
-                    <label>Objetivo 1</label>
-                    <input type="text" placeholder="Nombre del objetivo">
-                    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
-                        <div><label>Meta</label><input type="number"></div>
-                        <div><label>Tendencia</label>
-                            <select>
-                                <option value="Incremental">Incremental</option>
-                                <option value="Decremental">Decremental</option>
-                                <option value="Sostenible">Sostenible</option>
-                            </select>
-                        </div>
-                        <div><label>Peso %</label><input type="number"></div>
+        <div id="regContainer">
+            <div class="obj-card" id="obj1">
+                <label id="lblObj1">Objetivo 1 *</label>
+                <input type="text" placeholder="Nombre del objetivo">
+                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
+                    <div><label>Meta Anual</label><input type="number" placeholder="0"></div>
+                    <div><label>Tendencia</label>
+                        <select>
+                            <option>Incremental</option>
+                            <option>Sostenible</option>
+                            <option>Decremental</option>
+                        </select>
                     </div>
+                    <div><label>Peso (%)</label><input type="number" placeholder="0"></div>
                 </div>
             </div>
-
-            <div class="action-footer">
-                <button class="btn-send">Guardar Objetivos</button>
-            </div>
         </div>
+
+        <h3 style="color:var(--uix-green); margin-top:40px; font-size:1rem;">★ Competencias Organizacionales</h3>
+        <div class="comp-grid">
+            <div class="comp-card" style="border-color:#5a4ad1;"><strong>Confianza y Respeto</strong><br>Relaciones basadas en honestidad.</div>
+            <div class="comp-card" style="border-color:#4a7bd1;"><strong>Ejecución Impecable</strong><br>Cumplir compromisos con calidad.</div>
+            <div class="comp-card" style="border-color:#814ad1;"><strong>Mejora Continua</strong><br>Optimizar procesos y resultados.</div>
+            <div class="comp-card" style="border-color:#4a5ad1;"><strong>Pasión por el Cliente</strong><br>Superar expectativas del cliente.</div>
+            <div class="comp-card" style="border-color:#5c4ad1;"><strong>Trabajo en Equipo</strong><br>Colaborar para metas comunes.</div>
+        </div>
+
+        <button class="btn-send">Enviar Objetivos al Formador</button>
     </main>
 
     <script>
         let totalObjetivos = 1;
 
         function agregarObjetivo() {
-            if (totalObjetivos >= 5) {
-                alert("Has alcanzado el máximo de 5 objetivos.");
-                return;
-            }
-
+            if (totalObjetivos >= 5) return;
             totalObjetivos++;
-            const container = document.getElementById('regContainer');
             
+            const container = document.getElementById('regContainer');
             const card = document.createElement('div');
             card.className = 'obj-card';
             card.id = `obj${totalObjetivos}`;
@@ -124,50 +135,43 @@
                 <button class="btn-remove" onclick="eliminarObjetivo('${card.id}')">
                     <i class="fas fa-trash-alt"></i>
                 </button>
-                <label>Objetivo ${totalObjetivos}</label>
+                <label>Objetivo ${totalObjetivos} *</label>
                 <input type="text" placeholder="Nombre del objetivo">
                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
-                    <div><label>Meta</label><input type="number"></div>
+                    <div><label>Meta Anual</label><input type="number" placeholder="0"></div>
                     <div><label>Tendencia</label>
                         <select>
-                            <option value="Incremental">Incremental</option>
-                            <option value="Decremental">Decremental</option>
-                            <option value="Sostenible">Sostenible</option>
+                            <option>Incremental</option>
+                            <option>Sostenible</option>
+                            <option>Decremental</option>
                         </select>
                     </div>
-                    <div><label>Peso %</label><input type="number"></div>
+                    <div><label>Peso (%)</label><input type="number" placeholder="0"></div>
                 </div>
             `;
-            
             container.appendChild(card);
-            actualizarEstado();
+            actualizarInterfaz();
         }
 
         function eliminarObjetivo(id) {
-            const card = document.getElementById(id);
-            card.remove();
+            document.getElementById(id).remove();
             totalObjetivos--;
-            reordenarObjetivos();
-            actualizarEstado();
+            reordenar();
+            actualizarInterfaz();
         }
 
-        function reordenarObjetivos() {
+        function reordenar() {
             const cards = document.querySelectorAll('.obj-card');
             cards.forEach((card, index) => {
-                const nuevoNum = index + 1;
-                card.id = `obj${nuevoNum}`;
-                card.querySelector('label').innerText = `Objetivo ${nuevoNum}`;
-                
-                // Si es el primer objetivo, nos aseguramos de que no tenga botón de eliminar
-                const btn = card.querySelector('.btn-remove');
-                if (nuevoNum === 1 && btn) btn.remove();
+                const n = index + 1;
+                card.id = `obj${n}`;
+                card.querySelector('label').innerText = `Objetivo ${n} *`;
             });
         }
 
-        function actualizarEstado() {
+        function actualizarInterfaz() {
             document.getElementById('countObj').innerText = totalObjetivos;
-            // Bloquea o desbloquea el botón de agregar según el límite
-            document.getElementById('btnAdd').style.opacity = (totalObjetivos >= 5) ? "0.5" : "1";
+            document.getElementById('btnAdd').style.display = (totalObjetivos >= 5) ? 'none' : 'block';
         }
     </script>
 </body>
