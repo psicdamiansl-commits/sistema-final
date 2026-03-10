@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uix. Sistema de Desempeño | V16_FINAL_FIX</title>
+    <title>uix. Sistema de Desempeño | 20260309_V17</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -17,59 +17,88 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
-
-        /* Pantalla de Login */
-        #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
-        .login-card { background: rgba(255,255,255,0.03); padding: 50px; border-radius: 30px; width: 420px; text-align: center; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); }
         
-        /* Layout Principal */
-        .app-layout { display: flex; width: 100%; height: 100vh; }
-        .sidebar { width: 280px; background: #070111; padding: 40px 0; border-right: 1px solid rgba(255,255,255,0.05); }
-        .main-container { flex: 1; overflow-y: auto; padding: 40px 60px; }
+        body { 
+            font-family: 'Sora', sans-serif; 
+            background: var(--uix-purple-dark); 
+            color: var(--text-main); 
+            min-height: 100vh;
+            width: 100vw;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            overflow-x: hidden;
+        }
 
-        /* Navegación */
+        .app-layout {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* SIDEBAR ORIGINAL V12 */
+        .sidebar { width: 280px; background: #070111; padding: 40px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); }
+        .nav-item { padding: 15px 30px; display: flex; align-items: center; gap: 18px; cursor: pointer; color: var(--text-dim); font-size: 0.95rem; transition: 0.3s; }
+        .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 40px 40px 0; margin-right: 25px; }
+
+        /* MAIN CONTENT */
+        .main-container { flex: 1; overflow-y: auto; padding: 40px 60px; }
+        
         .tab-menu { display: flex; gap: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 40px; }
         .tab-item { padding-bottom: 15px; font-size: 0.9rem; color: #666; cursor: pointer; font-weight: 600; }
         .tab-item.active { color: var(--uix-green); border-bottom: 3px solid var(--uix-green); }
 
-        /* Estilo de Tarjetas */
-        .obj-card { background: var(--card-bg); padding: 30px; border-radius: 16px; margin-bottom: 25px; border-left: 6px solid var(--uix-red-main); transition: 0.3s; }
+        /* CARDS ESTILO V12 */
+        .obj-card { 
+            background: var(--card-bg); 
+            padding: 35px; 
+            border-radius: 16px; 
+            margin-bottom: 30px; 
+            border-left: 6px solid var(--uix-red-main); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
         
-        input, select, textarea { background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 12px; border-radius: 8px; width: 100%; margin-bottom: 15px; font-family: 'Sora'; }
-        label { font-size: 0.7rem; color: var(--uix-green); font-weight: 700; margin-bottom: 8px; display: block; text-transform: uppercase; }
+        label { font-size: 0.75rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 8px; display: block; letter-spacing: 1px; }
 
+        input, select, textarea { 
+            background: rgba(0,0,0,0.2); 
+            border: 1px solid rgba(255,255,255,0.1); 
+            color: white; 
+            padding: 15px; 
+            border-radius: 8px; 
+            width: 100%; 
+            margin-bottom: 20px; 
+            font-family: 'Sora';
+        }
+
+        .btn-send { background: var(--uix-red-main); color: white; border: none; padding: 20px; border-radius: 12px; width: 70%; font-weight: 700; cursor: pointer; }
         .hidden { display: none !important; }
-        .btn-green { background: var(--uix-green); color: black; border: none; padding: 15px; border-radius: 30px; font-weight: 800; cursor: pointer; width: 100%; transition: 0.3s; }
-        .btn-green:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(124, 255, 1, 0.3); }
+
+        #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
 
     <div id="loginScreen">
-        <div class="login-card">
-            <h1 style="color:var(--uix-green); font-size:3rem; margin-bottom:5px;">uix<span>.</span></h1>
-            <p style="color:white; opacity:0.5; font-size:0.7rem; margin-bottom:30px; letter-spacing: 2px;">GESTIÓN DE DESEMPEÑO</p>
-            <div style="text-align: left;">
-                <label>Correo Electrónico</label>
-                <input type="email" id="emailInput" placeholder="usuario@empresa.com">
-                <label>Contraseña</label>
-                <input type="password" id="passInput" placeholder="••••••••">
-            </div>
-            <button onclick="validaAcceso()" id="btnLogin" class="btn-green">INGRESAR</button>
-            <p id="loginMsg" style="color:#ff4d4d; font-size:0.8rem; margin-top:15px;"></p>
+        <div style="background: rgba(255,255,255,0.03); padding: 50px; border-radius: 30px; width: 420px; text-align: center; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
+            <h1 style="color:var(--uix-green); font-size:3.5rem; margin-bottom:10px;">uix<span>.</span></h1>
+            <input type="email" id="emailInput" placeholder="Correo">
+            <input type="password" id="passInput" placeholder="Contraseña">
+            <button onclick="validaAcceso()" id="btnLogin" style="background:var(--uix-green); color:black; width:100%; padding:18px; border-radius:35px; border:none; font-weight:800; cursor:pointer;">INGRESAR</button>
+            <p id="loginMsg" style="color:#ff4d4d; font-size:0.85rem; margin-top:20px;"></p>
         </div>
     </div>
 
     <div id="appLayout" class="app-layout hidden">
         <aside class="sidebar">
-            <div style="padding:0 30px 40px;">
-                <p id="uName" style="color:white; font-size:1.1rem; font-weight:600;">Cargando...</p>
-                <p id="uRole" style="color:var(--uix-green); font-size:0.7rem; text-transform:uppercase;">Rol</p>
+            <div style="padding:0 30px 40px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                <p id="uRole" style="color:var(--uix-green); font-size:0.7rem; font-weight:700;">ROL</p>
+                <h5 id="uName" style="color:white; font-size:1.2rem; margin-top:5px;">Usuario</h5>
             </div>
-            <div style="padding: 15px 30px; background: var(--uix-red-main); color: white;">
-                <i class="fas fa-bullseye"></i> &nbsp; Mis objetivos
-            </div>
+            <nav>
+                <div class="nav-item active"><i class="fas fa-bullseye"></i> Mis objetivos</div>
+            </nav>
         </aside>
 
         <main class="main-container">
@@ -79,17 +108,17 @@
             </div>
 
             <div id="subTab0" class="sub-tab-content">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                    <h2>Definición de Objetivos</h2>
-                    <button onclick="agregarObjetivo()" style="background:none; border:1px solid var(--uix-green); color:var(--uix-green); padding:8px 15px; border-radius:8px; cursor:pointer;">+ Agregar Objetivo</button>
+                <div style="display:flex; justify-content:space-between; margin-bottom:30px;">
+                    <h2>Mis Objetivos</h2>
+                    <button onclick="agregarObjetivo()" style="background:var(--uix-green); color:black; border:none; padding:10px 20px; border-radius:8px; font-weight:bold; cursor:pointer;">+ Nuevo</button>
                 </div>
                 <div id="regContainer">
                     <div class="obj-card">
-                        <label>Título del Objetivo</label>
-                        <input type="text" class="obj-nombre" placeholder="Ej: Incrementar ventas 10%">
-                        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
-                            <div><label>Meta Anual</label><input type="number" class="obj-meta"></div>
-                            <div><label>Peso (%)</label><input type="number" class="obj-peso"></div>
+                        <label>Objetivo</label>
+                        <input type="text" class="obj-nombre">
+                        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px;">
+                            <div><label>Meta</label><input type="number" class="obj-meta"></div>
+                            <div><label>Peso %</label><input type="number" class="obj-peso"></div>
                             <div><label>Tendencia</label><select class="obj-tendencia"><option>Incremental</option><option>Decremental</option></select></div>
                         </div>
                     </div>
@@ -97,49 +126,33 @@
             </div>
 
             <div id="subTab1" class="sub-tab-content hidden">
-                <div id="eval6Container">
-                    </div>
+                <div id="eval6Container"></div>
+            </div>
+
+            <div style="margin-top:40px;">
+                <button class="btn-send">ENVIAR A REVISIÓN</button>
             </div>
         </main>
     </div>
 
     <script>
-        // URL DE TU NUEVO APPSCRIPT INTEGRADA
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwhPOQV_MLkTe3qNBdKbxAS67EYNCe2UnYhshDnAw9LXdwWGV2bDIhFl_f4FBwtRIw/exec";
 
         async function validaAcceso() {
             const email = document.getElementById('emailInput').value.trim();
             const pass = document.getElementById('passInput').value.trim();
-            const btn = document.getElementById('btnLogin');
-            const msg = document.getElementById('loginMsg');
-
-            if (!email || !pass) {
-                msg.innerText = "Llena todos los campos.";
-                return;
-            }
-
-            btn.innerText = "VERIFICANDO...";
-            btn.disabled = true;
-
             try {
                 const response = await fetch(`${WEB_APP_URL}?action=login&email=${encodeURIComponent(email)}&pass=${encodeURIComponent(pass)}`);
                 const data = await response.json();
-
-                if (data.autorizado) {
+                if(data.autorizado) {
                     document.getElementById('uName').innerText = data.nombre;
                     document.getElementById('uRole').innerText = data.rol;
                     document.getElementById('loginScreen').classList.add('hidden');
                     document.getElementById('appLayout').classList.remove('hidden');
                 } else {
-                    msg.innerText = "Credenciales incorrectas.";
-                    btn.innerText = "INGRESAR";
-                    btn.disabled = false;
+                    document.getElementById('loginMsg').innerText = "Credenciales incorrectas";
                 }
-            } catch (error) {
-                msg.innerText = "Error de conexión.";
-                btn.innerText = "INGRESAR";
-                btn.disabled = false;
-            }
+            } catch(e) { document.getElementById('loginMsg').innerText = "Error de conexión"; }
         }
 
         function switchSubTab(idx, el) {
@@ -147,80 +160,33 @@
             document.getElementById('subTab' + idx).classList.remove('hidden');
             document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
             el.classList.add('active');
-
-            if (idx === 1) sincronizarMes6();
+            if(idx === 1) sincronizarMes6();
         }
 
         function sincronizarMes6() {
             const container = document.getElementById('eval6Container');
-            container.innerHTML = `<h2>Autoevaluación Mes 6</h2><p style="color:var(--text-dim); margin-bottom:30px;">Reporta tu progreso real contra las metas definidas.</p>`;
-            
-            const objetivos = document.querySelectorAll('#regContainer .obj-card');
-            
-            objetivos.forEach((obj, i) => {
+            container.innerHTML = '<h2>Autoevaluación Mes 6</h2>';
+            document.querySelectorAll('#regContainer .obj-card').forEach((obj, i) => {
                 const nombre = obj.querySelector('.obj-nombre').value || `Objetivo ${i+1}`;
                 const meta = parseFloat(obj.querySelector('.obj-meta').value) || 0;
-                const peso = obj.querySelector('.obj-peso').value || '0';
-
-                const card = document.createElement('div');
-                card.className = 'obj-card';
-                card.style.borderLeftColor = 'var(--uix-green)';
-                card.innerHTML = `
-                    <div style="margin-bottom:15px;">
-                        <label style="color:var(--uix-green)">OBJETIVO ${i+1}</label>
-                        <h3 style="color:white; margin-bottom:5px;">${nombre}</h3>
-                        <p style="font-size:0.7rem; opacity:0.5;">META: ${meta} | PESO: ${peso}%</p>
-                    </div>
+                const div = document.createElement('div');
+                div.className = 'obj-card';
+                div.style.borderLeftColor = 'var(--uix-green)';
+                div.innerHTML = `
+                    <label>${nombre}</label>
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
-                        <div>
-                            <label>RESULTADO LOGRADO</label>
-                            <input type="number" placeholder="Ingresa valor" oninput="calcPct(this, ${meta})">
-                        </div>
-                        <div>
-                            <label>% CUMPLIMIENTO</label>
-                            <input type="text" class="pct-view" readonly value="0%" style="color:var(--uix-green); font-weight:bold; background:rgba(124,255,1,0.05);">
-                        </div>
-                    </div>
-                    <label>COMENTARIOS Y EVIDENCIAS</label>
-                    <textarea style="height:80px;" placeholder="Describe tus avances o bloqueos..."></textarea>
-                `;
-                container.appendChild(card);
-            });
-            
-            // Sección de Competencias Organizacionales
-            const compTitle = document.createElement('h3');
-            compTitle.innerHTML = `<i class="fas fa-star" style="color:#ff4d4d; margin-top:40px;"></i> Autoevaluación de Competencias`;
-            compTitle.style.marginBottom = "20px";
-            container.appendChild(compTitle);
-
-            const comps = ["Pasión por el Cliente", "Ejecución Impecable", "Mejora Continua", "Trabajo en Equipo", "Confianza y Respeto"];
-            comps.forEach(c => {
-                const cCard = document.createElement('div');
-                cCard.className = 'obj-card';
-                cCard.style.borderLeftColor = '#6a5af9';
-                cCard.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <label style="margin:0;">${c}</label>
-                        <select style="width:180px; margin:0;">
-                            <option value="1">1 - Deficiente</option>
-                            <option value="2">2 - Regular</option>
-                            <option value="3" selected>3 - Bueno</option>
-                            <option value="4">4 - Muy Bueno</option>
-                            <option value="5">5 - Sobresaliente</option>
-                        </select>
+                        <div><label>Resultado</label><input type="number" oninput="calc(this, ${meta})"></div>
+                        <div><label>% Cumplimiento</label><input type="text" class="p-view" readonly value="0%" style="color:var(--uix-green)"></div>
                     </div>
                 `;
-                container.appendChild(cCard);
+                container.appendChild(div);
             });
         }
 
-        function calcPct(input, meta) {
-            const val = parseFloat(input.value) || 0;
-            const res = input.parentElement.parentElement.querySelector('.pct-view');
-            if (meta > 0) {
-                let pct = Math.round((val / meta) * 100);
-                res.value = pct + "%";
-            }
+        function calc(input, meta) {
+            const v = parseFloat(input.value) || 0;
+            const res = input.parentElement.parentElement.querySelector('.p-view');
+            if(meta > 0) res.value = Math.round((v/meta)*100) + "%";
         }
 
         function agregarObjetivo() {
