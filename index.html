@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uix. Sistema de Desempeño | 20260309_V09</title>
+    <title>20260309_objetivos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -73,7 +73,7 @@
         label { font-size: 0.75rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 8px; display: block; letter-spacing: 1px; }
         .req-star { color: #ff4d4d; margin-left: 3px; }
 
-        input, select { 
+        input, select, textarea { 
             background: rgba(0,0,0,0.2); 
             border: 1px solid rgba(255,255,255,0.1); 
             color: white; 
@@ -86,16 +86,14 @@
             transition: all 0.3s ease;
         }
 
-        /* ICONO CALENDARIO BLANCO */
         input[type="date"]::-webkit-calendar-picker-indicator {
             filter: invert(1);
             cursor: pointer;
         }
 
-        input:focus, select:focus { outline: none; border-color: var(--uix-green); box-shadow: 0 0 10px rgba(124, 255, 1, 0.2); }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--uix-green); box-shadow: 0 0 10px rgba(124, 255, 1, 0.2); }
         select option { color: white; background-color: #1a0f35; }
 
-        /* BOTÓN ELIMINAR */
         .btn-delete-obj {
             position: absolute;
             top: 20px;
@@ -110,18 +108,15 @@
             font-weight: 600;
         }
 
-        /* COMPETENCIAS GRID */
         .comp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 30px; }
         .comp-card { background: var(--grad-comp); padding: 25px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
         .comp-card h4 { font-size: 0.85rem; margin-bottom: 10px; }
         .comp-card p { font-size: 0.7rem; line-height: 1.6; }
 
-        /* BOTONES ACCIÓN */
         .btn-send { background: var(--uix-red-main); color: white; border: none; padding: 20px; border-radius: 12px; width: 70%; font-weight: 700; font-size: 1rem; cursor: pointer; transition: 0.3s; }
         .btn-draft { background: #2a2a2a; color: white; border: none; padding: 20px; border-radius: 12px; width: 28%; font-weight: 700; cursor: pointer; }
         .btn-send:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(139, 0, 0, 0.4); }
 
-        /* LOGIN SCREEN - Centrado corregido */
         #loginScreen { 
             position: fixed; 
             inset: 0; 
@@ -180,67 +175,77 @@
             <div id="misObjetivosSection">
                 <div id="formContent">
                     <div class="tab-menu">
-                        <div class="tab-item active">Objetivos y Competencias</div>
-                        <div class="tab-item">Autoevaluación Mes 6</div>
+                        <div class="tab-item active" id="btnTabReg" onclick="changeSubTab(0)">Objetivos y Competencias</div>
+                        <div class="tab-item" id="btnTabEval6" onclick="changeSubTab(1)">Autoevaluación Mes 6</div>
                         <div class="tab-item">Evaluación Final Mes 12</div>
                     </div>
 
-                    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:30px;">
-                        <div>
-                            <h2>Registro de Objetivos</h2>
-                            <p style="color:var(--text-dim); font-size:0.9rem;">Define tus metas estratégicas para este periodo.</p>
+                    <div id="subTab0">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:30px;">
+                            <div>
+                                <h2>Registro de Objetivos</h2>
+                                <p style="color:var(--text-dim); font-size:0.9rem;">Define tus metas estratégicas para este periodo.</p>
+                            </div>
+                            <button onclick="agregarObjetivo()" style="background:var(--uix-green); color:black; border:none; padding:12px 25px; border-radius:10px; font-weight:bold; cursor:pointer; font-size:0.9rem;">+ Nuevo Objetivo</button>
                         </div>
-                        <button onclick="agregarObjetivo()" style="background:var(--uix-green); color:black; border:none; padding:12px 25px; border-radius:10px; font-weight:bold; cursor:pointer; font-size:0.9rem;">+ Nuevo Objetivo</button>
-                    </div>
 
-                    <div class="weight-alert">
-                        <div style="display:flex; justify-content:space-between; font-size:0.95rem;">
-                            <span>Sumatoria de Pesos: <strong id="pesoTotalTxt" style="font-size:1.1rem;">0%</strong> / 100%</span>
-                            <span id="pesoMsg" style="color:#ff4d4d; font-weight:700;">Falta completar el 100%</span>
+                        <div class="weight-alert">
+                            <div style="display:flex; justify-content:space-between; font-size:0.95rem;">
+                                <span>Sumatoria de Pesos: <strong id="pesoTotalTxt" style="font-size:1.1rem;">0%</strong> / 100%</span>
+                                <span id="pesoMsg" style="color:#ff4d4d; font-weight:700;">La suma debe ser 100%</span>
+                            </div>
+                            <div class="weight-bar-bg"><div id="pesoBar" style="height:100%; width:0%; background:var(--uix-green); transition:0.4s;"></div></div>
                         </div>
-                        <div class="weight-bar-bg"><div id="pesoBar" class="weight-bar-fill" style="height:100%; width:0%; background:var(--uix-green); transition:0.4s;"></div></div>
-                    </div>
 
-                    <div id="regContainer">
-                        <div class="obj-card" id="obj1">
-                            <label>Título del Objetivo 1 <span class="req-star">*</span></label>
-                            <input type="text" class="obj-nombre" placeholder="Ej: Incrementar ventas en zona norte" required>
-                            
-                            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:25px;">
-                                <div><label>Meta Anual <span class="req-star">*</span></label><input type="number" class="obj-meta" placeholder="0" required></div>
-                                <div><label>Tendencia <span class="req-star">*</span></label>
-                                    <select class="obj-tendencia" required>
-                                        <option value="">Seleccionar...</option>
-                                        <option>Incremental</option>
-                                        <option>Decremental</option>
-                                    </select>
+                        <div id="regContainer">
+                            <div class="obj-card" id="obj1">
+                                <label>Título del Objetivo 1 <span class="req-star">*</span></label>
+                                <input type="text" class="obj-nombre" placeholder="Ej: Incrementar ventas en zona norte" required>
+                                
+                                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:25px;">
+                                    <div><label>Meta Anual <span class="req-star">*</span></label><input type="number" class="obj-meta" placeholder="0" required></div>
+                                    <div><label>Tendencia <span class="req-star">*</span></label>
+                                        <select class="obj-tendencia" required>
+                                            <option value="">Seleccionar...</option>
+                                            <option>Incremental</option>
+                                            <option>Decremental</option>
+                                        </select>
+                                    </div>
+                                    <div><label>Peso del Obj (%) <span class="req-star">*</span></label><input type="number" class="obj-peso" placeholder="0" oninput="recalc()" required></div>
                                 </div>
-                                <div><label>Peso del Obj (%) <span class="req-star">*</span></label><input type="number" class="obj-peso" placeholder="0" oninput="recalc()" required></div>
+                                
+                                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
+                                    <div><label>Fecha Inicio <span class="req-star">*</span></label><input type="date" class="obj-inicio" required></div>
+                                    <div><label>Fecha Fin <span class="req-star">*</span></label><input type="date" class="obj-fin" required></div>
+                                </div>
                             </div>
+                        </div>
+
+                        <div style="margin:60px 0 40px;">
+                            <h3 style="color:#ff4d4d; font-size:1.1rem; margin-bottom:8px;"><i class="fas fa-star"></i> Competencias Organizacionales</h3>
+                            <p style="font-size: 0.85rem; color: #888;">Estas competencias serán evaluadas en tu autoevaluación del 6° mes. Por ahora solo se registran como parte de tu perfil.</p>
                             
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
-                                <div><label>Fecha Inicio <span class="req-star">*</span></label><input type="date" class="obj-inicio" required></div>
-                                <div><label>Fecha Fin <span class="req-star">*</span></label><input type="date" class="obj-fin" required></div>
+                            <div class="comp-grid">
+                                <div class="comp-card"><i class="fas fa-handshake"></i><h4>Confianza y Respeto</h4><p>Relaciones basadas en honestidad y transparencia.</p></div>
+                                <div class="comp-card"><i class="fas fa-check-double"></i><h4>Ejecución Impecable</h4><p>Compromiso con la máxima calidad y tiempos.</p></div>
+                                <div class="comp-card"><i class="fas fa-chart-line"></i><h4>Mejora Continua</h4><p>Optimización constante de procesos y resultados.</p></div>
+                                <div class="comp-card"><i class="fas fa-heart"></i><h4>Pasión por el Cliente</h4><p>El cliente en el centro de cada decisión.</p></div>
+                                <div class="comp-card"><i class="fas fa-users"></i><h4>Trabajo en Equipo</h4><p>Colaboración activa para metas comunes.</p></div>
                             </div>
                         </div>
-                    </div>
 
-                    <div style="margin:60px 0 40px;">
-                        <h3 style="color:#ff4d4d; font-size:1.1rem; margin-bottom:8px;"><i class="fas fa-star"></i> Competencias Organizacionales</h3>
-                        <p style="font-size: 0.85rem; color: #888;">Estas competencias serán evaluadas en tu autoevaluación del 6° mes. Por ahora solo se registran como parte de tu perfil.</p>
-                        
-                        <div class="comp-grid">
-                            <div class="comp-card"><i class="fas fa-handshake"></i><h4>Confianza y Respeto</h4><p>Relaciones basadas en honestidad y transparencia.</p></div>
-                            <div class="comp-card"><i class="fas fa-check-double"></i><h4>Ejecución Impecable</h4><p>Compromiso con la máxima calidad y tiempos.</p></div>
-                            <div class="comp-card"><i class="fas fa-chart-line"></i><h4>Mejora Continua</h4><p>Optimización constante de procesos y resultados.</p></div>
-                            <div class="comp-card"><i class="fas fa-heart"></i><h4>Pasión por el Cliente</h4><p>El cliente en el centro de cada decisión.</p></div>
-                            <div class="comp-card"><i class="fas fa-users"></i><h4>Trabajo en Equipo</h4><p>Colaboración activa para metas comunes.</p></div>
+                        <div style="margin-top:50px; display:flex; justify-content:space-between; padding-bottom: 50px;">
+                            <button id="btnEnviar" onclick="enviarObjetivos()" class="btn-send" disabled><i class="fas fa-paper-plane"></i> ENVIAR A REVISIÓN</button>
+                            <button class="btn-draft">GUARDAR BORRADOR</button>
                         </div>
                     </div>
 
-                    <div style="margin-top:50px; display:flex; justify-content:space-between; padding-bottom: 50px;">
-                        <button id="btnEnviar" onclick="enviarObjetivos()" class="btn-send" disabled><i class="fas fa-paper-plane"></i> ENVIAR A REVISIÓN</button>
-                        <button class="btn-draft">GUARDAR BORRADOR</button>
+                    <div id="subTab1" class="hidden">
+                        <h2>Autoevaluación Semestral (Mes 6)</h2>
+                        <p style="color:var(--text-dim); margin-bottom:30px;">Reporta tu avance real frente a los objetivos pactados.</p>
+                        <div id="eval6Container">
+                            </div>
+                        <button class="btn-send" style="width:100%; background:var(--uix-green); color:black; margin-top:30px;">GUARDAR AUTOEVALUACIÓN</button>
                     </div>
                 </div>
 
@@ -260,6 +265,80 @@
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxj3FoyZjxYBYNK7XgLrGzCOp02hHBBQKsJZjXufqBvT2Tm0W3Ktu66E-z3neiTtP4/exec";
         let userData = {};
         let totalObj = 1;
+
+        // --- LÓGICA DE TRASPASO AUTOMÁTICO ---
+        function changeSubTab(idx) {
+            // Estética de pestañas
+            document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+            if(idx === 0) document.getElementById('btnTabReg').classList.add('active');
+            if(idx === 1) document.getElementById('btnTabEval6').classList.add('active');
+
+            // Mostrar/Ocultar secciones
+            document.getElementById('subTab0').classList.toggle('hidden', idx !== 0);
+            document.getElementById('subTab1').classList.toggle('hidden', idx !== 1);
+
+            // Si entra a la pestaña 1, generamos la evaluación
+            if(idx === 1) {
+                generarEvaluacionMes6();
+            }
+        }
+
+        function generarEvaluacionMes6() {
+            const container = document.getElementById('eval6Container');
+            container.innerHTML = ""; // Limpiar antes de generar
+
+            // Buscamos todas las tarjetas de objetivos en la pantalla de registro
+            const cards = document.querySelectorAll('#regContainer .obj-card');
+            
+            cards.forEach((card, index) => {
+                const nombre = card.querySelector('.obj-nombre').value || `Objetivo ${index + 1}`;
+                const meta = card.querySelector('.obj-meta').value || 0;
+                const peso = card.querySelector('.obj-peso').value || 0;
+
+                const evalCard = document.createElement('div');
+                evalCard.className = 'obj-card';
+                evalCard.style.borderLeftColor = 'var(--uix-green)';
+                evalCard.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:15px;">
+                        <h4 style="color:white; font-size:1.1rem;">${nombre}</h4>
+                        <span style="color:var(--uix-green); font-weight:700;">PESO: ${peso}%</span>
+                    </div>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
+                        <div>
+                            <label>Meta Anual Pactada</label>
+                            <input type="text" value="${meta}" readonly style="opacity:0.6; background:transparent;">
+                        </div>
+                        <div>
+                            <label>Resultado Real Alcanzado</label>
+                            <input type="number" class="res-real" placeholder="Ingresa valor logrado" oninput="calcularLogro(this, ${meta})">
+                        </div>
+                    </div>
+                    <div style="margin-top:10px;">
+                        <label>Comentarios de Avance</label>
+                        <textarea placeholder="Describe los logros o desafíos de este semestre..."></textarea>
+                    </div>
+                    <div style="text-align:right;">
+                        <span style="font-size:0.8rem; color:var(--text-dim);">Porcentaje de Cumplimiento: </span>
+                        <strong class="pct-logro" style="color:var(--uix-green); font-size:1.2rem;">0%</strong>
+                    </div>
+                `;
+                container.appendChild(evalCard);
+            });
+            
+            if(cards.length === 0) {
+                container.innerHTML = "<p style='color:#ff4d4d;'>Primero debes registrar objetivos en la pestaña anterior.</p>";
+            }
+        }
+
+        function calcularLogro(input, meta) {
+            const real = parseFloat(input.value) || 0;
+            const pctDisplay = input.parentElement.parentElement.parentElement.querySelector('.pct-logro');
+            if(meta > 0) {
+                const calculo = Math.round((real / meta) * 100);
+                pctDisplay.innerText = calculo + "%";
+            }
+        }
+        // --- FIN LÓGICA TRASPASO ---
 
         async function validaAcceso() {
             const email = document.getElementById('emailInput').value;
