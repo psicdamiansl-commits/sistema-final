@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uix. Sistema de Desempeño | 20260309_V11_RESTORED</title>
+    <title>uix. Sistema de Desempeño | V22_RESTORED</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -17,33 +17,30 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: var(--text-main); min-height: 100vh; display: flex; overflow: hidden; }
+        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: var(--text-main); height: 100vh; display: flex; overflow: hidden; }
 
-        /* SIDEBAR ORIGINAL V11 */
-        .sidebar { width: 280px; background: #070111; padding: 40px 0; border-right: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; height: 100vh; }
+        /* Sidebar Diseño V11 */
+        .sidebar { width: 280px; background: #070111; padding: 40px 0; border-right: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
         .user-info { padding: 0 30px 40px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
-        .nav-item { padding: 15px 30px; display: flex; align-items: center; gap: 18px; cursor: pointer; color: var(--text-dim); transition: 0.3s; font-size: 0.95rem; }
-        .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 40px 40px 0; margin-right: 25px; }
+        .nav-item { padding: 15px 30px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: var(--text-dim); }
+        .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 40px 40px 0; margin-right: 20px; }
 
-        /* CONTENIDO PRINCIPAL */
-        .main-container { flex: 1; overflow-y: auto; padding: 40px 60px; height: 100vh; }
-        .tab-menu { display: flex; gap: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 40px; }
-        .tab-item { padding-bottom: 15px; font-size: 0.9rem; color: #666; cursor: pointer; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-        .tab-item.active { color: var(--uix-green); border-bottom: 3px solid var(--uix-green); }
+        /* Contenido Principal */
+        .main-container { flex: 1; overflow-y: auto; padding: 40px 60px; }
+        .tab-menu { display: flex; gap: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
+        .tab-item { padding-bottom: 12px; font-size: 0.85rem; color: #555; cursor: pointer; font-weight: 600; text-transform: uppercase; }
+        .tab-item.active { color: var(--uix-green); border-bottom: 2px solid var(--uix-green); }
 
-        /* CARDS Y FORMULARIOS V11 */
-        .obj-card { background: var(--card-bg); padding: 35px; border-radius: 16px; margin-bottom: 30px; border-left: 6px solid var(--uix-red-main); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        /* Tarjetas Estilo V11 */
+        .obj-card { background: var(--card-bg); padding: 30px; border-radius: 12px; margin-bottom: 20px; border-left: 5px solid var(--uix-red-main); }
         .comp-card { background: rgba(255,255,255,0.02); padding: 25px; border-radius: 12px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.05); }
 
-        label { font-size: 0.75rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 8px; display: block; letter-spacing: 1px; }
-        input, select, textarea { background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 15px; border-radius: 8px; width: 100%; margin-bottom: 20px; font-family: 'Sora'; }
-        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
+        label { font-size: 0.65rem; color: var(--uix-green); font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px; display: block; }
+        input, select, textarea { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 14px; border-radius: 6px; width: 100%; margin-bottom: 15px; font-family: 'Sora'; font-size: 0.9rem; }
 
-        .weight-alert { background: rgba(124, 255, 1, 0.05); border: 1px solid rgba(124, 255, 1, 0.2); padding: 20px; border-radius: 15px; margin-bottom: 35px; }
-        .weight-bar-bg { width: 100%; height: 10px; background: #222; border-radius: 5px; margin-top: 10px; overflow: hidden; }
+        .btn-add { background: var(--uix-green); color: black; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 800; cursor: pointer; font-size: 0.75rem; }
+        .btn-main { background: var(--uix-red-main); color: white; border: none; padding: 18px; border-radius: 8px; font-weight: 700; cursor: pointer; width: 100%; text-transform: uppercase; margin-top: 20px; }
 
-        .btn-main { background: var(--uix-red-main); color: white; border: none; padding: 20px; border-radius: 12px; font-weight: 700; cursor: pointer; width: 100%; text-transform: uppercase; }
-        
         #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
         .hidden { display: none !important; }
     </style>
@@ -51,67 +48,73 @@
 <body>
 
     <div id="loginScreen">
-        <div style="background: rgba(255,255,255,0.03); padding: 50px; border-radius: 30px; width: 420px; text-align: center; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
-            <h1 style="color:var(--uix-green); font-size:3.5rem; margin-bottom:10px;">uix<span>.</span></h1>
-            <p style="color:white; opacity:0.5; font-size:0.8rem; margin-bottom:40px; letter-spacing: 2px;">SISTEMA DE DESEMPEÑO</p>
+        <div style="background: rgba(255,255,255,0.02); padding: 50px; border-radius: 24px; width: 400px; text-align: center; border: 1px solid rgba(255,255,255,0.1);">
+            <h1 style="color:var(--uix-green); font-size:3rem; margin-bottom:30px;">uix<span>.</span></h1>
             <input type="email" id="emailInput" placeholder="Correo corporativo">
             <input type="password" id="passInput" placeholder="Contraseña">
-            <button onclick="validaAcceso()" id="btnLogin" style="background:var(--uix-green); color:black; width:100%; padding:18px; border-radius:35px; border:none; font-weight:800; cursor:pointer;">INGRESAR</button>
-            <p id="loginMsg" style="color:#ff4d4d; font-size:0.85rem; margin-top:20px;"></p>
+            <button onclick="validaAcceso()" id="btnLogin" class="btn-main" style="background:var(--uix-green); color:black;">INGRESAR</button>
+            <p id="loginMsg" style="color:#ff4d4d; font-size:0.75rem; margin-top:20px;"></p>
         </div>
     </div>
 
     <div id="appLayout" class="app-layout hidden">
         <aside class="sidebar">
             <div class="user-info">
-                <p id="uRole" style="color:var(--uix-green); font-size:0.7rem; font-weight:700;">ROL</p>
-                <h2 id="uName" style="color:white; font-size:1.2rem; margin-top:5px;">Usuario</h2>
+                <p id="uRole" style="color:var(--uix-green); font-size:0.6rem; font-weight:800; letter-spacing:1px;">COLABORADOR</p>
+                <h2 id="uName" style="font-size:1.1rem; margin-top:5px;">Damian Sanchez Linares</h2>
             </div>
-            <nav><div class="nav-item active"><i class="fas fa-bullseye"></i> Mis objetivos</div></nav>
+            <nav>
+                <div class="nav-item active"><i class="fas fa-bullseye"></i> Mis objetivos</div>
+            </nav>
         </aside>
 
         <main class="main-container">
             <div class="tab-menu">
-                <div class="tab-item active" onclick="switchTab(0, this)">1. Registro de Objetivos</div>
-                <div class="tab-item" onclick="switchTab(1, this)">2. Autoevaluación Mes 6</div>
+                <div class="tab-item active" onclick="switchTab(0, this)">1. Registro (Mes 0)</div>
+                <div class="tab-item" onclick="switchTab(1, this)">2. Autoevaluación (Mes 6)</div>
             </div>
 
             <div id="tab0" class="content-section">
-                <div class="weight-alert">
-                    <span>Peso Total Asignado: <strong id="pesoTotalTxt">0%</strong></span>
-                    <div class="weight-bar-bg"><div id="pesoBar" style="height:100%; width:0%; background:var(--uix-green); transition:0.4s;"></div></div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
+                    <h2>Registro de Objetivos</h2>
+                    <button onclick="agregarObjetivo()" class="btn-add">+ Nuevo Objetivo</button>
                 </div>
 
                 <div id="regContainer">
                     <div class="obj-card">
                         <label>Nombre del Objetivo</label>
-                        <input type="text" class="obj-nombre" placeholder="Ej: Cumplimiento de meta de ventas mensual">
-                        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:25px;">
+                        <input type="text" class="obj-nombre" placeholder="Ej: Incrementar ventas">
+                        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
                             <div><label>Meta Anual</label><input type="number" class="obj-meta"></div>
-                            <div><label>Tendencia</label><select class="obj-tendencia"><option>Incremental</option><option>Decremental</option></select></div>
-                            <div><label>Peso (%)</label><input type="number" class="obj-peso" oninput="recalcPeso()"></div>
+                            <div><label>Peso (%)</label><input type="number" class="obj-peso"></div>
+                            <div><label>Tendencia</label>
+                                <select class="obj-tendencia">
+                                    <option value="Incremental">Incremental</option>
+                                    <option value="Decremental">Decremental</option>
+                                </select>
+                            </div>
                         </div>
-                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
                             <div><label>Fecha Inicio</label><input type="date" class="obj-inicio"></div>
                             <div><label>Fecha Fin</label><input type="date" class="obj-fin"></div>
                         </div>
                     </div>
                 </div>
-                <button onclick="agregarObjetivo()" style="background:none; border:1px solid var(--uix-green); color:var(--uix-green); padding:12px 25px; border-radius:10px; cursor:pointer; margin-bottom:40px;">+ Agregar Objetivo</button>
 
-                <h2 style="margin:40px 0 25px;">Competencias Organizacionales</h2>
-                <div class="comp-card"><h3>Pasión por el Cliente</h3><p style="font-size:0.8rem; opacity:0.6; margin-top:5px;">Anticipa necesidades, excede expectativas y construye relaciones de valor a largo plazo.</p></div>
-                <div class="comp-card"><h3>Ejecución Impecable</h3><p style="font-size:0.8rem; opacity:0.6; margin-top:5px;">Actúa con disciplina, cumple compromisos y asegura la calidad en cada entrega del proceso.</p></div>
-                <div class="comp-card"><h3>Mejora Continua</h3><p style="font-size:0.8rem; opacity:0.6; margin-top:5px;">Cuestiona el status quo, propone innovaciones y optimiza recursos para ser más eficientes.</p></div>
-                <div class="comp-card"><h3>Trabajo en Equipo</h3><p style="font-size:0.8rem; opacity:0.6; margin-top:5px;">Colabora activamente hacia metas comunes, compartiendo conocimiento y comunicando con transparencia.</p></div>
-                <div class="comp-card"><h3>Confianza y Respeto</h3><p style="font-size:0.8rem; opacity:0.6; margin-top:5px;">Actúa con integridad, reconoce el valor de la diversidad y fomenta un trato digno y humano.</p></div>
-                
+                <h2 style="margin:40px 0 20px;">Competencias Organizacionales</h2>
+                <div id="competenciasOriginales">
+                    <div class="comp-card"><h3>Pasión por el Cliente</h3><p style="font-size:0.8rem; opacity:0.6;">Anticipa necesidades y construye valor a largo plazo.</p></div>
+                    <div class="comp-card"><h3>Ejecución Impecable</h3><p style="font-size:0.8rem; opacity:0.6;">Actúa con disciplina y asegura calidad en cada entrega.</p></div>
+                    <div class="comp-card"><h3>Mejora Continua</h3><p style="font-size:0.8rem; opacity:0.6;">Propone innovaciones y optimiza recursos.</p></div>
+                    <div class="comp-card"><h3>Trabajo en Equipo</h3><p style="font-size:0.8rem; opacity:0.6;">Colabora activamente hacia metas comunes.</p></div>
+                    <div class="comp-card"><h3>Confianza y Respeto</h3><p style="font-size:0.8rem; opacity:0.6;">Actúa con integridad y fomenta un trato digno.</p></div>
+                </div>
                 <button class="btn-main">ENVIAR A REVISIÓN</button>
             </div>
 
             <div id="tab1" class="content-section hidden">
-                <div id="eval6Container"></div>
-                <button class="btn-main" style="background:var(--uix-green); color:black;">GUARDAR EVALUACIÓN MES 6</button>
+                <div id="evalContainer"></div>
+                <button class="btn-main" style="background:var(--uix-green); color:black;">GUARDAR EVALUACIÓN SEMESTRAL</button>
             </div>
         </main>
     </div>
@@ -124,15 +127,15 @@
             const pass = document.getElementById('passInput').value.trim();
             if(!email || !pass) return;
             try {
-                const response = await fetch(`${WEB_APP_URL}?action=login&email=${encodeURIComponent(email)}&pass=${encodeURIComponent(pass)}`);
-                const data = await response.json();
-                if(data.autorizado) {
-                    document.getElementById('uName').innerText = data.nombre;
-                    document.getElementById('uRole').innerText = data.rol;
+                const r = await fetch(`${WEB_APP_URL}?action=login&email=${encodeURIComponent(email)}&pass=${encodeURIComponent(pass)}`);
+                const d = await r.json();
+                if(d.autorizado) {
+                    document.getElementById('uName').innerText = d.nombre;
+                    document.getElementById('uRole').innerText = d.rol;
                     document.getElementById('loginScreen').classList.add('hidden');
                     document.getElementById('appLayout').classList.remove('hidden');
-                } else { document.getElementById('loginMsg').innerText = "Credenciales incorrectas"; }
-            } catch(e) { document.getElementById('loginMsg').innerText = "Error de conexión"; }
+                } else { document.getElementById('loginMsg').innerText = "Credenciales incorrectas."; }
+            } catch(e) { document.getElementById('loginMsg').innerText = "Error de conexión."; }
         }
 
         function switchTab(idx, el) {
@@ -140,44 +143,44 @@
             document.getElementById('tab' + idx).classList.remove('hidden');
             document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
             el.classList.add('active');
-            if(idx === 1) generarMes6();
+            if(idx === 1) syncEval();
         }
 
-        function generarMes6() {
-            const container = document.getElementById('eval6Container');
-            container.innerHTML = '<h2>Autoevaluación Semestral</h2><p style="color:var(--text-dim); margin-bottom:30px;">Califica tu avance en objetivos y competencias.</p>';
+        function syncEval() {
+            const container = document.getElementById('evalContainer');
+            container.innerHTML = '<h2>Autoevaluación Semestral</h2>';
             
-            // Objetivos
+            // Sincronizar Objetivos desde Tab 0
             document.querySelectorAll('#regContainer .obj-card').forEach((obj, i) => {
                 const nombre = obj.querySelector('.obj-nombre').value || `Objetivo ${i+1}`;
                 const meta = parseFloat(obj.querySelector('.obj-meta').value) || 0;
                 const div = document.createElement('div');
                 div.className = 'obj-card';
                 div.style.borderLeftColor = 'var(--uix-green)';
-                div.innerHTML = `<label>Objetivo: ${nombre}</label>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
-                        <div><label>Logro Alcanzado</label><input type="number" oninput="calcPct(this, ${meta})"></div>
-                        <div><label>% Cumplimiento</label><input type="text" class="p-view" readonly value="0%" style="color:var(--uix-green); font-weight:700;"></div>
+                div.innerHTML = `<label>OBJETIVO: ${nombre}</label>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                        <div><label>Resultado Logrado</label><input type="number" oninput="calc(this, ${meta})"></div>
+                        <div><label>% Cumplimiento</label><input type="text" class="res" readonly value="0%" style="color:var(--uix-green)"></div>
                     </div>
-                    <label>Comentarios</label><textarea placeholder="Describe tus resultados..."></textarea>`;
+                    <label>Comentarios</label><textarea></textarea>`;
                 container.appendChild(div);
             });
 
-            // Competencias
-            container.innerHTML += '<h2 style="margin-top:40px; margin-bottom:20px;">Autoevaluación de Competencias</h2>';
+            // Sincronizar Competencias para calificar
+            container.innerHTML += '<h2 style="margin-top:40px;">Calificación de Competencias</h2>';
             ["Pasión por el Cliente", "Ejecución Impecable", "Mejora Continua", "Trabajo en Equipo", "Confianza y Respeto"].forEach(c => {
                 const cDiv = document.createElement('div');
                 cDiv.className = 'comp-card';
                 cDiv.innerHTML = `<label>${c}</label>
                     <select><option value="1">1 - Deficiente</option><option value="2">2 - Regular</option><option value="3" selected>3 - Bueno</option><option value="4">4 - Muy Bueno</option><option value="5">5 - Sobresaliente</option></select>
-                    <textarea placeholder="Comenta brevemente tu desempeño en esta competencia..."></textarea>`;
+                    <textarea placeholder="Comentarios..."></textarea>`;
                 container.appendChild(cDiv);
             });
         }
 
-        function calcPct(input, meta) {
+        function calc(input, meta) {
             const val = parseFloat(input.value) || 0;
-            const res = input.parentElement.parentElement.querySelector('.p-view');
+            const res = input.parentElement.parentElement.querySelector('.res');
             if(meta > 0) res.value = Math.round((val/meta)*100) + "%";
         }
 
@@ -186,14 +189,6 @@
             const clone = container.querySelector('.obj-card').cloneNode(true);
             clone.querySelectorAll('input').forEach(i => i.value = "");
             container.appendChild(clone);
-            recalcPeso();
-        }
-
-        function recalcPeso() {
-            let total = 0;
-            document.querySelectorAll('.obj-peso').forEach(i => total += (parseFloat(i.value) || 0));
-            document.getElementById('pesoTotalTxt').innerText = total + "%";
-            document.getElementById('pesoBar').style.width = total + "%";
         }
     </script>
 </body>
