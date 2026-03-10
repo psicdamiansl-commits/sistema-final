@@ -3,304 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uix. Sistema de Desempeño | 20260309_V13</title>
+    <title>uix. Sistema de Desempeño | V15_FINAL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --uix-purple-dark: #0a0118;
-            --uix-red-main: #8b0000;
-            --uix-green: #7CFF01;
-            --card-bg: #1a0f35;
-            --grad-comp: linear-gradient(135deg, #6a5af9 0%, #4d3df2 100%);
-            --text-main: #ffffff;
-            --text-dim: #a094b7;
-        }
-
+        :root { --uix-purple-dark: #0a0118; --uix-red-main: #8b0000; --uix-green: #7CFF01; --card-bg: #1a0f35; --text-main: #ffffff; --text-dim: #a094b7; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body { 
-            font-family: 'Sora', sans-serif; 
-            background: var(--uix-purple-dark); 
-            color: var(--text-main); 
-            min-height: 100vh;
-            width: 100vw;
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            overflow-x: hidden;
-            font-size: 16px; 
-        }
-
-        .app-layout {
-            display: flex;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-            align-items: flex-start;
-            justify-content: flex-start;
-        }
-
-        /* SIDEBAR */
-        .sidebar { width: 280px; background: #070111; padding: 40px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); height: 100vh;}
-        .nav-item { padding: 15px 30px; display: flex; align-items: center; gap: 18px; cursor: pointer; color: var(--text-dim); font-size: 0.95rem; transition: 0.3s; }
-        .nav-item:hover { color: white; background: rgba(255,255,255,0.03); }
-        .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 40px 40px 0; margin-right: 25px; }
-
-        /* MAIN CONTENT */
-        .main-container { flex: 1; overflow-y: auto; padding: 40px 60px; height: 100vh; }
-        h2 { font-size: 1.8rem; margin-bottom: 10px; }
-        
+        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: var(--text-main); min-height: 100vh; }
+        #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
+        .login-card { background: rgba(255,255,255,0.03); padding: 50px; border-radius: 30px; width: 420px; text-align: center; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); }
+        .app-layout { display: flex; width: 100%; height: 100vh; }
+        .sidebar { width: 280px; background: #070111; padding: 40px 0; border-right: 1px solid rgba(255,255,255,0.05); }
+        .main-container { flex: 1; overflow-y: auto; padding: 40px 60px; }
         .tab-menu { display: flex; gap: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 40px; }
         .tab-item { padding-bottom: 15px; font-size: 0.9rem; color: #666; cursor: pointer; font-weight: 600; }
         .tab-item.active { color: var(--uix-green); border-bottom: 3px solid var(--uix-green); }
-
-        /* CARDS */
-        .obj-card { 
-            background: var(--card-bg); 
-            padding: 35px; 
-            border-radius: 16px; 
-            margin-bottom: 30px; 
-            border-left: 6px solid var(--uix-red-main); 
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        
-        label { font-size: 0.75rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 8px; display: block; letter-spacing: 1px; }
-        .req-star { color: #ff4d4d; margin-left: 3px; }
-
-        input, select, textarea { 
-            background: rgba(0,0,0,0.2); 
-            border: 1px solid rgba(255,255,255,0.1); 
-            color: white; 
-            padding: 15px; 
-            border-radius: 8px; 
-            width: 100%; 
-            margin-bottom: 20px; 
-            font-family: 'Sora';
-            font-size: 0.95rem;
-        }
-
-        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
-
-        .weight-alert { background: rgba(124, 255, 1, 0.05); border: 1px solid rgba(124, 255, 1, 0.2); padding: 20px; border-radius: 15px; margin-bottom: 35px; }
-        .weight-bar-bg { width: 100%; height: 12px; background: #222; border-radius: 6px; margin-top: 12px; overflow: hidden; }
-
-        .btn-send { background: var(--uix-red-main); color: white; border: none; padding: 20px; border-radius: 12px; width: 70%; font-weight: 700; cursor: pointer; transition: 0.3s; }
-        .btn-draft { background: #2a2a2a; color: white; border: none; padding: 20px; border-radius: 12px; width: 28%; font-weight: 700; cursor: pointer; }
-
-        #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
+        .obj-card { background: var(--card-bg); padding: 30px; border-radius: 16px; margin-bottom: 25px; border-left: 6px solid var(--uix-red-main); }
+        input, select, textarea { background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 12px; border-radius: 8px; width: 100%; margin-bottom: 15px; font-family: 'Sora'; }
         .hidden { display: none !important; }
+        .btn-green { background: var(--uix-green); color: black; border: none; padding: 15px; border-radius: 30px; font-weight: 800; cursor: pointer; width: 100%; }
     </style>
 </head>
 <body>
 
     <div id="loginScreen">
-        <div style="background: rgba(255,255,255,0.03); padding: 50px; border-radius: 30px; width: 420px; text-align: center; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
-            <h1 style="color:var(--uix-green); font-size:3.5rem; margin-bottom:10px;">uix<span>.</span></h1>
-            <p style="color:white; opacity:0.5; font-size:0.8rem; margin-bottom:40px; letter-spacing: 2px;">SISTEMA DE DESEMPEÑO</p>
-            <div style="text-align: left;">
-                <label>Rol</label>
-                <select id="roleInput"><option value="Colaborador">Colaborador</option><option value="Líder">Líder</option></select>
-                <label>Correo</label>
-                <input type="email" id="emailInput" placeholder="nombre@empresa.com">
-                <label>Contraseña</label>
-                <input type="password" id="passInput" placeholder="••••••••">
-            </div>
-            <button onclick="validaAcceso()" id="btnLogin" style="background:var(--uix-green); color:black; width:100%; padding:18px; border-radius:35px; border:none; font-weight:800; cursor:pointer;">INGRESAR</button>
-            <p id="loginMsg" style="color:#ff4d4d; font-size:0.85rem; margin-top:20px;"></p>
+        <div class="login-card">
+            <h1 style="color:var(--uix-green); font-size:3rem; margin-bottom:5px;">uix<span>.</span></h1>
+            <p style="color:white; opacity:0.5; font-size:0.7rem; margin-bottom:30px;">ACCESO COLABORADORES</p>
+            <input type="email" id="emailInput" placeholder="Correo electrónico">
+            <input type="password" id="passInput" placeholder="Contraseña">
+            <button onclick="validaAcceso()" id="btnLogin" class="btn-green">INGRESAR</button>
+            <p id="loginMsg" style="color:#ff4d4d; font-size:0.8rem; margin-top:15px;"></p>
         </div>
     </div>
 
     <div id="appLayout" class="app-layout hidden">
         <aside class="sidebar">
-            <div style="padding:0 30px 40px; border-bottom: 1px solid rgba(255,255,255,0.05);">
-                <p id="uRole" style="color:var(--uix-green); font-size:0.7rem; font-weight:700;">ROL</p>
-                <h5 id="uName" style="color:white; font-size:1.2rem; margin-top:5px;">Usuario</h5>
+            <div style="padding:0 30px 40px;">
+                <p id="uName" style="color:white; font-size:1.1rem; font-weight:600;">Cargando...</p>
+                <p id="uRole" style="color:var(--uix-green); font-size:0.7rem;">ROL</p>
             </div>
-            <nav>
-                <div class="nav-item active"><i class="fas fa-bullseye"></i> Mis objetivos</div>
-            </nav>
+            <div style="padding: 15px 30px; background: var(--uix-red-main); color: white;"><i class="fas fa-bullseye"></i> &nbsp; Mis objetivos</div>
         </aside>
 
         <main class="main-container">
-            <div id="misObjetivosSection">
-                <div class="tab-menu">
-                    <div class="tab-item active" onclick="switchSubTab(0, this)">Objetivos y Competencias</div>
-                    <div class="tab-item" onclick="switchSubTab(1, this)">Autoevaluación Mes 6</div>
-                    <div class="tab-item" onclick="switchSubTab(2, this)">Evaluación Final Mes 12</div>
-                </div>
+            <div class="tab-menu">
+                <div class="tab-item active" onclick="switchSubTab(0, this)">Objetivos y Competencias</div>
+                <div class="tab-item" onclick="switchSubTab(1, this)">Autoevaluación Mes 6</div>
+            </div>
 
-                <div id="subTab0" class="sub-tab-content">
-                    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:30px;">
-                        <div>
-                            <h2>Registro de Objetivos</h2>
-                            <p style="color:var(--text-dim); font-size:0.9rem;">Define tus metas estratégicas iniciales.</p>
-                        </div>
-                        <button onclick="agregarObjetivo()" style="background:var(--uix-green); color:black; border:none; padding:12px 25px; border-radius:10px; font-weight:bold; cursor:pointer;">+ Nuevo Objetivo</button>
-                    </div>
-                    <div class="weight-alert">
-                        <span>Peso Total: <strong id="pesoTotalTxt">0%</strong></span>
-                        <div class="weight-bar-bg"><div id="pesoBar" style="height:100%; width:0%; background:var(--uix-green); transition:0.4s;"></div></div>
-                    </div>
-                    <div id="regContainer">
-                        <div class="obj-card">
-                            <label>Título del Objetivo 1 <span class="req-star">*</span></label>
-                            <input type="text" class="obj-nombre" placeholder="Ej: Incrementar ventas" required>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:25px;">
-                                <div><label>Meta Anual</label><input type="number" class="obj-meta" required></div>
-                                <div><label>Tendencia</label><select class="obj-tendencia"><option>Incremental</option><option>Decremental</option></select></div>
-                                <div><label>Peso (%)</label><input type="number" class="obj-peso" oninput="recalc()" required></div>
-                            </div>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
-                                <div><label>Fecha Inicio</label><input type="date" class="obj-inicio" required></div>
-                                <div><label>Fecha Fin</label><input type="date" class="obj-fin" required></div>
-                            </div>
+            <div id="subTab0" class="sub-tab-content">
+                <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
+                    <h2>Registro de Objetivos</h2>
+                    <button onclick="agregarObjetivo()" style="background:var(--uix-green); color:black; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; font-weight:bold;">+ Nuevo</button>
+                </div>
+                <div id="regContainer">
+                    <div class="obj-card">
+                        <label style="color:var(--uix-green); font-size:0.7rem;">NOMBRE DEL OBJETIVO</label>
+                        <input type="text" class="obj-nombre" placeholder="Ej: Cumplimiento de ventas">
+                        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
+                            <div><label style="font-size:0.7rem;">META</label><input type="number" class="obj-meta"></div>
+                            <div><label style="font-size:0.7rem;">PESO (%)</label><input type="number" class="obj-peso"></div>
+                            <div><label style="font-size:0.7rem;">TENDENCIA</label><select class="obj-tendencia"><option>Incremental</option><option>Decremental</option></select></div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div id="subTab1" class="sub-tab-content hidden">
-                    <div id="eval6Container">
-                        </div>
-                </div>
-
-                <div id="subTab2" class="sub-tab-content hidden">
-                    <h2>Evaluación Final Mes 12</h2>
-                    <p style="color:var(--text-dim);">Próximamente disponible al cierre de año.</p>
-                </div>
-
-                <div style="margin-top:50px; display:flex; justify-content:space-between; padding-bottom:50px;">
-                    <button id="btnEnviar" onclick="enviarObjetivos()" class="btn-send" disabled>ENVIAR A REVISIÓN</button>
-                    <button class="btn-draft">GUARDAR BORRADOR</button>
-                </div>
+            <div id="subTab1" class="sub-tab-content hidden">
+                <div id="eval6Container"></div>
             </div>
         </main>
     </div>
 
     <script>
-        // NUEVA URL INTEGRADA
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz0umsoj3BJqETVgiLEt13quycc_uz6vqvcvUYkg60H-UUmeGJkcOR2ks6v2wmNeRU/exec";
-        let totalObj = 1;
+        // PEGA AQUÍ TU NUEVO URL DE IMPLEMENTACIÓN
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz3XD5Z4PzmHg1psFbhZgPXc1iZ-SFCl6oXEgQ7s7na3zehZVx69LV8kq39-rWLtvw/exec";
 
         async function validaAcceso() {
-            const email = document.getElementById('emailInput').value;
-            const pass = document.getElementById('passInput').value;
-            const role = document.getElementById('roleInput').value;
+            const email = document.getElementById('emailInput').value.trim();
+            const pass = document.getElementById('passInput').value.trim();
+            const btn = document.getElementById('btnLogin');
             if(!email || !pass) return;
-            document.getElementById('btnLogin').innerText = "CARGANDO...";
+
+            btn.innerText = "VERIFICANDO...";
             try {
-                const response = await fetch(`${WEB_APP_URL}?action=login&email=${encodeURIComponent(email)}&pass=${encodeURIComponent(pass)}&role=${encodeURIComponent(role)}`);
-                const res = await response.json();
-                if(res.autorizado) {
-                    document.getElementById('uName').innerText = res.nombre;
+                const response = await fetch(`${WEB_APP_URL}?action=login&email=${encodeURIComponent(email)}&pass=${encodeURIComponent(pass)}`);
+                const data = await response.json();
+                if(data.autorizado) {
+                    document.getElementById('uName').innerText = data.nombre;
+                    document.getElementById('uRole').innerText = data.rol;
                     document.getElementById('loginScreen').classList.add('hidden');
                     document.getElementById('appLayout').classList.remove('hidden');
-                    document.body.style.alignItems = 'flex-start';
                 } else {
-                    document.getElementById('loginMsg').innerText = "Credenciales incorrectas";
-                    document.getElementById('btnLogin').innerText = "INGRESAR";
+                    document.getElementById('loginMsg').innerText = "Credenciales incorrectas.";
+                    btn.innerText = "INGRESAR";
                 }
-            } catch(e) { console.error(e); }
+            } catch(e) {
+                document.getElementById('loginMsg').innerText = "Error de conexión.";
+                btn.innerText = "INGRESAR";
+            }
         }
 
-        // --- NAVEGACIÓN Y SINCRONIZACIÓN ---
-        function switchSubTab(index, el) {
+        function switchSubTab(idx, el) {
             document.querySelectorAll('.sub-tab-content').forEach(c => c.classList.add('hidden'));
-            document.getElementById('subTab' + index).classList.remove('hidden');
+            document.getElementById('subTab' + idx).classList.remove('hidden');
             document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
             el.classList.add('active');
-
-            if(index === 1) generarAutoevaluacionMes6();
+            if(idx === 1) sincronizarEvaluacion();
         }
 
-        function generarAutoevaluacionMes6() {
+        function sincronizarEvaluacion() {
             const container = document.getElementById('eval6Container');
-            container.innerHTML = '<h2>Autoevaluación Mes 6</h2><p style="color:var(--text-dim); margin-bottom:30px;">Reporta tus avances logrados al primer semestre.</p>';
+            container.innerHTML = '<h2>Autoevaluación Mes 6</h2><p style="color:var(--text-dim); margin-bottom:30px;">Tus objetivos se han cargado automáticamente.</p>';
             
-            const objetivosP1 = document.querySelectorAll('#regContainer .obj-card');
-            
-            objetivosP1.forEach((obj, i) => {
+            document.querySelectorAll('#regContainer .obj-card').forEach((obj, i) => {
                 const nombre = obj.querySelector('.obj-nombre').value || `Objetivo ${i+1}`;
                 const meta = parseFloat(obj.querySelector('.obj-meta').value) || 0;
-                const peso = obj.querySelector('.obj-peso').value || '0';
-
-                const div = document.createElement('div');
-                div.className = 'obj-card';
-                div.style.borderLeftColor = 'var(--uix-green)';
-                div.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-                        <label>OBJETIVO ${i+1}: ${nombre}</label>
-                        <span style="font-size:0.7rem; opacity:0.6;">META: ${meta} | PESO: ${peso}%</span>
+                
+                const card = document.createElement('div');
+                card.className = 'obj-card';
+                card.style.borderLeftColor = 'var(--uix-green)';
+                card.innerHTML = `
+                    <label style="color:var(--uix-green)">${nombre}</label>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-top:15px;">
+                        <div><label style="font-size:0.7rem;">RESULTADO LOGRADO</label><input type="number" oninput="calcPct(this, ${meta})"></div>
+                        <div><label style="font-size:0.7rem;">% CUMPLIMIENTO</label><input type="text" class="pct-view" readonly value="0%" style="color:var(--uix-green); font-weight:bold;"></div>
                     </div>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
-                        <div>
-                            <label>Resultado Logrado</label>
-                            <input type="number" class="eval-avance" oninput="calcularProgreso(this, ${meta})">
-                        </div>
-                        <div>
-                            <label>% Cumplimiento</label>
-                            <input type="text" class="eval-porcentaje" value="0%" readonly style="background:rgba(124,255,1,0.05); color:var(--uix-green); font-weight:bold;">
-                        </div>
-                    </div>
-                    <label>Comentarios / Evidencia</label>
-                    <textarea style="width:100%; height:80px;" placeholder="Describe tus logros..."></textarea>
                 `;
-                container.appendChild(div);
+                container.appendChild(card);
             });
-            // Inyectar sección de competencias fija al final
-            inyectarCompetencias(container);
         }
 
-        function calcularProgreso(input, meta) {
+        function calcPct(input, meta) {
             const val = parseFloat(input.value) || 0;
-            const pctField = input.parentElement.parentElement.querySelector('.eval-porcentaje');
-            if(meta > 0) pctField.value = Math.round((val/meta)*100) + "%";
-        }
-
-        function inyectarCompetencias(parent) {
-            const h = document.createElement('h3');
-            h.innerHTML = '<i class="fas fa-star" style="color:#ff4d4d"></i> Competencias';
-            h.style.margin = "40px 0 20px";
-            parent.appendChild(h);
-            
-            ["Confianza", "Ejecución", "Mejora Continua", "Cliente", "Equipo"].forEach(c => {
-                const d = document.createElement('div');
-                d.className = 'obj-card';
-                d.style.borderLeftColor = '#6a5af9';
-                d.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:center;">
-                    <label>${c}</label>
-                    <select style="width:150px; margin:0;"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select>
-                </div>`;
-                parent.appendChild(d);
-            });
+            const res = input.parentElement.parentElement.querySelector('.pct-view');
+            if(meta > 0) res.value = Math.round((val/meta)*100) + "%";
         }
 
         function agregarObjetivo() {
-            totalObj++;
-            const div = document.createElement('div');
-            div.className = 'obj-card';
-            div.innerHTML = `
-                <label>Título del Objetivo ${totalObj} *</label>
-                <input type="text" class="obj-nombre" required>
-                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:25px;">
-                    <div><label>Meta</label><input type="number" class="obj-meta" required></div>
-                    <div><label>Tendencia</label><select class="obj-tendencia"><option>Incremental</option></select></div>
-                    <div><label>Peso (%)</label><input type="number" class="obj-peso" oninput="recalc()" required></div>
-                </div>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
-                    <div><label>Fecha Inicio</label><input type="date" class="obj-inicio" required></div>
-                    <div><label>Fecha Fin</label><input type="date" class="obj-fin" required></div>
-                </div>`;
-            document.getElementById('regContainer').appendChild(div);
-        }
-
-        function recalc() {
-            let s = 0;
-            document.querySelectorAll('.obj-peso').forEach(i => s += Number(i.value) || 0);
-            document.getElementById('pesoTotalTxt').innerText = s + '%';
-            document.getElementById('pesoBar').style.width = s + '%';
-            document.getElementById('btnEnviar').disabled = (s !== 100);
+            const container = document.getElementById('regContainer');
+            const clone = container.firstElementChild.cloneNode(true);
+            clone.querySelectorAll('input').forEach(i => i.value = "");
+            container.appendChild(clone);
         }
     </script>
 </body>
