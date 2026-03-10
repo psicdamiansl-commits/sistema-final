@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uix. Sistema de Desempeño | 20260309_V20</title>
+    <title>uix. Sistema de Desempeño | 20260309_V21</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -17,70 +17,30 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body { 
-            font-family: 'Sora', sans-serif; 
-            background: var(--uix-purple-dark); 
-            color: var(--text-main); 
-            min-height: 100vh;
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-        }
-
-        .app-layout {
-            display: flex;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-            align-items: flex-start;
-        }
+        body { font-family: 'Sora', sans-serif; background: var(--uix-purple-dark); color: var(--text-main); height: 100vh; display: flex; overflow: hidden; }
 
         /* SIDEBAR V10 */
-        .sidebar { width: 280px; background: #070111; padding: 40px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); height: 100vh;}
-        .nav-item { padding: 15px 30px; display: flex; align-items: center; gap: 18px; cursor: pointer; color: var(--text-dim); font-size: 0.95rem; transition: 0.3s; }
+        .sidebar { width: 280px; background: #070111; padding: 40px 0; border-right: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
+        .user-info { padding: 0 30px 40px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
+        .nav-item { padding: 15px 30px; display: flex; align-items: center; gap: 18px; cursor: pointer; color: var(--text-dim); transition: 0.3s; }
         .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 40px 40px 0; margin-right: 25px; }
 
-        /* MAIN CONTENT V10 */
-        .main-container { flex: 1; overflow-y: auto; padding: 40px 60px; height: 100vh; }
-        h2 { font-size: 1.8rem; margin-bottom: 10px; }
-        
+        /* CONTENIDO */
+        .main-container { flex: 1; overflow-y: auto; padding: 40px 60px; }
         .tab-menu { display: flex; gap: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 40px; }
         .tab-item { padding-bottom: 15px; font-size: 0.9rem; color: #666; cursor: pointer; font-weight: 600; }
         .tab-item.active { color: var(--uix-green); border-bottom: 3px solid var(--uix-green); }
 
-        /* CARDS V10 */
-        .obj-card { 
-            background: var(--card-bg); 
-            padding: 35px; 
-            border-radius: 16px; 
-            margin-bottom: 30px; 
-            border-left: 6px solid var(--uix-red-main); 
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        
-        label { font-size: 0.75rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 8px; display: block; letter-spacing: 1px; }
+        /* CARDS */
+        .obj-card { background: var(--card-bg); padding: 35px; border-radius: 16px; margin-bottom: 30px; border-left: 6px solid var(--uix-red-main); }
+        .comp-card { background: rgba(255,255,255,0.02); padding: 25px; border-radius: 12px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.05); }
 
-        input, select, textarea { 
-            background: rgba(0,0,0,0.2); 
-            border: 1px solid rgba(255,255,255,0.1); 
-            color: white; 
-            padding: 15px; 
-            border-radius: 8px; 
-            width: 100%; 
-            margin-bottom: 20px; 
-            font-family: 'Sora';
-        }
+        label { font-size: 0.75rem; color: var(--uix-green); font-weight: 700; text-transform: uppercase; margin-bottom: 8px; display: block; }
+        input, select, textarea { background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 15px; border-radius: 8px; width: 100%; margin-bottom: 20px; font-family: 'Sora'; }
+        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); }
 
-        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
-
-        /* Barra de Peso V10 */
         .weight-alert { background: rgba(124, 255, 1, 0.05); border: 1px solid rgba(124, 255, 1, 0.2); padding: 20px; border-radius: 15px; margin-bottom: 35px; }
-        .weight-bar-bg { width: 100%; height: 12px; background: #222; border-radius: 6px; margin-top: 12px; overflow: hidden; }
-
-        .btn-send { background: var(--uix-red-main); color: white; border: none; padding: 20px; border-radius: 12px; width: 70%; font-weight: 700; cursor: pointer; }
-        .btn-draft { background: #2a2a2a; color: white; border: none; padding: 20px; border-radius: 12px; width: 28%; font-weight: 700; cursor: pointer; }
+        .btn-main { background: var(--uix-red-main); color: white; border: none; padding: 20px; border-radius: 12px; font-weight: 700; cursor: pointer; width: 100%; }
 
         #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
         .hidden { display: none !important; }
@@ -89,15 +49,10 @@
 <body>
 
     <div id="loginScreen">
-        <div style="background: rgba(255,255,255,0.03); padding: 50px; border-radius: 30px; width: 420px; text-align: center; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
-            <h1 style="color:var(--uix-green); font-size:3.5rem; margin-bottom:10px;">uix<span>.</span></h1>
-            <p style="color:white; opacity:0.5; font-size:0.8rem; margin-bottom:40px; letter-spacing: 2px;">SISTEMA DE DESEMPEÑO</p>
-            <div style="text-align: left;">
-                <label>Correo</label>
-                <input type="email" id="emailInput" placeholder="nombre@empresa.com">
-                <label>Contraseña</label>
-                <input type="password" id="passInput" placeholder="••••••••">
-            </div>
+        <div style="background: rgba(255,255,255,0.03); padding: 50px; border-radius: 30px; width: 420px; text-align: center; border: 1px solid rgba(255,255,255,0.1);">
+            <h1 style="color:var(--uix-green); font-size:3.5rem; margin-bottom:30px;">uix<span>.</span></h1>
+            <input type="email" id="emailInput" placeholder="Correo">
+            <input type="password" id="passInput" placeholder="Contraseña">
             <button onclick="validaAcceso()" id="btnLogin" style="background:var(--uix-green); color:black; width:100%; padding:18px; border-radius:35px; border:none; font-weight:800; cursor:pointer;">INGRESAR</button>
             <p id="loginMsg" style="color:#ff4d4d; font-size:0.85rem; margin-top:20px;"></p>
         </div>
@@ -105,63 +60,56 @@
 
     <div id="appLayout" class="app-layout hidden">
         <aside class="sidebar">
-            <div style="padding:0 30px 40px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+            <div class="user-info">
                 <p id="uRole" style="color:var(--uix-green); font-size:0.7rem; font-weight:700;">ROL</p>
-                <h5 id="uName" style="color:white; font-size:1.2rem; margin-top:5px;">Usuario</h5>
+                <h2 id="uName" style="color:white; font-size:1.2rem; margin-top:5px;">Usuario</h2>
             </div>
-            <nav>
-                <div class="nav-item active"><i class="fas fa-bullseye"></i> Mis objetivos</div>
-            </nav>
+            <nav><div class="nav-item active"><i class="fas fa-bullseye"></i> Mis objetivos</div></nav>
         </aside>
 
         <main class="main-container">
-            <div id="misObjetivosSection">
-                <div class="tab-menu">
-                    <div class="tab-item active" onclick="switchSubTab(0, this)">1. Registro de Objetivos</div>
-                    <div class="tab-item" onclick="switchSubTab(1, this)">2. Autoevaluación Mes 6</div>
+            <div class="tab-menu">
+                <div class="tab-item active" onclick="switchTab(0, this)">1. Registro de Objetivos</div>
+                <div class="tab-item" onclick="switchTab(1, this)">2. Autoevaluación Mes 6</div>
+            </div>
+
+            <div id="tab0" class="content-section">
+                <div class="weight-alert">
+                    <span>Peso Total Asignado: <strong id="pesoTotalTxt">0%</strong></span>
+                    <div style="width:100%; height:8px; background:#222; border-radius:4px; margin-top:10px;"><div id="pesoBar" style="height:100%; width:0%; background:var(--uix-green); transition:0.4s;"></div></div>
                 </div>
 
-                <div id="subTab0" class="sub-tab-content">
-                    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:30px;">
-                        <div>
-                            <h2>Definición de Objetivos</h2>
-                            <p style="color:var(--text-dim); font-size:0.9rem;">Registra tus metas, pesos y periodos de cumplimiento.</p>
+                <div id="regContainer">
+                    <div class="obj-card">
+                        <label>Nombre del Objetivo</label>
+                        <input type="text" class="obj-nombre" placeholder="¿Qué quieres lograr?">
+                        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px;">
+                            <div><label>Meta Anual</label><input type="number" class="obj-meta"></div>
+                            <div><label>Tendencia</label><select class="obj-tendencia"><option>Incremental</option><option>Decremental</option></select></div>
+                            <div><label>Peso (%)</label><input type="number" class="obj-peso" oninput="recalcPeso()"></div>
                         </div>
-                        <button onclick="agregarObjetivo()" style="background:var(--uix-green); color:black; border:none; padding:12px 25px; border-radius:10px; font-weight:bold; cursor:pointer;">+ Nuevo Objetivo</button>
-                    </div>
-
-                    <div class="weight-alert">
-                        <span>Peso Total Asignado: <strong id="pesoTotalTxt">0%</strong></span>
-                        <div class="weight-bar-bg"><div id="pesoBar" style="height:100%; width:0%; background:var(--uix-green); transition:0.4s;"></div></div>
-                    </div>
-
-                    <div id="regContainer">
-                        <div class="obj-card">
-                            <label>Nombre del Objetivo</label>
-                            <input type="text" class="obj-nombre" placeholder="Ej: Cumplimiento de ventas">
-                            
-                            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:25px;">
-                                <div><label>Meta Anual</label><input type="number" class="obj-meta"></div>
-                                <div><label>Tendencia</label><select class="obj-tendencia"><option>Incremental</option><option>Decremental</option></select></div>
-                                <div><label>Peso (%)</label><input type="number" class="obj-peso" oninput="recalcPeso()"></div>
-                            </div>
-
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
-                                <div><label>Fecha Inicio</label><input type="date" class="obj-inicio"></div>
-                                <div><label>Fecha Fin</label><input type="date" class="obj-fin"></div>
-                            </div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+                            <div><label>Fecha Inicio</label><input type="date" class="obj-inicio"></div>
+                            <div><label>Fecha Fin</label><input type="date" class="obj-fin"></div>
                         </div>
                     </div>
                 </div>
+                <button onclick="agregarObjetivo()" style="background:none; border:1px solid var(--uix-green); color:var(--uix-green); padding:10px 20px; border-radius:8px; cursor:pointer; margin-bottom:40px;">+ Agregar Objetivo</button>
 
-                <div id="subTab1" class="sub-tab-content hidden">
-                    <div id="eval6Container"></div>
+                <h2 style="margin-top:40px; margin-bottom:20px;">Competencias Organizacionales</h2>
+                <div id="compContainer">
+                    <div class="comp-card"><h3>Pasión por el Cliente</h3><p style="font-size:0.75rem; opacity:0.6;">Excede expectativas y genera valor.</p></div>
+                    <div class="comp-card"><h3>Ejecución Impecable</h3><p style="font-size:0.75rem; opacity:0.6;">Disciplinado en procesos y resultados.</p></div>
+                    <div class="comp-card"><h3>Mejora Continua</h3><p style="font-size:0.75rem; opacity:0.6;">Innova y optimiza constantemente.</p></div>
+                    <div class="comp-card"><h3>Trabajo en Equipo</h3><p style="font-size:0.75rem; opacity:0.6;">Colaboración activa y comunicación.</p></div>
+                    <div class="comp-card"><h3>Confianza y Respeto</h3><p style="font-size:0.75rem; opacity:0.6;">Integridad y trato humano.</p></div>
                 </div>
+                <button class="btn-main">ENVIAR A REVISIÓN</button>
+            </div>
 
-                <div style="margin-top:50px; display:flex; justify-content:space-between; padding-bottom:50px;">
-                    <button class="btn-send">ENVIAR A REVISIÓN</button>
-                    <button class="btn-draft">GUARDAR BORRADOR</button>
-                </div>
+            <div id="tab1" class="content-section hidden">
+                <div id="eval6Container"></div>
+                <button class="btn-main" style="background:var(--uix-green); color:black;">GUARDAR EVALUACIÓN SEMESTRAL</button>
             </div>
         </main>
     </div>
@@ -172,66 +120,64 @@
         async function validaAcceso() {
             const email = document.getElementById('emailInput').value.trim();
             const pass = document.getElementById('passInput').value.trim();
-            const btn = document.getElementById('btnLogin');
             if(!email || !pass) return;
-            btn.innerText = "VERIFICANDO...";
             try {
-                const response = await fetch(`${WEB_APP_URL}?action=login&email=${encodeURIComponent(email)}&pass=${encodeURIComponent(pass)}`);
-                const data = await response.json();
-                if(data.autorizado) {
-                    document.getElementById('uName').innerText = data.nombre;
-                    document.getElementById('uRole').innerText = data.rol;
+                const r = await fetch(`${WEB_APP_URL}?action=login&email=${encodeURIComponent(email)}&pass=${encodeURIComponent(pass)}`);
+                const d = await r.json();
+                if(d.autorizado) {
+                    document.getElementById('uName').innerText = d.nombre;
+                    document.getElementById('uRole').innerText = d.rol;
                     document.getElementById('loginScreen').classList.add('hidden');
                     document.getElementById('appLayout').classList.remove('hidden');
-                    document.body.style.alignItems = 'flex-start';
-                } else {
-                    document.getElementById('loginMsg').innerText = "Credenciales incorrectas";
-                    btn.innerText = "INGRESAR";
-                }
-            } catch(e) { 
-                document.getElementById('loginMsg').innerText = "Error de conexión";
-                btn.innerText = "INGRESAR";
-            }
+                } else { document.getElementById('loginMsg').innerText = "Incorrecto"; }
+            } catch(e) { document.getElementById('loginMsg').innerText = "Error"; }
         }
 
-        function switchSubTab(idx, el) {
-            document.querySelectorAll('.sub-tab-content').forEach(c => c.classList.add('hidden'));
-            document.getElementById('subTab' + idx).classList.remove('hidden');
+        function switchTab(idx, el) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
+            document.getElementById('tab' + idx).classList.remove('hidden');
             document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
             el.classList.add('active');
-            if(idx === 1) generarMes6();
+            if(idx === 1) syncEval();
         }
 
-        function generarMes6() {
+        function syncEval() {
             const container = document.getElementById('eval6Container');
-            container.innerHTML = '<h2>Autoevaluación Mes 6</h2><p style="color:var(--text-dim); margin-bottom:30px;">Reporta tus avances logrados al primer semestre.</p>';
+            container.innerHTML = '<h2>Evaluación de Objetivos</h2>';
             
+            // Sincronizar Objetivos
             document.querySelectorAll('#regContainer .obj-card').forEach((obj, i) => {
                 const nombre = obj.querySelector('.obj-nombre').value || `Objetivo ${i+1}`;
                 const meta = parseFloat(obj.querySelector('.obj-meta').value) || 0;
-                const peso = obj.querySelector('.obj-peso').value || "0";
-
                 const div = document.createElement('div');
                 div.className = 'obj-card';
                 div.style.borderLeftColor = 'var(--uix-green)';
-                div.innerHTML = `
-                    <label>OBJETIVO: ${nombre}</label>
-                    <p style="font-size:0.7rem; color:var(--text-dim); margin-bottom:15px;">META ANUAL: ${meta} | PESO: ${peso}%</p>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
-                        <div><label>Resultado Mes 6</label><input type="number" oninput="calcCumplimiento(this, ${meta})"></div>
-                        <div><label>% Cumplimiento</label><input type="text" class="res-pct" readonly value="0%" style="color:var(--uix-green); font-weight:700;"></div>
+                div.innerHTML = `<label>${nombre}</label>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+                        <div><label>Resultado</label><input type="number" oninput="calc(this, ${meta})"></div>
+                        <div><label>% Cumplimiento</label><input type="text" class="p-view" readonly value="0%" style="color:var(--uix-green)"></div>
                     </div>
-                    <label>Comentarios / Evidencia</label>
-                    <textarea placeholder="Describe tus logros..."></textarea>
-                `;
+                    <label>Evidencia</label><textarea></textarea>`;
                 container.appendChild(div);
+            });
+
+            // Sincronizar Competencias para evaluar
+            container.innerHTML += '<h2 style="margin-top:40px;">Autoevaluación de Competencias</h2>';
+            const comps = ["Pasión por el Cliente", "Ejecución Impecable", "Mejora Continua", "Trabajo en Equipo", "Confianza y Respeto"];
+            comps.forEach(c => {
+                const cDiv = document.createElement('div');
+                cDiv.className = 'comp-card';
+                cDiv.innerHTML = `<label>${c}</label>
+                    <select><option value="1">1 - Deficiente</option><option value="2">2 - Regular</option><option value="3" selected>3 - Bueno</option><option value="4">4 - Muy Bueno</option><option value="5">5 - Sobresaliente</option></select>
+                    <textarea placeholder="Comenta tu desempeño en esta competencia..."></textarea>`;
+                container.appendChild(cDiv);
             });
         }
 
-        function calcCumplimiento(input, meta) {
-            const val = parseFloat(input.value) || 0;
-            const res = input.parentElement.parentElement.querySelector('.res-pct');
-            if(meta > 0) res.value = Math.round((val/meta)*100) + "%";
+        function calc(input, meta) {
+            const v = parseFloat(input.value) || 0;
+            const res = input.parentElement.parentElement.querySelector('.p-view');
+            if(meta > 0) res.value = Math.round((v/meta)*100) + "%";
         }
 
         function agregarObjetivo() {
