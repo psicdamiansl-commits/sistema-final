@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>20260307_V6_Objetivos</title>
+    <title>20260309_Objetivos_V8</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -290,7 +290,7 @@
             const cards = document.querySelectorAll('#regContainer .obj-card');
             
             cards.forEach((card, index) => {
-                const nombre = card.querySelector('.obj-nombre').value || Objetivo ${index + 1};
+                const nombre = card.querySelector('.obj-nombre').value || `Objetivo ${index + 1}`;
                 const meta = card.querySelector('.obj-meta').value || 0;
                 const peso = card.querySelector('.obj-peso').value || 0;
 
@@ -349,7 +349,8 @@
             btn.innerText = "AUTENTICANDO..."; btn.disabled = true;
 
             try {
-                const url = ${WEB_APP_URL}?action=login&email=${encodeURIComponent(email)}&pass=${encodeURIComponent(pass)}&role=${encodeURIComponent(role)};
+                // Se asegura de enviar la petición como GET
+                const url = `${WEB_APP_URL}?action=login&email=${encodeURIComponent(email)}&pass=${encodeURIComponent(pass)}&role=${encodeURIComponent(role)}`;
                 const response = await fetch(url);
                 const res = await response.json();
 
@@ -364,11 +365,14 @@
                     document.body.style.alignItems = 'flex-start';
                     document.body.style.justifyContent = 'flex-start';
                 } else {
-                    msg.innerText = res.mensaje; btn.innerText = "INGRESAR"; btn.disabled = false;
+                    msg.innerText = res.mensaje || "Credenciales incorrectas."; 
+                    btn.innerText = "INGRESAR"; 
+                    btn.disabled = false;
                 }
             } catch (e) {
-                msg.innerText = "Error de conexión. Revisa el Script.";
-                btn.innerText = "INGRESAR"; btn.disabled = false;
+                msg.innerText = "Error de conexión. Revisa el Script o permisos.";
+                btn.innerText = "INGRESAR"; 
+                btn.disabled = false;
             }
         }
 
