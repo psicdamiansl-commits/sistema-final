@@ -41,13 +41,11 @@
             justify-content: flex-start;
         }
 
-        /* SIDEBAR */
         .sidebar { width: 280px; background: #070111; padding: 40px 0; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); height: 100vh;}
         .nav-item { padding: 15px 30px; display: flex; align-items: center; gap: 18px; cursor: pointer; color: var(--text-dim); font-size: 0.95rem; transition: 0.3s; }
         .nav-item:hover { color: white; background: rgba(255,255,255,0.03); }
         .nav-item.active { background: var(--uix-red-main); color: white; border-radius: 0 40px 40px 0; margin-right: 25px; }
 
-        /* MAIN CONTENT */
         .main-container { flex: 1; overflow-y: auto; padding: 40px 60px; height: 100vh; }
         h2 { font-size: 1.8rem; margin-bottom: 10px; }
         
@@ -55,11 +53,9 @@
         .tab-item { padding-bottom: 15px; font-size: 0.9rem; color: #666; cursor: pointer; font-weight: 600; }
         .tab-item.active { color: var(--uix-green); border-bottom: 3px solid var(--uix-green); }
 
-        /* WEIGHT ALERT */
         .weight-alert { background: rgba(124, 255, 1, 0.05); border: 1px solid rgba(124, 255, 1, 0.2); padding: 20px; border-radius: 15px; margin-bottom: 35px; }
         .weight-bar-bg { width: 100%; height: 12px; background: #222; border-radius: 6px; margin-top: 12px; overflow: hidden; }
 
-        /* CARDS */
         .obj-card { 
             background: var(--card-bg); 
             padding: 35px; 
@@ -86,28 +82,11 @@
             transition: all 0.3s ease;
         }
 
-        input[type="date"]::-webkit-calendar-picker-indicator {
-            filter: invert(1);
-            cursor: pointer;
-        }
-
+        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
         input:focus, select:focus, textarea:focus { outline: none; border-color: var(--uix-green); box-shadow: 0 0 10px rgba(124, 255, 1, 0.2); }
         select option { color: white; background-color: #1a0f35; }
 
-        .btn-delete-obj {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 77, 77, 0.1);
-            color: #ff4d4d;
-            border: 1px solid rgba(255, 77, 77, 0.3);
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
+        .btn-delete-obj { position: absolute; top: 20px; right: 20px; background: rgba(255, 77, 77, 0.1); color: #ff4d4d; border: 1px solid rgba(255, 77, 77, 0.3); padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-weight: 600; }
         .comp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 30px; }
         .comp-card { background: var(--grad-comp); padding: 25px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
         .comp-card h4 { font-size: 0.85rem; margin-bottom: 10px; }
@@ -117,16 +96,7 @@
         .btn-draft { background: #2a2a2a; color: white; border: none; padding: 20px; border-radius: 12px; width: 28%; font-weight: 700; cursor: pointer; }
         .btn-send:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(139, 0, 0, 0.4); }
 
-        #loginScreen { 
-            position: fixed; 
-            inset: 0; 
-            background: var(--uix-purple-dark); 
-            z-index: 10000; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-        }
-
+        #loginScreen { position: fixed; inset: 0; background: var(--uix-purple-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; }
         .hidden { display: none !important; }
     </style>
 </head>
@@ -136,21 +106,17 @@
         <div style="background: rgba(255,255,255,0.03); padding: 50px; border-radius: 30px; width: 420px; text-align: center; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
             <h1 style="color:var(--uix-green); font-size:3.5rem; margin-bottom:10px; line-height:1;">uix<span>.</span></h1>
             <p style="color:white; opacity:0.5; font-size:0.8rem; margin-bottom:40px; letter-spacing: 2px; text-transform: uppercase;">Sistema de Desempeño</p>
-            
             <div style="text-align: left;">
                 <label>Selecciona tu rol</label>
                 <select id="roleInput">
                     <option value="Colaborador">Colaborador</option>
                     <option value="Líder">Líder</option>
                 </select>
-                
                 <label>Correo institucional</label>
                 <input type="email" id="emailInput" placeholder="nombre@empresa.com" required>
-                
                 <label>Contraseña</label>
                 <input type="password" id="passInput" placeholder="••••••••" required>
             </div>
-            
             <button onclick="validaAcceso()" id="btnLogin" style="background:var(--uix-green); color:black; width:100%; padding:18px; border-radius:35px; border:none; font-weight:800; cursor:pointer; font-size:1rem; margin-top:20px; transition: 0.3s;">INGRESAR</button>
             <p id="loginMsg" style="color:#ff4d4d; font-size:0.85rem; margin-top:20px; min-height: 1.2em;"></p>
         </div>
@@ -200,8 +166,7 @@
                         <div id="regContainer">
                             <div class="obj-card" id="obj1">
                                 <label>Título del Objetivo 1 <span class="req-star">*</span></label>
-                                <input type="text" class="obj-nombre" placeholder="Ej: Incrementar ventas en zona norte" required>
-                                
+                                <input type="text" class="obj-nombre" placeholder="Ej: Incrementar ventas" required>
                                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:25px;">
                                     <div><label>Meta Anual <span class="req-star">*</span></label><input type="number" class="obj-meta" placeholder="0" required></div>
                                     <div><label>Tendencia <span class="req-star">*</span></label>
@@ -213,7 +178,6 @@
                                     </div>
                                     <div><label>Peso del Obj (%) <span class="req-star">*</span></label><input type="number" class="obj-peso" placeholder="0" oninput="recalc()" required></div>
                                 </div>
-                                
                                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
                                     <div><label>Fecha Inicio <span class="req-star">*</span></label><input type="date" class="obj-inicio" required></div>
                                     <div><label>Fecha Fin <span class="req-star">*</span></label><input type="date" class="obj-fin" required></div>
@@ -221,17 +185,12 @@
                             </div>
                         </div>
 
-                        <div style="margin:60px 0 40px;">
-                            <h3 style="color:#ff4d4d; font-size:1.1rem; margin-bottom:8px;"><i class="fas fa-star"></i> Competencias Organizacionales</h3>
-                            <p style="font-size: 0.85rem; color: #888;">Estas competencias serán evaluadas en tu autoevaluación del 6° mes. Por ahora solo se registran como parte de tu perfil.</p>
-                            
-                            <div class="comp-grid">
-                                <div class="comp-card"><i class="fas fa-handshake"></i><h4>Confianza y Respeto</h4><p>Relaciones basadas en honestidad y transparencia.</p></div>
-                                <div class="comp-card"><i class="fas fa-check-double"></i><h4>Ejecución Impecable</h4><p>Compromiso con la máxima calidad y tiempos.</p></div>
-                                <div class="comp-card"><i class="fas fa-chart-line"></i><h4>Mejora Continua</h4><p>Optimización constante de procesos y resultados.</p></div>
-                                <div class="comp-card"><i class="fas fa-heart"></i><h4>Pasión por el Cliente</h4><p>El cliente en el centro de cada decisión.</p></div>
-                                <div class="comp-card"><i class="fas fa-users"></i><h4>Trabajo en Equipo</h4><p>Colaboración activa para metas comunes.</p></div>
-                            </div>
+                        <div class="comp-grid">
+                            <div class="comp-card"><i class="fas fa-handshake"></i><h4>Confianza y Respeto</h4><p>Relaciones basadas en honestidad.</p></div>
+                            <div class="comp-card"><i class="fas fa-check-double"></i><h4>Ejecución Impecable</h4><p>Compromiso con la máxima calidad.</p></div>
+                            <div class="comp-card"><i class="fas fa-chart-line"></i><h4>Mejora Continua</h4><p>Optimización constante de procesos.</p></div>
+                            <div class="comp-card"><i class="fas fa-heart"></i><h4>Pasión por el Cliente</h4><p>El cliente en el centro.</p></div>
+                            <div class="comp-card"><i class="fas fa-users"></i><h4>Trabajo en Equipo</h4><p>Colaboración activa.</p></div>
                         </div>
 
                         <div style="margin-top:50px; display:flex; justify-content:space-between; padding-bottom: 50px;">
@@ -242,10 +201,7 @@
 
                     <div id="subTab1" class="hidden">
                         <h2>Autoevaluación Semestral (Mes 6)</h2>
-                        <p style="color:var(--text-dim); margin-bottom:30px;">Reporta tu avance real frente a los objetivos pactados.</p>
-                        <div id="eval6Container">
-                        </div>
-                        <button class="btn-send" style="width:100%; background:var(--uix-green); color:black; margin-top:30px;">GUARDAR AUTOEVALUACIÓN</button>
+                        <div id="eval6Container"></div>
                     </div>
                 </div>
 
@@ -254,90 +210,30 @@
                         <i class="fas fa-check" style="font-size: 4rem; color: var(--uix-green);"></i>
                     </div>
                     <h2 style="color:var(--uix-green); font-size:2.5rem; margin-bottom:15px;">¡Registro Exitoso!</h2>
-                    <p style="font-size: 1.1rem; opacity:0.7;">Hola <span id="userNameSuccess"></span>, tus objetivos han sido enviados.</p>
+                    <p>Hola <span id="userNameSuccess"></span>, tus objetivos han sido enviados.</p>
                     <button onclick="location.reload()" style="background:var(--uix-red-main); color:white; border:none; padding:18px 60px; border-radius:40px; margin-top:40px; cursor:pointer; font-weight:700;">VOLVER AL INICIO</button>
                 </div>
             </div>
             
-            <div id="dashboardSection" class="hidden"><h2>Dashboard</h2><p style="color:var(--text-dim);">Contenido del Dashboard...</p></div>
-            <div id="historialSection" class="hidden"><h2>Historial</h2><p style="color:var(--text-dim);">Historial de evaluaciones...</p></div>
-            <div id="notificacionesSection" class="hidden"><h2>Notificaciones</h2><p style="color:var(--text-dim);">No tienes notificaciones nuevas.</p></div>
+            <div id="dashboardSection" class="hidden"><h2>Dashboard</h2></div>
+            <div id="historialSection" class="hidden"><h2>Historial</h2></div>
+            <div id="notificacionesSection" class="hidden"><h2>Notificaciones</h2></div>
         </main>
     </div>
 
     <script>
-        // AQUÍ ESTÁ LA NUEVA URL QUE ME PASASTE (Actualizada)
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyck5Mznvj2j19HL3FkRkBzDi-0bw72WnMwYSoWeHwbo9ag0FraK7YFlzZR5Jy28J4/exec"; 
+        // URL ACTUALIZADA SUMINISTRADA POR DIEGO
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwTj6-dxWRBJyRycEHgKtlvTE7WZSilM1GdssOG_VrFP5epoc8Kxx1FKyaVEgHrTrk/exec"; 
         
         let userData = {};
         let totalObj = 1;
 
-        // --- LÓGICA DE TRASPASO AUTOMÁTICO ---
         function changeSubTab(idx) {
             document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
             if(idx === 0) document.getElementById('btnTabReg').classList.add('active');
             if(idx === 1) document.getElementById('btnTabEval6').classList.add('active');
-
             document.getElementById('subTab0').classList.toggle('hidden', idx !== 0);
             document.getElementById('subTab1').classList.toggle('hidden', idx !== 1);
-
-            if(idx === 1) {
-                generarEvaluacionMes6();
-            }
-        }
-
-        function generarEvaluacionMes6() {
-            const container = document.getElementById('eval6Container');
-            container.innerHTML = "";
-            const cards = document.querySelectorAll('#regContainer .obj-card');
-            
-            cards.forEach((card, index) => {
-                const nombre = card.querySelector('.obj-nombre').value || `Objetivo ${index + 1}`;
-                const meta = card.querySelector('.obj-meta').value || 0;
-                const peso = card.querySelector('.obj-peso').value || 0;
-
-                const evalCard = document.createElement('div');
-                evalCard.className = 'obj-card';
-                evalCard.style.borderLeftColor = 'var(--uix-green)';
-                evalCard.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:15px;">
-                        <h4 style="color:white; font-size:1.1rem;">${nombre}</h4>
-                        <span style="color:var(--uix-green); font-weight:700;">PESO: ${peso}%</span>
-                    </div>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
-                        <div>
-                            <label>Meta Anual Pactada</label>
-                            <input type="text" value="${meta}" readonly style="opacity:0.6; background:transparent;">
-                        </div>
-                        <div>
-                            <label>Resultado Real Alcanzado</label>
-                            <input type="number" class="res-real" placeholder="Ingresa valor logrado" oninput="calcularLogro(this, ${meta})">
-                        </div>
-                    </div>
-                    <div style="margin-top:10px;">
-                        <label>Comentarios de Avance</label>
-                        <textarea placeholder="Describe los logros o desafíos de este semestre..."></textarea>
-                    </div>
-                    <div style="text-align:right;">
-                        <span style="font-size:0.8rem; color:var(--text-dim);">Porcentaje de Cumplimiento: </span>
-                        <strong class="pct-logro" style="color:var(--uix-green); font-size:1.2rem;">0%</strong>
-                    </div>
-                `;
-                container.appendChild(evalCard);
-            });
-            
-            if(cards.length === 0) {
-                container.innerHTML = "<p style='color:#ff4d4d;'>Primero debes registrar objetivos en la pestaña anterior.</p>";
-            }
-        }
-
-        function calcularLogro(input, meta) {
-            const real = parseFloat(input.value) || 0;
-            const pctDisplay = input.parentElement.parentElement.parentElement.querySelector('.pct-logro');
-            if(meta > 0) {
-                const calculo = Math.round((real / meta) * 100);
-                pctDisplay.innerText = calculo + "%";
-            }
         }
 
         async function validaAcceso() {
@@ -347,11 +243,10 @@
             const msg = document.getElementById('loginMsg');
             const btn = document.getElementById('btnLogin');
 
-            if(!email || !pass) { msg.innerText = "Por favor, completa tus credenciales."; return; }
+            if(!email || !pass) { msg.innerText = "Completa tus credenciales."; return; }
             btn.innerText = "AUTENTICANDO..."; btn.disabled = true;
 
             try {
-                // Hacemos el fetch como GET con los parámetros en la URL
                 const url = `${WEB_APP_URL}?action=login&email=${encodeURIComponent(email)}&pass=${encodeURIComponent(pass)}&role=${encodeURIComponent(role)}`;
                 const response = await fetch(url);
                 const res = await response.json();
@@ -361,44 +256,34 @@
                     document.getElementById('uName').innerText = res.nombre;
                     document.getElementById('uRole').innerText = role;
                     document.getElementById('userNameSuccess').innerText = res.nombre.split(' ')[0];
-                    
                     document.getElementById('loginScreen').classList.add('hidden');
                     document.getElementById('appLayout').classList.remove('hidden');
-                    document.body.style.alignItems = 'flex-start';
-                    document.body.style.justifyContent = 'flex-start';
                 } else {
-                    msg.innerText = res.mensaje || "Credenciales incorrectas."; 
-                    btn.innerText = "INGRESAR"; 
-                    btn.disabled = false;
+                    msg.innerText = res.mensaje; 
+                    btn.innerText = "INGRESAR"; btn.disabled = false;
                 }
             } catch (e) {
-                msg.innerText = "Error de conexión. Revisa el Script o permisos.";
-                btn.innerText = "INGRESAR"; 
-                btn.disabled = false;
+                msg.innerText = "Error de conexión."; btn.innerText = "INGRESAR"; btn.disabled = false;
             }
         }
 
         function agregarObjetivo() {
-            if(totalObj >= 5) { alert("Máximo 5 objetivos por periodo."); return; }
+            if(totalObj >= 5) return;
             totalObj++;
             const div = document.createElement('div');
             div.className = 'obj-card';
             div.innerHTML = `
-                <button class="btn-delete-obj" onclick="this.parentElement.remove(); recalc();">
-                    <i class="fas fa-trash"></i> Eliminar
-                </button>
+                <button class="btn-delete-obj" onclick="this.parentElement.remove(); recalc();"><i class="fas fa-trash"></i></button>
                 <label>Título del Objetivo ${totalObj} <span class="req-star">*</span></label>
-                <input type="text" class="obj-nombre" placeholder="Describe tu meta" required>
+                <input type="text" class="obj-nombre" required>
                 <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:25px;">
-                    <div><label>Meta <span class="req-star">*</span></label><input type="number" class="obj-meta" placeholder="0" required></div>
-                    <div><label>Tendencia <span class="req-star">*</span></label>
-                        <select class="obj-tendencia" required><option value="">Seleccionar...</option><option>Incremental</option><option>Decremental</option></select>
-                    </div>
-                    <div><label>Peso (%) <span class="req-star">*</span></label><input type="number" class="obj-peso" placeholder="0" oninput="recalc()" required></div>
+                    <div><label>Meta</label><input type="number" class="obj-meta" required></div>
+                    <div><label>Tendencia</label><select class="obj-tendencia" required><option value="">Sel...</option><option>Incremental</option><option>Decremental</option></select></div>
+                    <div><label>Peso (%)</label><input type="number" class="obj-peso" oninput="recalc()" required></div>
                 </div>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
-                    <div><label>Fecha Inicio <span class="req-star">*</span></label><input type="date" class="obj-inicio" required></div>
-                    <div><label>Fecha Fin <span class="req-star">*</span></label><input type="date" class="obj-fin" required></div>
+                    <div><label>Inicio</label><input type="date" class="obj-inicio" required></div>
+                    <div><label>Fin</label><input type="date" class="obj-fin" required></div>
                 </div>`;
             document.getElementById('regContainer').appendChild(div);
             recalc();
@@ -410,22 +295,12 @@
             document.getElementById('pesoTotalTxt').innerText = s + '%';
             document.getElementById('pesoBar').style.width = Math.min(s, 100) + '%';
             document.getElementById('btnEnviar').disabled = (s !== 100);
-            const msg = document.getElementById('pesoMsg');
-            if(s === 100) { msg.innerText = "✓ Peso distribuido"; msg.style.color = "#7CFF01"; }
-            else { msg.innerText = "La suma debe ser 100%"; msg.style.color = "#ff4d4d"; }
+            document.getElementById('pesoMsg').innerText = (s === 100) ? "✓ Correcto" : "Debe ser 100%";
         }
 
         async function enviarObjetivos() {
             const btn = document.getElementById('btnEnviar');
-            let incompleto = false;
-            document.querySelectorAll('.obj-card').forEach(card => {
-                card.querySelectorAll('input[required], select[required]').forEach(input => {
-                    if (!input.value) { incompleto = true; input.style.borderColor = "#ff4d4d"; }
-                    else { input.style.borderColor = "rgba(255,255,255,0.1)"; }
-                });
-            });
-            if(incompleto) { alert("Completa todos los campos obligatorios."); return; }
-            btn.innerText = "ENVIANDO Y NOTIFICANDO..."; btn.disabled = true;
+            btn.innerText = "ENVIANDO..."; btn.disabled = true;
             
             const goals = [];
             document.querySelectorAll('.obj-card').forEach(card => {
@@ -446,17 +321,12 @@
                 });
                 document.getElementById('formContent').classList.add('hidden');
                 document.getElementById('successScreen').classList.remove('hidden');
-            } catch (e) { alert("Error al enviar."); btn.innerText = "ENVIAR A REVISIÓN"; btn.disabled = false; }
+            } catch (e) { alert("Error."); btn.innerText = "ENVIAR"; btn.disabled = false; }
         }
 
         function switchMainTab(id, el) {
-            ['dashboard','misObjetivos','historial','notificaciones'].forEach(s => {
-                const sec = document.getElementById(s+'Section');
-                if(sec) sec.classList.add('hidden');
-            });
-            const target = document.getElementById(id+'Section');
-            if(target) target.classList.remove('hidden');
-            
+            ['dashboard','misObjetivos','historial','notificaciones'].forEach(s => document.getElementById(s+'Section')?.classList.add('hidden'));
+            document.getElementById(id+'Section')?.classList.remove('hidden');
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             el.classList.add('active');
         }
